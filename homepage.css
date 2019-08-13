@@ -1,0 +1,133 @@
+/***********************************
+****************GENERAL************
+***********************************/
+
+* {
+	box-sizing: border-box;
+}
+
+html {
+	font-size: 62.5%;
+	margin: 0;
+}
+
+body {
+	margin: 0;
+	font-size :1.6rem;
+	font-family: 'Roboto', sans-serif;
+	background-image: url('pictures/beige-wallpaper.jpg');
+	background-size: cover;
+}
+
+.container {
+	width : 70%;
+	margin: 0 auto;
+}
+
+/***********************************
+****************MAIN***************
+***********************************/
+
+.main-container {
+	display : flex;
+}
+
+.main-container .main-content {
+	width : 60%;
+}
+
+.main-container .left-content {
+	width : 20%;
+}
+
+.main-container .right-content {
+	width : 20%;
+}
+
+/***********************************
+****************HEADER***************
+***********************************/
+
+.main-header h1 {
+	text-align :center;
+}
+
+.main-header h1 a{
+	color: black;
+	text-decoration: none;
+}
+
+.main-header .menu ul{
+	display: flex;
+	justify-content: center;
+	margin: 0;
+	padding: 0;
+}
+
+.main-header .menu ul li{
+	list-style: none;
+	margin-top: 1em;
+	margin-bottom: 1em;
+}
+
+.main-header .menu ul li a{
+	display: block;
+	text-decoration: none;
+	color: black;
+	padding : 1em 2em;
+}
+
+.main-header .menu ul li a:hover{
+	background-color: black;
+	color : white;
+}
+
+main .card-link {
+	text-decoration: none;
+	color: black;
+}
+
+/***********************************
+****************CARDS***************
+***********************************/
+
+.cards-container {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+
+article.card{
+	height:14em;
+	width: 22em;
+	border-radius: .5em;
+	margin: 1em;
+	background-image: url('pictures/student-walking.jpg');
+	background-size: cover;
+}
+
+article.card p.discover {
+	display: none;
+}
+
+article.card:hover{
+	background-image: url("pictures/student-walking.jpg"), linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5));
+    background-blend-mode: overlay;
+    color: white;
+}
+
+article.card:hover .discover{
+	display: block;
+	text-align: center;
+	color: white;
+	font-size: 3rem;
+}
+
+article.card h1{
+	padding-top: 1em;
+	padding-left: 1em;
+	padding-bottom: 1em;
+}
+
+
+
