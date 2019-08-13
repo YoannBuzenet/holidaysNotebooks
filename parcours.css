@@ -1,0 +1,31 @@
+/***********************************
+****************PARCOURS***************
+***********************************/
+
+/* .main-content {
+	border: 1px solid black;
+} */
+
+.question h1 {
+	margin-bottom: 0.25em;
+}
+
+.question-form {
+	text-align: center;
+}
+
+.question-form .form-container{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	text-align: left;
+}
+
+.question-form .form-container > div {
+	width: 20em;
+}
+
+.question-form input[type="button"]{
+	margin-top: 2em;
+}
+

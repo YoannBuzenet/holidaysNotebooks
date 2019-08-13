@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="general.css">
 	<link rel="stylesheet" href="homepage.css">
 	<title>Template</title>
 </head>
@@ -13,7 +15,7 @@
 		<div class="main-content">
 			<header class="main-header">
 				<div class="container">
-					<h1><a href="/">Cahiers de vacances gratuits</a></h1>
+					<h1><a href="/holidaysNotebooks">Cahiers de vacances gratuits</a></h1>
 				</div>
 				<div class="menu">
 					<ul>
@@ -25,7 +27,7 @@
 			<div class="container">
 				<main>
 					<div class="cards-container">
-						<a href="#" class="card-link">
+						<a href="parcours.php" class="card-link">
 							<article class="card">
 								<h1>3ème - College</h1>
 								<p class="discover">Découvrez</p>
@@ -87,5 +89,13 @@
 			
 		</div>
 	</div>
+	<footer>
+		<ul>
+			<li><a href="#">A propos</a></li>
+			<li><a href="#">Contactez-nous</a></li>
+			<li><a href="#">Politique de confidentialité</a></li>
+			<li><a href="#">Mentions légales</a></li>
+		</ul>
+	</footer>
 </body>
 </html>
