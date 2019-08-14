@@ -32,7 +32,9 @@
 			<div class="container">
 				<main>
 					<article class="question">
-						<progress value="20" max="100">20</progress>
+						<div class="progress-wrapper">
+							<progress value="20" max="100">20</progress>
+						</div>
 						<h1>PARTIE : MATHEMATIQUES</h1>
 						<small>Question 2</small>
 
@@ -40,23 +42,22 @@
 
 						<form action="#" method="POST" id="" class="question-form">
 							<div class="form-container">
-								<div>
-								  <input type="radio" id="huey" name="question" value="huey"
-								         checked>
+								<div class="answer">
+								  <input type="radio" id="huey" name="question" value="huey">
 								  <label for="huey">Blip</label>
 								</div>
 
-								<div>
+								<div class="answer">
 								  <input type="radio" id="dewey" name="question" value="dewey">
 								  <label for="dewey">Bloup</label>
 								</div>
 
-								<div>
+								<div class="answer">
 								  <input type="radio" id="louie" name="question" value="louie">
 								  <label for="louie">Blap</label>
 								</div>
 
-								<div>
+								<div class="answer">
 								  <input type="radio" id="louie2" name="question" value="louie">
 								  <label for="louie2">Blouh</label>
 								</div>
@@ -74,5 +75,6 @@
 			
 		</div>	
 	</div>	
+	<script type="text/javascript" src="course.js"></script>
 </body>
 </html>

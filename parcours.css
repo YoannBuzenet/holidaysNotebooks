@@ -6,6 +6,25 @@
 	border: 1px solid black;
 } */
 
+
+/***********************************
+****************PROGRESS***************
+***********************************/
+
+.progress-wrapper {
+	text-align: center;
+}
+
+progress {
+	width: 80%;
+	height: 40px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/***********************************
+****************FORM***************
+***********************************/
 .question h1 {
 	margin-bottom: 0.25em;
 }
@@ -27,5 +46,24 @@
 
 .question-form input[type="button"]{
 	margin-top: 2em;
+	padding: 1em;
+	padding-right: 2em;
+	padding-left: 2em;
+	font-size:2rem;
+	background-color: #3B87FB;
 }
+
+.question-form input[type="button"]:hover{
+	background-color: #3B87FB80;
+}
+
+.answer {
+	padding : 2em;
+	border: 1px solid black;
+}
+
+.answer:hover {
+	background-color: #3B87FB80;
+}
+
 
