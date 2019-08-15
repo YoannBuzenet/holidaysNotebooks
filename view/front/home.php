@@ -1,7 +1,7 @@
 <?php ob_start() ?>
 
 <div class="cards-container">
-	<a href="index.php?section=course&class=3eme" class="card-link">
+	<a href="index.php?section=courses&class=3eme" class="card-link">
 		<article class="card">
 			<h1>3ème - College</h1>
 			<p class="discover">Découvrez</p>
