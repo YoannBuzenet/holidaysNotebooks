@@ -7,25 +7,25 @@ ob_start();
 <div class="container">
 
 	<div class="command-section">
-		<a href="index?php?section=courses&action=2">
+		<a href="index.php?section=questions&action=2">
 			<div class="command-action">
 				<i class="fas fa-plus-circle"></i></i>
-				<p>Créer un parcours</p>
+				<p>Créer une question</p>
 			</div>
 		</a>
 	</div>
 	
 	<div class="table-course">
-		<h2>Parcours</h2>
+		<h2>Questions</h2>
 	<table>
 		<thead>
 			<tr>
-				<th>ID</th><th>Name</th><th>Questions</th>
+				<th>ID</th><th>Name</th><th>Discipline</th><th>Success Rate</th>
 			</tr>
 		</thead>
 		<tbody>
-			<?php foreach($listCourses as $course){ ?>
-				<tr><td><?= $course->getId() ?></td><td><?= $course->getName() ?></td><td><?= $course->getNumberOfQuestions() ?></td></tr>
+			<?php foreach($listQuestions as $question){ ?>
+				<tr><td><?= $question->getId() ?></td><td><?= $question->getName() ?></td><td><?= $question->getDiscipline() ?></td><td><?= $question->getSuccessRate() ?>%</td></tr>
 			<?php } ?>
 		</tbody>
 	</table>

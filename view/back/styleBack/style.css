@@ -8,6 +8,11 @@
 	text-align: center;
 }
 
+.back-header h1 a {
+	text-decoration: none;
+	color: black;
+}
+
 .logout-link {
 	float: right;
 	color: black;
@@ -64,3 +69,28 @@
 .command-action:hover{
 	background-color: #FFFFFF;
 }
+
+a:only-child {
+	margin :1em auto;
+}
+
+.table-course h2 {
+	text-align: center;
+}
+
+table{
+	border-collapse: collapse;
+	border-spacing: length;
+	margin: 1em auto;
+}
+
+table td{
+	border: 1px solid black;
+	text-align: center;
+}
+
+table td+td{
+	text-align: left;
+}
+
+

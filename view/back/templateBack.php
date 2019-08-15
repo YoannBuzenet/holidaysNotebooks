@@ -17,8 +17,9 @@
 <body>
 	<header class="back-header">
 		<div class="container">
-			<a href="index.php?section=logout" class="logout-link"><i class="fas fa-sign-out-alt"></i></a><h1>Back-office</h1>
+			<a href="index.php?section=logout" class="logout-link"><i class="fas fa-sign-out-alt"></i></a><h1><a href="index.php">Back-office</a></h1>
 			<ul>
+				<li><a href="index.php">Dashboard</a></li>
 				<li><a href="index.php?section=questions&action=1">Questions</a></li>
 				<li><a href="index.php?section=courses&action=1">Parcours</a></li>
 				<li><a href="index.php?section=users&action=1">Utilisateurs</a></li>

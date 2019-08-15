@@ -12,7 +12,11 @@ ob_start();
 							<a href=""><i class="fas fa-chart-area"></i></a>
 							<p>Réussite des parcours</p>
 						</div>
-					</div>
+						<div class="command-action">
+							<a href=""><i class="fas fa-question-circle"></i></i></a>
+							<p>Réussite des questions</p>
+						</div>
+				</div>
 
 			</section>
 
