@@ -74,7 +74,7 @@ a:only-child {
 	margin :1em auto;
 }
 
-.table-course h2 {
+h2 {
 	text-align: center;
 }
 
@@ -94,3 +94,19 @@ table td+td{
 }
 
 
+/***********************************
+****************FORM***************
+***********************************/
+
+.form-container {
+	display: flex;
+	justify-content: center;
+}
+
+.create-form{
+	
+}
+
+.create-form input[type='text'], .create-form textarea, .create-form select{
+	display: block;
+}

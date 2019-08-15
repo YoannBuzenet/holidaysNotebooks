@@ -16,16 +16,16 @@ ob_start();
 	</div>
 	
 	<div class="table-course">
-		<h2>Questions</h2>
+		<h2>Toutes les questions</h2>
 	<table>
 		<thead>
 			<tr>
-				<th>ID</th><th>Name</th><th>Discipline</th><th>Success Rate</th>
+				<th>ID</th><th>Name</th><th>Discipline</th><th>Success Rate</th><th>Type</th>
 			</tr>
 		</thead>
 		<tbody>
 			<?php foreach($listQuestions as $question){ ?>
-				<tr><td><?= $question->getId() ?></td><td><?= $question->getName() ?></td><td><?= $question->getDiscipline() ?></td><td><?= $question->getSuccessRate() ?>%</td></tr>
+				<tr><td><?= $question->getId() ?></td><td><?= $question->getName() ?></td><td><?= $question->getDiscipline() ?></td><td><?= $question->getSuccessRate() ?>%</td><td><?= $question->getType() ?></td></tr>
 			<?php } ?>
 		</tbody>
 	</table>

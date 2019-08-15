@@ -44,6 +44,9 @@ else if(isset($_GET['section']) && $_GET['section'] == "courses"){
 else if(isset($_GET['section']) && $_GET['section'] == "questions"){
 	include('controller/question/question.php');
 }
+else if(isset($_POST['section']) && $_POST['section'] == "questions"){
+	include('controller/question/question.php');
+}
 else if(isset($_GET['section']) && $_GET['section'] == 'logout'){
 	session_destroy();
 	include('view/front/home.php');

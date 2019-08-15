@@ -12,7 +12,14 @@ if(userManager::checkIfAdmin($_SESSION['user'])){
 		break;
 
 		case "2":
-		echo "blibli";
+		$list_of_types = questionManager::getAllTypes($bdd);
+		$list_of_disciplines = questionManager::getAllDisciplines($bdd);
+		$list_of_school_level = questionManager::getAllSchoolLevel($bdd);
+		include('view/back/question/create.php');
+		break;
+
+		case "2V":
+		echo "je suis censé enregistrer lol";
 		break;
 	}
 }

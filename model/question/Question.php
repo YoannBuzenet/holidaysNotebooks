@@ -3,6 +3,7 @@
 class Question {
 	private $id;
 	private $name;
+	private $type;
 	private $discipline;
 	private $success_rate;
 
@@ -20,6 +21,14 @@ class Question {
 
 	public function setName(string $name){
 		$this->name = $name;
+	}
+
+	public function getType(){
+		return $this->type;
+	}
+
+	public function setType(string $type){
+		$this->type = $type;
 	}
 
 	public function getDiscipline(){
