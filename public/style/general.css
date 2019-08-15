@@ -15,7 +15,7 @@ body {
 	margin: 0;
 	font-size :1.6rem;
 	font-family: 'Roboto', sans-serif;
-	background-image: url('pictures/beige-wallpaper.jpg');
+	background-image: url('../../public/pictures/beige-wallpaper.jpg');
 	background-size: cover;
 }
 

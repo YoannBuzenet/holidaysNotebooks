@@ -13,7 +13,7 @@ article.card{
 	width: 22em;
 	border-radius: .5em;
 	margin: 1em;
-	background-image: url('pictures/student-walking.jpg');
+	background-image: url('../../public/pictures/student-walking.jpg');
 	background-size: cover;
 }
 
@@ -22,7 +22,7 @@ article.card p.discover {
 }
 
 article.card:hover{
-	background-image: url("pictures/student-walking.jpg"), linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5));
+	background-image: url("../../public/pictures/student-walking.jpg"), linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5));
     background-blend-mode: overlay;
     color: white;
 }
