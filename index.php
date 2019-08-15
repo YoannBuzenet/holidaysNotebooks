@@ -1,5 +1,7 @@
 <?php 
 
+include_once('tools/db_connect.php');
+
 session_start();
 // Catching parameters
 //Defining what the user is doing with parameters of by default
@@ -20,7 +22,7 @@ if(isset($_GET['id'])){
 //Browsing app when NON LOGGUED
 if(!isset($_SESSION['logged_user'])){
 	if(isset($_GET['section']) && $_GET['section'] == "loginnn"){
-		include('views/front/login.php');
+		include('view/front/login.php');
 	}
 	else if(isset($_POST['user_login'])){
 		include('tools/session.php');
@@ -34,22 +36,15 @@ if(!isset($_SESSION['logged_user'])){
 }
 //Browing when LOGGED
 else if(isset($_SESSION['logged_user'])){
-	if(isset($_GET['section']) && $_GET['section'] == "stories"){
-		include('controllers/story.php');
-	}
-	else if(isset($_GET['section']) && $_GET['section'] == 'posters'){
-		include('controllers/poster.php');
-	}
-	else if(isset($_FILES['fileposter'])){
-		$action = 'create';
-		include('controllers/poster.php');
+	if(isset($_GET['section']) && $_GET['section'] == "courses"){
+		include('controller/course/course.php');
 	}
 	else if(isset($_GET['section']) && $_GET['section'] == 'logout'){
 		session_destroy();
-		include('views/front/homepage.php');
+		include('view/front/home.php');
 	}
 	else{
-		include('controllers/story.php');
+		include('controller/user/user_admin.php');
 	}
 }
 
