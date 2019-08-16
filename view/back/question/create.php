@@ -12,7 +12,7 @@ ob_start();
 				<select name="question-type" id="question-type">
 					<option value="type-de-question" selected disabled>Type de question</option>
 					<?php foreach($list_of_types as $type){?>
-					<option value="<?= $type[1] ?>"><?= $type[1] ?></option>
+					<option value="<?= $type['id'] ?>"><?= $type[1] ?></option>
 					<?php }  ?>
 				</select>
 

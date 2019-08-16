@@ -6,11 +6,12 @@ class questionManager {
 
 	public static function getAllQuestions(PDO $pdo){
 
-		$sql = "SELECT q.id, qtr.name, qtr.success_rate, d.discipline, atoq.type  
+		$sql = "SELECT q.id, qtr.name, qtr.success_rate, d.discipline, atoq.type, sl.school_level 
 				FROM questions q 
 				INNER JOIN questions_type_radio qtr ON q.id = qtr.global_id 
 				INNER JOIN disciplines d ON d.id = qtr.id_discipline 
 				INNER JOIN all_types_of_questions atoq ON qtr.id_type = atoq.id 
+				INNER JOIN school_levels sl ON qtr.id_school_level = sl.id 
 				ORDER BY id";
 
 		$pdoStatement = $pdo->prepare($sql);
@@ -31,7 +32,19 @@ class questionManager {
 
 	}
 
-	public static function getIdInfos(PDO $pdo, string $type){
+	public static function getTypeNameByIdType(PDO $pdo, int $typeID){
+
+		$sql = "SELECT * FROM all_types_of_questions WHERE id= ?";
+
+		$pdoStatement = $pdo->prepare($sql);
+		$pdoStatement->bindParam(1, $typeID, PDO::PARAM_INT);
+		$pdoStatement->execute();
+		$result=$pdoStatement->fetch();
+
+		return $result['type'];
+	}
+
+	public static function getIdTypeInfo(PDO $pdo, string $type){
 
 		$sql = "SELECT id,type FROM all_types_of_questions WHERE type = ?";
 
@@ -90,11 +103,9 @@ class questionManager {
 		// 2. Insert all details in a dedicated table, following the question type
 		//We do this in two steps because questions do not have all the same database structure
 
-		$result = questionManager::getIdInfos($pdo, $question->getType());
-		$id_type = $result['id'];
-
 		//Desassembling the $question
 		$question_name = $question->getName();
+		$id_type = $question->getIdType();
 
 		//writing FIRST in the global questions table, then the detailed one
 		$sql = "INSERT INTO questions(name,id_type, created_at) VALUES (?, ?, NOW())";
@@ -108,14 +119,14 @@ class questionManager {
 
 		//If it worked, we write data in the relevant table with all details
 		if($pdoStatement->rowCount()>0){
-			echo "dans le bon if <br>";
 			//Getting global ID to put it into the detailed table
 			$global_id_question = questionManager::getGlobalIdQuestion($pdo, $question);
 			
 			//Getting the type name to write into the good SQL table
-			$table_to_register = 'questions_type_'.$result['type'];
+			$type_name = questionManager::getTypeNameByIdType($pdo, $id_type);
+			$table_to_register = 'questions_type_'.$type_name;
 
-			$sql = "INSERT INTO ".$table_to_register."(enonce, answ1, answ2, answ3, answ4, solution, id_type, id_discipline, id_school_level, name, success_rate, global_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			$sql = "INSERT INTO ".$table_to_register."(enonce, answer1, answer2, answer3, answer4, solution, id_type, id_discipline, id_school_level, name, success_rate, global_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 			$pdoStatement = $pdo->prepare($sql);
 			
@@ -126,9 +137,9 @@ class questionManager {
 			$answ3 = $question->getAnswer3();
 			$answ4 = $question->getAnswer4();
 			$solution = $question->getSoluce();
-			$id_type = $result['id'];
-			$id_discipline = $question->getDiscipline();
-			$id_school_level =$question->getSchoolLevel();
+			$id_type = $question->getIdType();
+			$id_discipline = $question->getIdDiscipline();
+			$id_school_level =$question->getIdSchoolLevel();
 			$name =$question->getName();
 			$success_rate = 0;
 
@@ -148,26 +159,58 @@ class questionManager {
 			$pdoStatement->execute();
 
 			if($pdoStatement->rowCount()>0){
-				echo"ok";
+
+				return $success = true;
 			}
 			else{
-				echo "pas ok";
+				$error = "Could not register in detailed table";
+				throw new Exception($error);
+				return $success = false;
 			}
-
-			//continue
-			//write all details in small table
 
 		}
 		else {
-			echo"error";
-			//throw error
+			$error = "Could not register in global table";
+			throw new Exception($error);
 		}
 
+	}
 
+	
+	public static function getQuestionById(PDO $pdo, int $id){
 
-		return $pdoStatement->rowCount();
+		//get the type in the global question table
+		$sql = "SELECT q.id_type, atoq.type 
+				FROM questions q 
+				INNER JOIN all_types_of_questions atoq ON q.id_type = atoq.id
+				WHERE q.id = ?";
+
+		$pdoStatement = $pdo->prepare($sql);
+		$pdoStatement->bindParam(1, $id, PDO::PARAM_INT);
+		$pdoStatement->execute();
+
+		$result= $pdoStatement->fetch();
+
+		$question_type = $result['type'];
+
+		//Now going into the right table to get the datas
+		$table_to_search = "questions_type_".$question_type;
+
+		$sql="SELECT * FROM ".$table_to_search." WHERE global_id=?";
+
+		$pdoStatement = $pdo->prepare($sql);
+		$pdoStatement->bindParam(1, $id, PDO::PARAM_INT);
+		$pdoStatement->execute();
+
+		$result= $pdoStatement->fetchAll(PDO::FETCH_CLASS, "Question");
+
+		return $result[0];
+
+		
 
 	}
+
+
 
 
 }

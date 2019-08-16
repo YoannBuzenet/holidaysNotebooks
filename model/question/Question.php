@@ -4,15 +4,18 @@ class Question {
 	private $id;
 	private $name;
 	private $type;
+	private $id_type;
 	private $discipline;
+	private $id_discipline;
 	private $school_level;
+	private $id_school_level;
 	private $success_rate;
 	private $enonce;
-	private $question1;
-	private $question2;
-	private $question3;
-	private $question4;
-	private $soluce;
+	private $answer1;
+	private $answer2;
+	private $answer3;
+	private $answer4;
+	private $solution;
 	
 
 	public function getId(){
@@ -39,6 +42,14 @@ class Question {
 		$this->type = $type;
 	}
 
+	public function getIdType(){
+		return $this->id_type;
+	}
+
+	public function setIdType(int $id_type){
+		$this->id_type = $id_type;
+	}
+
 	public function getDiscipline(){
 		return $this->discipline;
 	}
@@ -47,12 +58,28 @@ class Question {
 		$this->discipline = $discipline;
 	}
 
+	public function getIdDiscipline(){
+		return $this->id_discipline;
+	}
+
+	public function setIdDiscipline(string $id_discipline){
+		$this->id_discipline = $id_discipline;
+	}
+
 	public function getSchoolLevel(){
 		return $this->school_level;
 	}
 
 	public function setSchoolLevel(string $school_level){
 		$this->school_level = $school_level;
+	}
+
+	public function getIdSchoolLevel(){
+		return $this->id_school_level;
+	}
+
+	public function setIdSchoolLevel(string $id_school_level){
+		$this->id_school_level = $id_school_level;
 	}
 
 	public function setSuccessRate(string $success_rate){
@@ -103,12 +130,12 @@ class Question {
 		return $this->answer4;
 	}
 
-	public function setSoluce(string $soluce){
-		$this->soluce = $soluce;
+	public function setSoluce(string $solution){
+		$this->solution = $solution;
 	}
 
 	public function getSoluce(){
-		return $this->soluce;
+		return $this->solution;
 	}
 
 }
