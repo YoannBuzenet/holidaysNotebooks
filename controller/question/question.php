@@ -19,7 +19,20 @@ if(userManager::checkIfAdmin($_SESSION['user'])){
 		break;
 
 		case "2V":
-		echo "je suis censé enregistrer lol";
+		$question_to_register = new Question;
+		$question_to_register->setName($_POST['name']);
+		$question_to_register->setType($_POST['question-type']);
+		$question_to_register->setDiscipline($_POST['question-discipline']);
+		$question_to_register->setSchoolLevel($_POST['question-school_level']);
+		$question_to_register->setEnonce($_POST['enonce']);
+		$question_to_register->setAnswer1($_POST['answer1']);
+		$question_to_register->setAnswer2($_POST['answer2']);
+		$question_to_register->setAnswer3($_POST['answer3']);
+		$question_to_register->setAnswer4($_POST['answer4']);
+		$question_to_register->setSoluce($_POST['soluce']);
+
+		questionManager::insertQuestion($bdd, $question_to_register);
+
 		break;
 	}
 }

@@ -103,10 +103,36 @@ table td+td{
 	justify-content: center;
 }
 
-.create-form{
-	
+.create-form label {
 }
 
-.create-form input[type='text'], .create-form textarea, .create-form select{
+.create-form textarea, .create-form select{
 	display: block;
+}
+
+.create-form input[type='text']{
+	display: block;
+	height: 3em;
+	margin-top: 0;
+	width:100%;
+}
+
+.create-form textarea, .create-form input[type='text'], .create-form input[type='submit']{
+	border-radius:.25em;
+}
+
+.create-form textarea{
+	margin-top: 1em;
+}
+
+.create-form input[type='submit']{
+	padding:2em;
+	background-color: #FFFFFF80;
+	display: block;
+	margin: 1em auto;
+}
+
+.create-form select {
+	height:3em;
+	margin: 1em auto;
 }
