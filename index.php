@@ -30,6 +30,9 @@ else{
 if(isset($_GET['id'])){
 		$id = $_GET['id'];
 }
+else if(isset($_POST['id'])){
+		$id = $_POST['id'];
+}		
 
 //Browsing app
 if(isset($_GET['section']) && $_GET['section'] == "loginnn"){

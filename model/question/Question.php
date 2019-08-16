@@ -16,6 +16,8 @@ class Question {
 	private $answer3;
 	private $answer4;
 	private $solution;
+	private $solution_number;
+	private $global_id;
 	
 
 	public function getId(){
@@ -136,6 +138,22 @@ class Question {
 
 	public function getSoluce(){
 		return $this->solution;
+	}
+
+	public function setSolutionNumber(int $solution_number){
+		$this->solution_number = $solution_number;
+	}
+
+	public function getSolutionNumber(){
+		return $this->solution_number;
+	}
+
+	public function setGlobalId(int $global_id){
+		$this->global_id = $global_id;
+	}
+
+	public function getGlobalId(){
+		return $this->global_id;
 	}
 
 }

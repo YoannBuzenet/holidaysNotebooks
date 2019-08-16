@@ -126,7 +126,7 @@ class questionManager {
 			$type_name = questionManager::getTypeNameByIdType($pdo, $id_type);
 			$table_to_register = 'questions_type_'.$type_name;
 
-			$sql = "INSERT INTO ".$table_to_register."(enonce, answer1, answer2, answer3, answer4, solution, id_type, id_discipline, id_school_level, name, success_rate, global_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			$sql = "INSERT INTO ".$table_to_register."(enonce, answer1, answer2, answer3, answer4, solution, solution_number, id_type, id_discipline, id_school_level, name, success_rate, global_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 			$pdoStatement = $pdo->prepare($sql);
 			
@@ -137,6 +137,7 @@ class questionManager {
 			$answ3 = $question->getAnswer3();
 			$answ4 = $question->getAnswer4();
 			$solution = $question->getSoluce();
+			$solution_number = $question->getSolutionNumber();
 			$id_type = $question->getIdType();
 			$id_discipline = $question->getIdDiscipline();
 			$id_school_level =$question->getIdSchoolLevel();
@@ -149,12 +150,13 @@ class questionManager {
 			$pdoStatement->bindParam(4, $answ3, PDO::PARAM_STR);
 			$pdoStatement->bindParam(5, $answ4, PDO::PARAM_STR);
 			$pdoStatement->bindParam(6, $solution, PDO::PARAM_STR);
-			$pdoStatement->bindParam(7, $id_type, PDO::PARAM_INT);
-			$pdoStatement->bindParam(8, $id_discipline, PDO::PARAM_INT);
-			$pdoStatement->bindParam(9, $id_school_level, PDO::PARAM_INT);
-			$pdoStatement->bindParam(10, $name, PDO::PARAM_STR);
-			$pdoStatement->bindParam(11, $success_rate, PDO::PARAM_INT);
-			$pdoStatement->bindParam(12, $global_id_question, PDO::PARAM_INT);
+			$pdoStatement->bindParam(7, $solution_number, PDO::PARAM_INT);
+			$pdoStatement->bindParam(8, $id_type, PDO::PARAM_INT);
+			$pdoStatement->bindParam(9, $id_discipline, PDO::PARAM_INT);
+			$pdoStatement->bindParam(10, $id_school_level, PDO::PARAM_INT);
+			$pdoStatement->bindParam(11, $name, PDO::PARAM_STR);
+			$pdoStatement->bindParam(12, $success_rate, PDO::PARAM_INT);
+			$pdoStatement->bindParam(13, $global_id_question, PDO::PARAM_INT);
 
 			$pdoStatement->execute();
 
@@ -205,8 +207,68 @@ class questionManager {
 		$result= $pdoStatement->fetchAll(PDO::FETCH_CLASS, "Question");
 
 		return $result[0];
+	}
 
-		
+	public static function updateQuestion(PDO $pdo, Question $question){
+
+		$sql = "UPDATE questions SET name = ?, id_type = ? WHERE id=?";
+
+		$name = $question->getName();
+		$id_type = $question->getIdType();
+		$global_id = $question->getGlobalId();
+
+		/*var_dump($name);
+		var_dump($id_type);
+		var_dump($global_id);*/
+
+		$pdoStatement = $pdo->prepare($sql);
+		$pdoStatement->bindParam(1,$name, PDO::PARAM_STR);
+		$pdoStatement->bindParam(2,$id_type, PDO::PARAM_INT);
+		$pdoStatement->bindParam(3,$global_id, PDO::PARAM_INT);
+		$pdoStatement->execute();
+
+
+		//Once the first table was updated successfully, we update the second, the more detailed one
+			$sql = "UPDATE questions_type_radio SET enonce = ?, answer1 = ?, answer2 = ?, answer3 = ?, answer4 = ?, solution = ?, solution_number = ?, id_discipline = ?, id_school_level = ?, name = ?, id_type = ? WHERE global_id=?";
+
+			$pdoStatement = $pdo->prepare($sql);
+
+			$enonce = $question->getEnonce();			
+			$Answer1 = $question->getAnswer1();		
+			$Answer2 = $question->getAnswer2();		
+			$Answer3 = $question->getAnswer3();		
+			$Answer4 = $question->getAnswer4();		
+			$solution = $question->getSoluce();
+			$solution_number = $question->getSolutionNumber();
+			$id_discipline = $question->getIdDiscipline();
+			$id_school_level = $question->getIdSchoolLevel();
+			$name = $question->getName();
+			$id_type = $question->getIdType();
+			$id = $question->getGlobalId();
+
+			$pdoStatement->bindParam(1, $enonce, PDO::PARAM_STR);
+			$pdoStatement->bindParam(2, $Answer1, PDO::PARAM_STR);
+			$pdoStatement->bindParam(3, $Answer2, PDO::PARAM_STR);
+			$pdoStatement->bindParam(4, $Answer3, PDO::PARAM_STR);
+			$pdoStatement->bindParam(5, $Answer4, PDO::PARAM_STR);
+			$pdoStatement->bindParam(6, $solution, PDO::PARAM_STR);
+			$pdoStatement->bindParam(7, $solution_number, PDO::PARAM_INT);
+			$pdoStatement->bindParam(8, $id_discipline, PDO::PARAM_INT);
+			$pdoStatement->bindParam(9, $id_school_level, PDO::PARAM_INT);
+			$pdoStatement->bindParam(10, $name, PDO::PARAM_STR);
+			$pdoStatement->bindParam(11, $id_type, PDO::PARAM_INT);
+			$pdoStatement->bindParam(12, $id, PDO::PARAM_INT);
+			$pdoStatement->execute();
+
+			if($pdoStatement->rowCount()>0){
+				return $success = true;
+			}
+			else{
+				$error = "Could not update in detailed table";
+				throw new Exception($error);
+				return $success = false;
+			}
+	
 
 	}
 

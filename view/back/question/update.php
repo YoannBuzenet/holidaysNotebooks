@@ -36,7 +36,15 @@ ob_start();
 			<textarea name="answer2" id="answer2" cols="60" rows="10" placeholder="Réponse 2" required><?= $question_to_edit->getAnswer2() ?></textarea>
 			<textarea name="answer3" id="answer3" cols="60" rows="10" placeholder="Réponse 3" required><?= $question_to_edit->getAnswer3() ?></textarea>
 			<textarea name="answer4" id="answer4" cols="60" rows="10" placeholder="Réponse 4" required><?= $question_to_edit->getAnswer4() ?></textarea>
+			<select name="solution_number" id="solution_number">
+					<option value="0" disabled>Solution</option>
+					<option value="1" <?= ($question_to_edit->getSolutionNumber() == 1) ? 'selected': null ?>>1</option>
+					<option value="2" <?= ($question_to_edit->getSolutionNumber() == 2) ? 'selected': null ?>>2</option>
+					<option value="3" <?= ($question_to_edit->getSolutionNumber() == 3) ? 'selected': null ?>>3</option>
+					<option value="4" <?= ($question_to_edit->getSolutionNumber() == 4) ? 'selected': null ?>>4</option>
+			</select>
 			<textarea name="soluce" id="soluce" cols="60" rows="10" placeholder="Solution" required><?= $question_to_edit->getSoluce() ?></textarea>
+			<input type="hidden" name="id" value="<?= $question_to_edit->getGlobalId(); ?>">
 			<input type="hidden" name="action" value="3V">
 			<input type="hidden" name="section" value="questions">
 			<input type="submit" value ="Créer">

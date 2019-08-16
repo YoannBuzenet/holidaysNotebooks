@@ -8,7 +8,7 @@ ob_start();
 
 	<?php  if(isset($success) && $success){
 ?><div class="alert-wrapper">
-		<p class="alert success">La question a bien été ajoutée en base de données.</p>
+		<p class="alert success"><?= $message ?></p>
   </div><?php
   //Reinitializing param
 	$success = null;

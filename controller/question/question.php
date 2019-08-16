@@ -30,9 +30,11 @@ if(userManager::checkIfAdmin($_SESSION['user'])){
 			$question_to_register->setAnswer3($_POST['answer3']);
 			$question_to_register->setAnswer4($_POST['answer4']);
 			$question_to_register->setSoluce($_POST['soluce']);
+			$question_to_register->setSolutionNumber($_POST['solution_number']);
+
 
 			$success = questionManager::insertQuestion($bdd, $question_to_register);
-
+			$message = "La question a bien été ajoutée en base de données.";
 			$listQuestions = questionManager::getAllQuestions($bdd);
 		include('view/back/question/all_questions.php');
 		break;
@@ -46,6 +48,25 @@ if(userManager::checkIfAdmin($_SESSION['user'])){
 		break;
 
 		case "3V":
+			$question_to_edit = new Question;
+			$question_to_edit->setName($_POST['name']);
+			$question_to_edit->setIdType($_POST['question-type']);
+			$question_to_edit->setIdDiscipline($_POST['question-discipline']);
+			$question_to_edit->setIdSchoolLevel($_POST['question-school_level']);
+			$question_to_edit->setEnonce($_POST['enonce']);
+			$question_to_edit->setAnswer1($_POST['answer1']);
+			$question_to_edit->setAnswer2($_POST['answer2']);
+			$question_to_edit->setAnswer3($_POST['answer3']);
+			$question_to_edit->setAnswer4($_POST['answer4']);
+			$question_to_edit->setSoluce($_POST['soluce']);
+			$question_to_edit->setSolutionNumber($_POST['solution_number']);
+			$question_to_edit->setGlobalId($id);
+
+			$success = questionManager::updateQuestion($bdd, $question_to_edit);
+			$message = "La question a bien été modifiée.";
+
+			$listQuestions = questionManager::getAllQuestions($bdd);
+			include('view/back/question/all_questions.php');
 		
 		break;
 	}

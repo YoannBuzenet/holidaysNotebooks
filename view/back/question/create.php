@@ -35,6 +35,13 @@ ob_start();
 			<textarea name="answer2" id="answer2" cols="60" rows="10" placeholder="Réponse 2" required></textarea>
 			<textarea name="answer3" id="answer3" cols="60" rows="10" placeholder="Réponse 3" required></textarea>
 			<textarea name="answer4" id="answer4" cols="60" rows="10" placeholder="Réponse 4" required></textarea>
+			<select name="solution_number" id="solution_number">
+					<option value="0" selected disabled>Solution</option>
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+			</select>
 			<textarea name="soluce" id="soluce" cols="60" rows="10" placeholder="Solution" required></textarea>
 			<input type="hidden" name="action" value="2V">
 			<input type="hidden" name="section" value="questions">
