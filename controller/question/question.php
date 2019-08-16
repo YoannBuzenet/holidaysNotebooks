@@ -69,6 +69,24 @@ if(userManager::checkIfAdmin($_SESSION['user'])){
 			include('view/back/question/all_questions.php');
 		
 		break;
+
+		case "4":
+
+			try{
+				$success = questionManager::deleteQuestion($bdd, $id);
+				$message = "La question a bien été supprimée.";
+			}
+			catch(Exception $e) {
+				$problem = true;
+   				if($e->getMessage() == "SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`courses`.`course-questions`, CONSTRAINT `Integrity_Questions` FOREIGN KEY (`id_question`) REFERENCES `questions` (`id`))"){
+   					$message = "Cette question est actuellement utilisée dans un parcours. Elle ne peut être supprimée.";
+   				}
+			}
+			
+			
+			$listQuestions = questionManager::getAllQuestions($bdd);
+			include('view/back/question/all_questions.php');
+
 	}
 }
 else{

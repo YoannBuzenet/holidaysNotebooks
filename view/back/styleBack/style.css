@@ -93,14 +93,16 @@ table td+td{
 	text-align: left;
 }
 
-table td:nth-of-type(7){
+table td:nth-of-type(7), table td:nth-of-type(8){
 	text-align: center;
 }
 
-table td:nth-of-type(7) a{
-		color: black;
+table tbody tr td i {
+	color: black;
 }
-
+table tbody tr td i:hover {
+	color: #3B87FB;
+}
 
 /***********************************
 ****************FORM***************

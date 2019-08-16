@@ -268,11 +268,20 @@ class questionManager {
 				throw new Exception($error);
 				return $success = false;
 			}
-	
 
 	}
 
+	public static function deleteQuestion(PDO $pdo, int $id){
 
+		$sql = "DELETE FROM questions WHERE id=?";
+
+		$pdoStatement = $pdo->prepare($sql);
+		$pdoStatement->bindParam(1, $id, PDO::PARAM_INT);
+		$pdoStatement->execute();
+
+		return $pdoStatement->rowCount();
+
+	}
 
 
 }
