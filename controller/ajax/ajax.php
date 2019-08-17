@@ -26,6 +26,11 @@ switch($page){
 	case"ask":
 
 	include('src/ajax/ask.php');
+	break;	
+
+	case"post":
+
+	include('src/ajax/post.php');
 	break;
 
 }

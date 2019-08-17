@@ -218,10 +218,15 @@ function checkBeforeSubmit(submitButton){
 				let question = new Question(currentQuestionSelectedID.value, currentOrderQuestion.value);
 				questionsArray.push(question);
 			}
+			//ON A EGALEMENT BESOIN DU NOM DU PARCOURS
+			//a ajouter dans l'array qui part
+			// et d'une image (upload here + url dans le json)
+			//et d'une description (à ajouter en base)
 
 		if(submit){
 			console.log('envoyer ajax');
-			console.log(questionsArray);
+			//console.log(questionsArray);
+				sendAjax(questionsArray);
 		}
 		else{
 			problemParagraph = document.createElement('p');
@@ -245,6 +250,7 @@ function sendAjax(array){
 	xhr.onload = function() {
 	    if (this.readyState == 4 && this.status == 200) {
 	    	rep = xhr.responseText;
+	    	console.log(rep);
 	    }
 	};
 	xhr.send(encodeURI('jsonArray='+array));

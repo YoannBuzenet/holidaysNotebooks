@@ -4,7 +4,7 @@ ob_start();
 <div class="container">
 	<h2>Créer un parcours</h2>
 	<div class="form-container">
-		<form action="index.php" method="POST" class="create-form" id="course-form">
+		<form action="index.php?section=ajax&page=post" method="POST" class="create-form" id="course-form">
 
 			<label for="course-name">Nom du parcours</label>
 			<input type="text" id="course-name">
