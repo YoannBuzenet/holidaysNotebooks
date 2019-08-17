@@ -7,7 +7,7 @@ ob_start();
 <div class="container">
 
 	<div class="command-section">
-		<a href="index?php?section=courses&action=2">
+		<a href="index.php?section=courses&action=2">
 			<div class="command-action">
 				<i class="fas fa-plus-circle"></i></i>
 				<p>Créer un parcours</p>

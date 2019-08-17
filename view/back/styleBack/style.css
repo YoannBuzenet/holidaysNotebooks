@@ -170,3 +170,19 @@ table tbody tr td i:hover {
 .alert.problem{
 	background-color: #FB735690;
 }
+
+/***********************************
+****************BUTTONS************
+***********************************/
+
+#button-add {
+	cursor: pointer;
+	background-color: #3B87FB;
+	padding: 1em;
+	border-radius: .5em;
+}
+
+#button-add:hover{
+	background-color: #3B87FB80;
+}
+

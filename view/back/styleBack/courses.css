@@ -1,0 +1,42 @@
+/***********************************
+****************COURSES*************
+***********************************/
+
+.course-question-add {
+	margin: 2em auto;
+}
+
+.question-div {
+	position :relative;
+	margin-top: 1em;
+	padding: 2em;
+	border-radius: .5em;
+	background-color: blue;
+}
+
+#select-question{
+	margin-top: 2em;
+}
+
+#course-name {
+	width: 20em;
+}
+
+.remove-question{
+	position: absolute;
+	top:0;
+	right:0;
+	margin-top:-.5em;
+	margin-right: -.5em;
+	height:2em;
+	width:2em;
+	border-radius: 50%;
+	background-color: black;
+	cursor: pointer;
+}
+
+.remove-question i{
+	margin-left: 26%;
+    color: white;
+    margin-top: 23%;
+}

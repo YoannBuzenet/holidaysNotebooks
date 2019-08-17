@@ -21,6 +21,28 @@ class questionManager {
 
 	}
 
+	public static function getQuestionsWithIdDisciplineAndIdSchoolLevel(PDO $pdo, int $id_discipline, int $id_school_level){
+
+		$sql = "SELECT q.id, qtr.name, qtr.success_rate, d.discipline, atoq.type, sl.school_level 
+				FROM questions q 
+				INNER JOIN questions_type_radio qtr ON q.id = qtr.global_id 
+				INNER JOIN disciplines d ON d.id = qtr.id_discipline 
+				INNER JOIN all_types_of_questions atoq ON qtr.id_type = atoq.id 
+				INNER JOIN school_levels sl ON qtr.id_school_level = sl.id 
+				WHERE d.id = ?
+				AND sl.id = ?
+				ORDER BY id";
+
+		$pdoStatement = $pdo->prepare($sql);
+
+		$pdoStatement->bindParam(1, $id_discipline, PDO::PARAM_INT);
+		$pdoStatement->bindParam(2, $id_school_level, PDO::PARAM_INT);
+
+		$pdoStatement->execute();
+
+		return $pdoStatement->fetchAll();
+	}
+
 	public static function getAllTypes(PDO $pdo){
 
 		$sql = "SELECT * FROM all_types_of_questions";

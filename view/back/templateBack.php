@@ -11,6 +11,7 @@
 	<script src="https://kit.fontawesome.com/c7d097c289.js"></script>
 	<link rel="stylesheet" href="public/style/general.css">
 	<link rel="stylesheet" href="view/back/styleBack/style.css">
+	<link rel="stylesheet" href="view/back/styleBack/courses.css">
 	<title>Template</title>
 </head>
 

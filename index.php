@@ -24,7 +24,7 @@ elseif(isset($_POST['action'])){
 	$action = $_POST['action'];
 }
 else{
-	$action = "read";
+	$action = "1";
 }
 // Definng the id we are looking for, is there is one
 if(isset($_GET['id'])){
@@ -42,13 +42,16 @@ else if(isset($_POST['user_login'])){
 	include('tools/session.php');
 }
 else if(isset($_GET['section']) && $_GET['section'] == "courses"){
-	include('controller/course/course.php');
+		include('controller/course/course.php');
 }
 else if(isset($_GET['section']) && $_GET['section'] == "questions"){
 	include('controller/question/question.php');
 }
 else if(isset($_POST['section']) && $_POST['section'] == "questions"){
 	include('controller/question/question.php');
+}
+else if(isset($_GET['section']) && $_GET['section'] == "ajax"){
+	include('controller/ajax/ajax.php');
 }
 else if(isset($_GET['section']) && $_GET['section'] == 'logout'){
 	session_destroy();
