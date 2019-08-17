@@ -12,7 +12,7 @@ function init(){
 		questionDiv = document.createElement('div');
 		questionDiv.classList.add('question-div');
 
-		//removebutton 
+		//adding removebutton 
 		var removeButton = document.createElement('div');
 		removeButton.classList.add('remove-question');
 		removeButton.innerHTML ='<i class="far fa-trash-alt"></i>';
@@ -20,9 +20,18 @@ function init(){
 
 		removeButton.addEventListener('click', function(){
 			this.parentNode.remove();
+			resetOptions();
 		})
 
+		//adding order selection in questions
+		var orderButton = document.createElement('select');
+		orderButton.classList.add('order-question');
+		orderButton.setAttribute('id','order-question');
+		questionDiv.appendChild(orderButton);
 		divToAppendNewQuestions.appendChild(questionDiv);
+
+		//Updating all options when adding a new question
+		resetOptions();
 
 		//Getting disciplines
 		//Creating the Select form with it
@@ -79,6 +88,7 @@ function init(){
 
 						    	selectQuestion = document.createElement('select');
 						    	selectQuestion.setAttribute('id','select-question');
+						    	selectQuestion.setAttribute('name','select-question');
 
 						        for(let i=0; i<relevantQuestions.length; i++){
 						        	questionOption = document.createElement('option');
@@ -155,6 +165,7 @@ function init(){
 
 						        selectQuestion = document.createElement('select');
 						        selectQuestion.setAttribute('id','select-question');
+						        selectQuestion.setAttribute('name','select-question');
 
 						        for(let i=0; i<relevantQuestions.length; i++){
 						        	questionOption = document.createElement('option');
@@ -174,7 +185,74 @@ function init(){
 	  	xhttp2.open("GET", "index.php?section=ajax&page=get_school_level", true);
 	  	xhttp2.send();
 
+
+		function resetOptions(){
+			allOrderFormCreated = document.getElementsByClassName('order-question');
+
+			for(var n=0;n<allOrderFormCreated.length;n++){
+				allOrderFormCreated[n].innerHTML ="";
+				for(let i=0;i<allOrderFormCreated.length;i++){
+					var numberOption = document.createElement('option');
+					numberOption.value = i;
+					numberOption.text = i;
+					allOrderFormCreated[n].appendChild(numberOption);
+				}
+			}
+		}  	
+
 		
+	}
+
+	var submitButton = document.getElementById('create-course-button');
+	submitButton.addEventListener('click', checkBeforeSubmit);
+
+	function checkBeforeSubmit(){
+
+		var submit = true;
+		problemParagraph = document.createElement('p');
+		
+		//checking if all questions have an order and are in order
+		allQuestionsCreated = document.getElementsByClassName('question-div');
+		var checkOrderArray = [];
+
+		for(var n=0; n<allQuestionsCreated.length; n++){
+			currentOrderQuestion = allQuestionsCreated[n].querySelector('#order-question');
+			//taking value of each order chosen, translating it into a INT to compare it with i just below
+			checkOrderArray.push(parseInt(currentOrderQuestion.value));
+		}
+
+		for(let i=0;i<checkOrderArray.length;i++){
+			if(checkOrderArray.includes(i)){
+				continue;
+			}
+			else{
+				submit = false;
+			}
+		}
+
+
+		//getting all the questions created
+		allQuestionsCreated = document.getElementsByClassName('question-div');
+
+			for(var n=0;n<allQuestionsCreated.length;n++){
+				currentOrderQuestion = allQuestionsCreated[n].querySelector('#order-question');
+				currentQuestionSelectedID = allQuestionsCreated[n].querySelector('#select-question');
+			}
+
+		if(submit){
+			console.log('envoyer ajax');
+		}
+		else{
+			problemParagraph.innerHTML = "L'ordre des questions ne semble pas complet. Pouvez-vous revérifier ?";
+			problemParagraph.classList.add('alert');
+			problemParagraph.classList.add('problem');
+
+			formParent = document.getElementById('course-form');
+
+			formParent.insertBefore(problemParagraph, submitButton);
+
+
+		}
 	}
 
 }

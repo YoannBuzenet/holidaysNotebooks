@@ -4,7 +4,7 @@ ob_start();
 <div class="container">
 	<h2>Créer un parcours</h2>
 	<div class="form-container">
-		<form action="index.php" method="POST" class="create-form">
+		<form action="index.php" method="POST" class="create-form" id="course-form">
 
 			<label for="course-name">Nom du parcours</label>
 			<input type="text" id="course-name">
@@ -15,12 +15,13 @@ ob_start();
 
 			<input type="hidden" name="action" value="2V">
 			<input type="hidden" name="section" value="course">
-			<input type="submit" value ="Créer le parcours">
+			<input type="button" id="create-course-button" value ="Créer le parcours">
 		</form>
 	</div>	
 
 </div>
 <script src="view/back/jsBack/course.js"></script>
+<script src="view/back/jsBack/Question.js"></script>
 <?php 
 
 $view= ob_get_clean();

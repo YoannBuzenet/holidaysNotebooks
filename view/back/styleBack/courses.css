@@ -11,7 +11,7 @@
 	margin-top: 1em;
 	padding: 2em;
 	border-radius: .5em;
-	background-color: blue;
+	background-color: #3B87FB50;
 }
 
 #select-question{
@@ -39,4 +39,15 @@
 	margin-left: 26%;
     color: white;
     margin-top: 23%;
+}
+
+.order-question{
+	position: absolute;
+	top:0%;
+	left:0;
+}
+
+#order-question {
+	margin-top:-.5em;
+	margin-left:-.5em;
 }
