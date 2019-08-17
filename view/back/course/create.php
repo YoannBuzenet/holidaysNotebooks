@@ -20,8 +20,8 @@ ob_start();
 	</div>	
 
 </div>
-<script src="view/back/jsBack/course.js"></script>
 <script src="view/back/jsBack/Question.js"></script>
+<script src="view/back/jsBack/course.js"></script>
 <?php 
 
 $view= ob_get_clean();

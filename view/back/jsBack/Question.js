@@ -1,5 +1,7 @@
-class question($id,$order){
+class Question{
 	
-	this->globaliD = $id;
-	this->order = $order;
+	constructor($id,$order){
+	this.globaliD = $id;
+	this.order = $order;
+	}
 }
