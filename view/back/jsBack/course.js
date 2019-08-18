@@ -196,7 +196,6 @@ function getSchoolLevels(questionDiv){
 		  		//Once school level AND discipline have been both selected, we GET the relevant questions in DB
 		  		selectSchoolLevel.addEventListener('change',function(e){
 		  			selectedSchoolLevel = e.target.selectedIndex;
-		  			console.log(e);
 		  			currentDataNumber = questionDiv.getAttribute('data-number');
 		  			checkDisciplineANDSchoolLevel(questionDiv, currentDataNumber, selectedSchoolLevel, selectedDiscipline);
 		  		});
