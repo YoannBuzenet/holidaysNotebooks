@@ -2,6 +2,9 @@ onload=init;
 
 var number_of_questions = 0;
 var orderFollowUp = [];
+var selectedSchoolLevel;
+var selectedDiscipline;
+
 
 function init(){
 
@@ -142,9 +145,10 @@ function getDisciplines(questionDiv){
 
 	  		//Checking if both discipline AND school level have been selected
 	  		//Once school level AND discipline have been both selected, we GET the relevant questions in DB
-  			selectDiscipline.addEventListener('change',function(){
+  			selectDiscipline.addEventListener('change',function(e){
+  				selectedDiscipline = e.target.value;
   				currentDataNumber = questionDiv.getAttribute('data-number');
-		  		checkDisciplineANDSchoolLevel(questionDiv, currentDataNumber);
+		  		checkDisciplineANDSchoolLevel(questionDiv, currentDataNumber, selectedSchoolLevel, selectedDiscipline);
 		  		});
 
 	    }
@@ -190,9 +194,11 @@ function getSchoolLevels(questionDiv){
 
 		  		//Checking if both discipline AND school level have been selected
 		  		//Once school level AND discipline have been both selected, we GET the relevant questions in DB
-		  		selectSchoolLevel.addEventListener('change',function(){
+		  		selectSchoolLevel.addEventListener('change',function(e){
+		  			selectedSchoolLevel = e.target.selectedIndex;
+		  			console.log(e);
 		  			currentDataNumber = questionDiv.getAttribute('data-number');
-		  			checkDisciplineANDSchoolLevel(questionDiv, currentDataNumber);
+		  			checkDisciplineANDSchoolLevel(questionDiv, currentDataNumber, selectedSchoolLevel, selectedDiscipline);
 		  		});
 
 		    }
@@ -201,9 +207,8 @@ function getSchoolLevels(questionDiv){
 	  	xhttp2.send();
 }
 
-function checkDisciplineANDSchoolLevel(questionDiv, currentDataNumber){
-	if(selectSchoolLevel.selectedIndex != 0 && selectDiscipline.selectedIndex != 0){
-		console.log('go');
+function checkDisciplineANDSchoolLevel(questionDiv, currentDataNumber, selectedSchoolLevel){
+	if(selectedSchoolLevel != 0 && selectedDiscipline != 0){
 
 	xhr = new XMLHttpRequest();
 	xhr.open('POST', 'index.php?section=ajax&page=ask');
@@ -211,20 +216,24 @@ function checkDisciplineANDSchoolLevel(questionDiv, currentDataNumber){
 	xhr.onload = function() {
 	    if (this.readyState == 4 && this.status == 200) {
 	        relevantQuestions = JSON.parse(xhr.responseText);
+	        console.log(relevantQuestions);
+	        console.log(selectedSchoolLevel);
+	        console.log(selectedDiscipline);
 
 	        		//checking if the result already exist, to just modify it instead of creating severals
 	        		currentSelectQuestion = questionDiv.querySelector('#select-question');
+
 					if(currentSelectQuestion == null){
-	        			selectQuestion = document.createElement('select');
+	        			var selectQuestion = document.createElement('select');
 	        		}
 	        		else{
 	        			//removing old options if filters disciplines & school level changed
+	        			var selectQuestion = currentSelectQuestion;
 	        			selectQuestion.options.length = 0;
 	        		}
 
 		        	selectQuestion.setAttribute('id','select-question');
 		        	selectQuestion.setAttribute('name','select-question');
-		        	console.log(questionDiv.getAttribute('data-number'));
 
 	        		for(let i=0; i<relevantQuestions.length; i++){
 			        	questionOption = document.createElement('option');
@@ -236,7 +245,7 @@ function checkDisciplineANDSchoolLevel(questionDiv, currentDataNumber){
 
 	    }
 	};
-	xhr.send(encodeURI('id_discipline=' + selectDiscipline.value +'&id_school_level='+selectSchoolLevel.value));
+	xhr.send(encodeURI('id_discipline=' + selectedDiscipline +'&id_school_level='+selectedSchoolLevel));
 	}
 }
 
