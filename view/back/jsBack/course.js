@@ -1,12 +1,17 @@
 onload=init;
 
+var number_of_questions = 0;
+var orderFollowUp = [];
+
 function init(){
 
 	// Allowing Question creation
 	var createQuestionButton = document.getElementById('button-add');
 	var divToAppendNewQuestions = document.getElementById('course-question-add');
+	
 	createQuestionButton.addEventListener('click', function(){
 		createQuestion(divToAppendNewQuestions);
+		number_of_questions += 1;
 	});
 
 	
@@ -15,11 +20,15 @@ function init(){
 	submitButton.addEventListener('click', function(){
 		checkBeforeSubmit(submitButton);
 		});
+
+	//Questions creation follow-up
+	
 }
 
 function createQuestion(divToAppendNewQuestions){
-		questionDiv = document.createElement('div');
+		var questionDiv = document.createElement('div');
 		questionDiv.classList.add('question-div');
+		questionDiv.setAttribute('data-number', number_of_questions);
 
 		//adding removebutton 
 		var removeButton = document.createElement('div');
@@ -27,9 +36,27 @@ function createQuestion(divToAppendNewQuestions){
 		removeButton.innerHTML ='<i class="far fa-trash-alt"></i>';
 		questionDiv.appendChild(removeButton);
 
+		//Delete Question event
 		removeButton.addEventListener('click', function(){
+			//deleting
 			this.parentNode.remove();
 			resetOptions();
+			//updating the attribute data number of each question to follow up its order number
+			let allQuestionsCreated = document.querySelectorAll('.question-div');
+			for(let i=0;i<allQuestionsCreated.length;i++){
+				allQuestionsCreated[i].setAttribute('data-number', i);
+			}
+			number_of_questions = allQuestionsCreated.length;
+
+			//updating the "saving" array
+			currentIndexOfQuestionWeWantToRemove = this.parentNode.getAttribute('data-number');
+			let filteredItems = orderFollowUp.splice(currentIndexOfQuestionWeWantToRemove,1);
+
+			//updating order number of each remaining question
+			for(let i=0;i<allQuestionsCreated.length;i++){
+				allQuestionsCreated[i].querySelector('.order-question').value = orderFollowUp[i];
+			}
+
 		})
 
 		//adding order selection in questions
@@ -38,12 +65,28 @@ function createQuestion(divToAppendNewQuestions){
 		orderButton.setAttribute('id','order-question');
 		questionDiv.appendChild(orderButton);
 		divToAppendNewQuestions.appendChild(questionDiv);
+		//Saving the order in the global array orderFollowUp
+		orderButton.addEventListener('change', function(){
+			orderFollowUp[this.parentNode.getAttribute('data-number')] = this.value;
+		})
 
 		//Updating all options when adding a new question
 		resetOptions();
 
-		getDisciplines();
-		setTimeout(getSchoolLevels,10);
+		//Order follow up in a global array that allows to save the order indicated on the question
+		let currentQuestionOrder = questionDiv.getAttribute('data-number');
+		orderFollowUp[currentQuestionOrder]=0;
+
+		//updating each existing question with the good number order
+		let allQuestionsCreated = document.querySelectorAll('.question-div');
+			for(let i=0;i<allQuestionsCreated.length;i++){
+				allQuestionsCreated[i].querySelector('.order-question').value = orderFollowUp[i];
+			}
+
+		getDisciplines(questionDiv);
+		setTimeout(function(){
+			getSchoolLevels(questionDiv)}
+			,10);
 	  	  	
 }
 
@@ -61,7 +104,7 @@ function resetOptions(){
 	}
 }
 
-function getDisciplines(){
+function getDisciplines(questionDiv){
   	//Getting disciplines
 	//Creating the Select form with it
 	var xhttp = new XMLHttpRequest();
@@ -71,6 +114,7 @@ function getDisciplines(){
 
 	    	selectDiscipline = document.createElement('select');
 	    	selectDiscipline.id ="select-discipline";
+	    	selectDiscipline.setAttribute('required','true');
 
 	    	var labelForselectDiscipline = document.createElement('label');
 	    	labelForselectDiscipline.setAttribute('for','select-discipline');
@@ -94,14 +138,14 @@ function getDisciplines(){
 	  		}
 
 	  		questionDiv.appendChild(selectDiscipline);
+	  		currentDataNumber = questionDiv.getAttribute('data-number');
 
 	  		//Checking if both discipline AND school level have been selected
 	  		//Once school level AND discipline have been both selected, we GET the relevant questions in DB
-  			selectDiscipline.addEventListener('change', function() {
-
-  				checkDisciplineANDSchoolLevel();
-
-  			});
+  			selectDiscipline.addEventListener('change',function(){
+  				currentDataNumber = questionDiv.getAttribute('data-number');
+		  		checkDisciplineANDSchoolLevel(questionDiv, currentDataNumber);
+		  		});
 
 	    }
  	};
@@ -109,7 +153,7 @@ function getDisciplines(){
   	xhttp.send();
 }
 
-function getSchoolLevels(){
+function getSchoolLevels(questionDiv){
 	  		//Getting school_level
 	  	//Creating the Select form with it
 		var xhttp2 = new XMLHttpRequest();
@@ -142,10 +186,14 @@ function getSchoolLevels(){
 		  		}
 
 		  		questionDiv.appendChild(selectSchoolLevel);
+		  		currentDataNumber = questionDiv.getAttribute('data-number');
 
 		  		//Checking if both discipline AND school level have been selected
 		  		//Once school level AND discipline have been both selected, we GET the relevant questions in DB
-		  		selectSchoolLevel.addEventListener('change',checkDisciplineANDSchoolLevel);
+		  		selectSchoolLevel.addEventListener('change',function(){
+		  			currentDataNumber = questionDiv.getAttribute('data-number');
+		  			checkDisciplineANDSchoolLevel(questionDiv, currentDataNumber);
+		  		});
 
 		    }
 	 	};
@@ -153,8 +201,9 @@ function getSchoolLevels(){
 	  	xhttp2.send();
 }
 
-function checkDisciplineANDSchoolLevel(){
+function checkDisciplineANDSchoolLevel(questionDiv, currentDataNumber){
 	if(selectSchoolLevel.selectedIndex != 0 && selectDiscipline.selectedIndex != 0){
+		console.log('go');
 
 	xhr = new XMLHttpRequest();
 	xhr.open('POST', 'index.php?section=ajax&page=ask');
@@ -163,24 +212,28 @@ function checkDisciplineANDSchoolLevel(){
 	    if (this.readyState == 4 && this.status == 200) {
 	        relevantQuestions = JSON.parse(xhr.responseText);
 
-	        //still buggy (remove all other select form for relevant questions)
-	        //to have only one proposition of questions by div
-			/*var check_if_form_already_exists = document.getElementById('select-question');
-	        if(check_if_form_already_exists != null){
-	        	check_if_form_already_exists.parentNode.removeChild(check_if_form_already_exists);
-	        }*/
+	        		//checking if the result already exist, to just modify it instead of creating severals
+	        		currentSelectQuestion = questionDiv.querySelector('#select-question');
+					if(currentSelectQuestion == null){
+	        			selectQuestion = document.createElement('select');
+	        		}
+	        		else{
+	        			//removing old options if filters disciplines & school level changed
+	        			selectQuestion.options.length = 0;
+	        		}
 
-	        selectQuestion = document.createElement('select');
-	        selectQuestion.setAttribute('id','select-question');
-	        selectQuestion.setAttribute('name','select-question');
+		        	selectQuestion.setAttribute('id','select-question');
+		        	selectQuestion.setAttribute('name','select-question');
+		        	console.log(questionDiv.getAttribute('data-number'));
 
-	        for(let i=0; i<relevantQuestions.length; i++){
-	        	questionOption = document.createElement('option');
-	        	questionOption.value = relevantQuestions[i]['id'];
-	        	questionOption.text = relevantQuestions[i]['name'];
-	        	selectQuestion.appendChild(questionOption);
-	        	questionDiv.appendChild(selectQuestion);
-	        }
+	        		for(let i=0; i<relevantQuestions.length; i++){
+			        	questionOption = document.createElement('option');
+			        	questionOption.value = relevantQuestions[i]['id'];
+			        	questionOption.text = relevantQuestions[i]['name'];
+			        	selectQuestion.appendChild(questionOption);
+	        		}
+	        		questionDiv.appendChild(selectQuestion);
+
 	    }
 	};
 	xhr.send(encodeURI('id_discipline=' + selectDiscipline.value +'&id_school_level='+selectSchoolLevel.value));
