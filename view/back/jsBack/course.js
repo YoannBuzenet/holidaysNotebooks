@@ -4,6 +4,7 @@ var number_of_questions = 0;
 var orderFollowUp = [];
 var selectedSchoolLevel;
 var selectedDiscipline;
+var incrementing_id = 0;
 
 
 function init(){
@@ -215,9 +216,6 @@ function checkDisciplineANDSchoolLevel(questionDiv, currentDataNumber, selectedS
 	xhr.onload = function() {
 	    if (this.readyState == 4 && this.status == 200) {
 	        relevantQuestions = JSON.parse(xhr.responseText);
-	        console.log(relevantQuestions);
-	        console.log(selectedSchoolLevel);
-	        console.log(selectedDiscipline);
 
 	        		//checking if the result already exist, to just modify it instead of creating severals
 	        		currentSelectQuestion = questionDiv.querySelector('#select-question');
@@ -283,11 +281,14 @@ function checkBeforeSubmit(submitButton){
 			//a ajouter dans l'array qui part
 			// et d'une image (upload here + url dans le json)
 			//et d'une description (à ajouter en base)
+			let courseName = document.getElementById('course-name').value;
+			var finalArray = [];
+			finalArray.push(courseName,questionsArray)
 
 		if(submit){
 			console.log('envoyer ajax');
-			//console.log(questionsArray);
-				sendAjax(questionsArray);
+			//console.log(finalArray);
+				sendAjax(finalArray);
 		}
 		else{
 			problemParagraph = document.createElement('p');
@@ -304,9 +305,10 @@ function checkBeforeSubmit(submitButton){
 }
 
 function sendAjax(array){
+	console.log(array);
 
 	xhr = new XMLHttpRequest();
-	xhr.open('POST', 'index.php?section=ajax&page=post');
+	xhr.open('POST', 'index.php?section=courses&action=2V');
 	xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 	xhr.onload = function() {
 	    if (this.readyState == 4 && this.status == 200) {
@@ -314,7 +316,7 @@ function sendAjax(array){
 	    	console.log(rep);
 	    }
 	};
-	xhr.send(encodeURI('jsonArray='+array));
+	xhr.send(encodeURI('jsonArray='+JSON.stringify(array)));
 }
 
 

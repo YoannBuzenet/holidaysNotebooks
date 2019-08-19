@@ -30,6 +30,8 @@ switch($page){
 
 	case"post":
 
+	
+
 	include('src/ajax/post.php');
 	break;
 

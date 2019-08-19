@@ -1,9 +1,10 @@
 /***********************************
-****************COURSES*************
+*************COURSES FORM***********
 ***********************************/
 
+
 .course-question-add {
-	margin: 2em auto;
+	margin: 1em auto;
 }
 
 .question-div {
@@ -20,6 +21,7 @@
 
 #course-name {
 	width: 20em;
+	margin-bottom: 1em;
 }
 
 .remove-question{
@@ -51,3 +53,41 @@
 	margin-top:-.5em;
 	margin-left:-.5em;
 }
+
+/***********************************
+**************INPUT FILE************
+***********************************/
+
+.inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.inputfile + label {
+    color: black;
+    display: inline-block;
+    padding: 1em;
+    background-color: #90EE90;
+    width: 100%;
+    border-radius: .5em;
+}
+
+.inputfile + label i{
+	margin-right:.5em;
+	margin-left:1em;
+}
+
+.inputfile:focus + label,
+.inputfile + label:hover {
+    background-color: #90EE9090;
+}
+
+.inputfile + label {
+	cursor: pointer; /* "hand" cursor */
+}
+
+

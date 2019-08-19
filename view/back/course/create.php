@@ -4,17 +4,20 @@ ob_start();
 <div class="container">
 	<h2>Créer un parcours</h2>
 	<div class="form-container">
-		<form action="index.php?section=ajax&page=post" method="POST" class="create-form" id="course-form">
+		<form action="index.php" method="POST" class="create-form" id="course-form" enctype="multipart/form-data">
 
 			<label for="course-name">Nom du parcours</label>
 			<input type="text" id="course-name">
+
+			<!-- <input type="file" id="course-picture" name="course-picture" class="inputfile" accept="image/png, image/jpeg">
+			<label for="course-picture"><i class="fas fa-plus-circle"></i> Ajouter une image</label> -->
 			
 			<div class="course-question-add" id="course-question-add">
 				<p id=button-add><i class="fas fa-plus-circle"></i> Ajouter une question</p>
 			</div>
 
 			<input type="hidden" name="action" value="2V">
-			<input type="hidden" name="section" value="course">
+			<input type="hidden" name="section" value="courses">
 			<input type="button" id="create-course-button" value ="Créer le parcours">
 		</form>
 	</div>	

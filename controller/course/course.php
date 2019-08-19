@@ -20,6 +20,17 @@ if(userManager::checkIfAdmin($_SESSION['user'])){
 		
 		include('view/back/course/create.php');
 		break;
+
+		case "2V":
+		//On traite le JSON
+		if(isset($_POST['jsonArray'])){
+			$json_array = $_POST['jsonArray'];
+			courseManager::registerCourseWithJSON($bdd, $json_array);
+		}
+		//Image plus tard (action 3 par exemple)
+
+		break;
+
 	}
 }
 else{
