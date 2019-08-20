@@ -4,7 +4,6 @@ var number_of_questions = 0;
 var orderFollowUp = [];
 var selectedSchoolLevel;
 var selectedDiscipline;
-var incrementing_id = 0;
 
 
 function init(){
@@ -21,8 +20,8 @@ function init(){
 	
 	//Checking form validation
 	var submitButton = document.getElementById('create-course-button');
-	submitButton.addEventListener('click', function(){
-		checkBeforeSubmit(submitButton);
+	submitButton.addEventListener('click', function(e){
+		checkBeforeSubmit(e, submitButton);
 		});
 
 	//Questions creation follow-up
@@ -33,6 +32,7 @@ function createQuestion(divToAppendNewQuestions){
 		var questionDiv = document.createElement('div');
 		questionDiv.classList.add('question-div');
 		questionDiv.setAttribute('data-number', number_of_questions);
+		// questionDiv.setAttribute('name', 'question-'+number_of_questions);
 
 		//adding removebutton 
 		var removeButton = document.createElement('div');
@@ -49,6 +49,15 @@ function createQuestion(divToAppendNewQuestions){
 			let allQuestionsCreated = document.querySelectorAll('.question-div');
 			for(let i=0;i<allQuestionsCreated.length;i++){
 				allQuestionsCreated[i].setAttribute('data-number', i);
+				//updating the "name" of questions id AND order to get the final POST differenciated
+				let selectQuestion = allQuestionsCreated[i].querySelector('#select-question');
+				console.log(selectQuestion);
+				if(selectQuestion == null){
+
+				}
+				else{
+				selectQuestion.setAttribute('name', 'question-'+i);
+				}
 			}
 			number_of_questions = allQuestionsCreated.length;
 
@@ -59,6 +68,8 @@ function createQuestion(divToAppendNewQuestions){
 			//updating order number of each remaining question
 			for(let i=0;i<allQuestionsCreated.length;i++){
 				allQuestionsCreated[i].querySelector('.order-question').value = orderFollowUp[i];
+				//updating the "name" of order to get the final POST differenciated
+				allQuestionsCreated[i].querySelector('.order-question').setAttribute('name', 'order-'+i);
 			}
 
 		})
@@ -67,6 +78,7 @@ function createQuestion(divToAppendNewQuestions){
 		var orderButton = document.createElement('select');
 		orderButton.classList.add('order-question');
 		orderButton.setAttribute('id','order-question');
+		orderButton.setAttribute('name','order-'+number_of_questions);
 		questionDiv.appendChild(orderButton);
 		divToAppendNewQuestions.appendChild(questionDiv);
 		//Saving the order in the global array orderFollowUp
@@ -230,7 +242,6 @@ function checkDisciplineANDSchoolLevel(questionDiv, currentDataNumber, selectedS
 	        		}
 
 		        	selectQuestion.setAttribute('id','select-question');
-		        	selectQuestion.setAttribute('name','select-question');
 
 	        		for(let i=0; i<relevantQuestions.length; i++){
 			        	questionOption = document.createElement('option');
@@ -239,6 +250,8 @@ function checkDisciplineANDSchoolLevel(questionDiv, currentDataNumber, selectedS
 			        	selectQuestion.appendChild(questionOption);
 	        		}
 	        		questionDiv.appendChild(selectQuestion);
+	        		currentDataNumber = selectQuestion.parentNode.getAttribute('data-number');
+	        		selectQuestion.setAttribute('name','question-'+currentDataNumber);
 
 	    }
 	};
@@ -246,7 +259,7 @@ function checkDisciplineANDSchoolLevel(questionDiv, currentDataNumber, selectedS
 	}
 }
 
-function checkBeforeSubmit(submitButton){
+function checkBeforeSubmit(e, submitButton){
 
 		var submit = true;
 		
@@ -268,30 +281,34 @@ function checkBeforeSubmit(submitButton){
 		}
 		//end of the check
 
-		//getting all the questions created to put them into array to prepare ajax sending
-		allQuestionsCreated = document.getElementsByClassName('question-div');
-		var questionsArray = [];
-			for(var n=0;n<allQuestionsCreated.length;n++){
-				currentOrderQuestion = allQuestionsCreated[n].querySelector('#order-question');
-				currentQuestionSelectedID = allQuestionsCreated[n].querySelector('#select-question');
-				let question = new Question(currentQuestionSelectedID.value, currentOrderQuestion.value);
-				questionsArray.push(question);
-			}
-			//ON A EGALEMENT BESOIN DU NOM DU PARCOURS
-			//a ajouter dans l'array qui part
-			// et d'une image (upload here + url dans le json)
-			//et d'une description (à ajouter en base)
-			let courseName = document.getElementById('course-name').value;
-			var finalArray = [];
-			finalArray.push(courseName,questionsArray)
+		// //getting all the questions created to put them into array to prepare ajax sending
+		// allQuestionsCreated = document.getElementsByClassName('question-div');
+		// var questionsArray = [];
+		// 	for(var n=0;n<allQuestionsCreated.length;n++){
+		// 		currentOrderQuestion = allQuestionsCreated[n].querySelector('#order-question');
+		// 		currentQuestionSelectedID = allQuestionsCreated[n].querySelector('#select-question');
+		// 		let question = new Question(currentQuestionSelectedID.value, currentOrderQuestion.value);
+		// 		questionsArray.push(question);
+		// 	}
+		// 	//ON A EGALEMENT BESOIN DU NOM DU PARCOURS
+		// 	//a ajouter dans l'array qui part
+		// 	// et d'une image (upload here + url dans le json)
+		// 	//et d'une description (à ajouter en base)
+		// 	let courseName = document.getElementById('course-name').value;
+		// 	var finalArray = [];
+		// 	finalArray.push(courseName,questionsArray)
 
-		if(submit){
-			console.log('envoyer ajax');
-			//console.log(finalArray);
-				sendAjax(finalArray);
-		}
-		else{
-			problemParagraph = document.createElement('p');
+		if(!submit){
+			e.preventDefault();
+			paragraphCheck = document.getElementById('problem-paragraph');
+			if(paragraphCheck == null){
+				var problemParagraph = document.createElement('p');
+				problemParagraph.setAttribute('id','problem-paragraph');
+			}	
+			else{
+				problemParagraph = document.getElementById('problem-paragraph');
+			}	
+
 			problemParagraph.innerHTML = "L'ordre des questions ne semble pas complet. Pouvez-vous revérifier ?";
 			problemParagraph.classList.add('alert');
 			problemParagraph.classList.add('problem');
@@ -299,9 +316,8 @@ function checkBeforeSubmit(submitButton){
 			formParent = document.getElementById('course-form');
 
 			formParent.insertBefore(problemParagraph, submitButton);
-
-
 		}
+
 }
 
 function sendAjax(array){

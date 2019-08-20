@@ -35,22 +35,15 @@ public static function registerCourseWithJSON(PDO $pdo, string $json){
 }
 
 
-public static function registerPictureCourse(PDO $pdo, $picture){
+public static function registerPictureCourse(PDO $pdo, $file){
 
 	$target_dir = "public/pictures/courses/";
 	$target_file = $target_dir . basename($file["name"]);
 	$uploadOk = 1;
 	$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 	// if everything is ok, try to upload file
-	move_uploaded_file($_FILES["fileposter"]["tmp_name"], $target_file); 
-	//TODO A MAJ//TODO A MAJ//TODO A MAJ//TODO A MAJ//TODO A MAJ//TODO A MAJ//TODO A MAJ//TODO A MAJ//TODO A MAJ//TODO A MAJ//TODO A MAJ// 
-	$sql = "INSERT INTO posters (url_poster) VALUES (?)"; 
-	//TODO A MAJ// //TODO A MAJ// //TODO A MAJ// //TODO A MAJ// //TODO A MAJ// //TODO A MAJ// //TODO A MAJ// //TODO A MAJ// //TODO A MAJ//
-	$pdoStatement = $pdo->prepare($sql);
-	$pdoStatement->bindParam(1, $target_file, PDO::PARAM_STR);
-	$pdoStatement->execute();
+	move_uploaded_file($_FILES["course-picture"]["tmp_name"], $target_file); 
 
-	return $mesure_success =  $pdoStatement->rowCount();
 }
 
 }

@@ -9,8 +9,8 @@ ob_start();
 			<label for="course-name">Nom du parcours</label>
 			<input type="text" id="course-name">
 
-			<!-- <input type="file" id="course-picture" name="course-picture" class="inputfile" accept="image/png, image/jpeg">
-			<label for="course-picture"><i class="fas fa-plus-circle"></i> Ajouter une image</label> -->
+			<input type="file" id="course-picture" name="course-picture" class="inputfile" accept="image/png, image/jpeg">
+			<label for="course-picture"><i class="fas fa-plus-circle"></i> Ajouter une image</label>
 			
 			<div class="course-question-add" id="course-question-add">
 				<p id=button-add><i class="fas fa-plus-circle"></i> Ajouter une question</p>
@@ -18,7 +18,7 @@ ob_start();
 
 			<input type="hidden" name="action" value="2V">
 			<input type="hidden" name="section" value="courses">
-			<input type="button" id="create-course-button" value ="Créer le parcours">
+			<input type="submit" id="create-course-button" value ="Créer le parcours">
 		</form>
 	</div>	
 

@@ -22,12 +22,17 @@ if(userManager::checkIfAdmin($_SESSION['user'])){
 		break;
 
 		case "2V":
-		//On traite le JSON
+		var_dump($action);
+		//Course validation after creation
+		//JSON form treating
 		if(isset($_POST['jsonArray'])){
 			$json_array = $_POST['jsonArray'];
 			courseManager::registerCourseWithJSON($bdd, $json_array);
 		}
-		//Image plus tard (action 3 par exemple)
+		//Picture registering
+		if(isset($_FILES["course-picture"])){
+			echo 'image';
+		}
 
 		break;
 

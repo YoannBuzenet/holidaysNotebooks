@@ -17,6 +17,17 @@ if(!isset($_SESSION['user'])){
 
 // Catching parameters
 //Defining what the user is doing with parameters of by default
+if(isset($_GET['section'])){
+	$section = $_GET['section'];
+}
+elseif(isset($_POST['section'])){
+	$section = $_POST['section'];
+}
+else{
+	$section = "none";
+}
+
+
 if(isset($_GET['action'])){
 	$action = $_GET['action'];
 }
@@ -26,7 +37,8 @@ elseif(isset($_POST['action'])){
 else{
 	$action = "1";
 }
-// Definng the id we are looking for, is there is one
+
+// Definnig the id we are looking for, is there is one
 if(isset($_GET['id'])){
 		$id = $_GET['id'];
 }
@@ -35,25 +47,22 @@ else if(isset($_POST['id'])){
 }		
 
 //Browsing app
-if(isset($_GET['section']) && $_GET['section'] == "loginnn"){
+if($section == "loginnn"){
 	include('view/front/login.php');
 }
 else if(isset($_POST['user_login'])){
 	include('tools/session.php');
 }
-else if(isset($_GET['section']) && $_GET['section'] == "courses"){
+else if($section == "courses"){
 		include('controller/course/course.php');
 }
-else if(isset($_GET['section']) && $_GET['section'] == "questions"){
+else if($section == "questions"){
 	include('controller/question/question.php');
 }
-else if(isset($_POST['section']) && $_POST['section'] == "questions"){
-	include('controller/question/question.php');
-}
-else if(isset($_GET['section']) && $_GET['section'] == "ajax"){
+else if($section == "ajax"){
 	include('controller/ajax/ajax.php');
 }
-else if(isset($_GET['section']) && $_GET['section'] == 'logout'){
+else if($section == 'logout'){
 	session_destroy();
 	include('view/front/home.php');
 }
