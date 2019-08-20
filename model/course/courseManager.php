@@ -109,10 +109,10 @@ public static function findCourseById(PDO $pdo, int $id){
 //Get all datas about questions in a course
 public static function getCourseQuestionsData(PDO $pdo, int $id){
 	
-	$sql = "SELECT q.id, qtr.name, d.id, d.discipline, sl.id, sl.school_level, cq.order_question
+	$sql = "SELECT q.id, qtr.name, d.id, d.discipline, sl.id, sl.school_level, cq.order_question, c.name
 			FROM courses c
 			INNER JOIN course_questions cq ON c.id = cq.id_course
-			INNER JOIN questions q ON cq.id_course = q.id
+			INNER JOIN questions q ON cq.id_question = q.id
 			INNER JOIN questions_type_radio qtr ON q.id = qtr.global_id
 			INNER JOIN school_levels sl ON qtr.id_school_level = sl.id
 			INNER JOIN disciplines d ON qtr.id_discipline = d.id
