@@ -21,7 +21,7 @@ if(userManager::checkIfAdmin($_SESSION['user'])){
 		break;
 
 		case "2V":
-			var_dump($_POST);
+			//var_dump($_POST);
 			//Course validation after creation
 			courseManager::registerCourse($bdd, $_POST, $_FILES["course-picture"]);
 		break;
