@@ -81,6 +81,12 @@ if(userManager::checkIfAdmin($_SESSION['user'])){
    				if($e->getMessage() == "SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`courses`.`course-questions`, CONSTRAINT `Integrity_Questions` FOREIGN KEY (`id_question`) REFERENCES `questions` (`id`))"){
    					$message = "Cette question est actuellement utilisée dans un parcours. Elle ne peut être supprimée.";
    				}
+   				elseif($e->getMessage() == "SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`courses`.`course_questions`, CONSTRAINT `Integrity_Questions` FOREIGN KEY (`id_question`) REFERENCES `questions` (`id`))"){
+   					$message = "Cette question est actuellement utilisée dans un parcours. Elle ne peut être supprimée.";
+   				}
+   				else{
+   					$message = $e->getMessage();
+   				}
 			}
 			
 			

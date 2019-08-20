@@ -28,11 +28,9 @@ switch($page){
 	include('src/ajax/ask.php');
 	break;	
 
-	case"post":
+	case"data":
 
-	
-
-	include('src/ajax/post.php');
+	include('src/ajax/getCourseDataWithId.php');
 	break;
 
 }

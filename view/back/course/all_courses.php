@@ -6,6 +6,14 @@ ob_start();
 ?>
 <div class="container">
 
+	<?php  if(isset($success) && $success){
+?><div class="alert-wrapper">
+		<p class="alert success"><?= $message ?></p>
+  </div><?php
+  //Reinitializing param
+	$success = null;
+}?>	
+
 	<div class="command-section">
 		<a href="index.php?section=courses&action=2">
 			<div class="command-action">
@@ -17,15 +25,20 @@ ob_start();
 	
 	<div class="table-course">
 		<h2>Parcours</h2>
-	<table>
+	<table class="course-table">
 		<thead>
 			<tr>
-				<th>ID</th><th>Name</th><th>Questions</th>
+				<th>ID</th><th>Name</th><th>Questions</th><th>Niveau</th><th>Edit</th>
 			</tr>
 		</thead>
 		<tbody>
 			<?php foreach($listCourses as $course){ ?>
-				<tr><td><?= $course->getId() ?></td><td><?= $course->getName() ?></td><td><?= $course->getNumberOfQuestions() ?></td></tr>
+				<tr>
+					<td><?= $course['id'] ?></td>
+					<td><?= $course['name'] ?></td>
+					<td><?= $course['total_questions'] ?></td>
+					<td><?= $course['slname'] ?></td>
+					<td><a href="index.php?section=courses&action=3&id=<?= $course['id'] ?>"><i class="fas fa-edit"></a></i></td></tr>
 			<?php } ?>
 		</tbody>
 	</table>

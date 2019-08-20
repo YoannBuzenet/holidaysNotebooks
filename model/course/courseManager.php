@@ -7,12 +7,15 @@ class CourseManager{
 
 public static function getAllCourses($pdo){
 
-	$sql = "SELECT * FROM courses ORDER BY id";
+	$sql = "SELECT (SELECT COUNT(id_question) FROM course_questions WHERE id_course=c.id) as total_questions, c.id, c.name, c.id_school_level, sl.school_level as slname 
+			FROM courses c
+			INNER JOIN school_levels sl ON c.id_school_level = sl.id
+			ORDER BY c.id";
 
 	$pdoStatement = $pdo->prepare($sql);
 	$pdoStatement->execute();
 
-	return $pdoStatement->fetchAll(PDO::FETCH_CLASS, "Course");
+	return $pdoStatement->fetchAll();
 }
 
 public static function registerCourse(PDO $pdo, $post, $file){
@@ -30,13 +33,15 @@ public static function registerCourse(PDO $pdo, $post, $file){
 
 	//insert into bdd
 	$course_name = $_POST['course-name'];
+	$course_level = $_POST['course-level'];
 
-	$sql = "INSERT INTO courses(name, url_picture) VALUES (?,?)";
+	$sql = "INSERT INTO courses(name, id_school_level, url_picture) VALUES (?,?,?)";
 
 	$pdoStatement = $pdo->prepare($sql);
 
 	$pdoStatement->bindParam(1, $course_name, PDO::PARAM_STR);
-	$pdoStatement->bindParam(2, $target_file, PDO::PARAM_STR);
+	$pdoStatement->bindParam(2, $course_level, PDO::PARAM_INT);
+	$pdoStatement->bindParam(3, $target_file, PDO::PARAM_STR);
 	$pdoStatement->execute();
 
 	//get the most recent course and take the id
@@ -86,7 +91,41 @@ public static function registerCourse(PDO $pdo, $post, $file){
 	}
 
 }
+//Get the basic information about a course (id, name, url picture, school level)
+public static function findCourseById(PDO $pdo, int $id){
 
+	$sql = "SELECT * FROM courses WHERE id=?";
+
+	$pdoStatement = $pdo->prepare($sql);
+
+	$pdoStatement->bindParam(1, $id, PDO::PARAM_INT);
+	$pdoStatement->execute();
+
+	return $pdoStatement->fetchAll(PDO::FETCH_CLASS, "Course");
+
+
+}
+
+//Get all datas about questions in a course
+public static function getCourseQuestionsData(PDO $pdo, int $id){
+	
+	$sql = "SELECT q.id, qtr.name, d.id, d.discipline, sl.id, sl.school_level, cq.order_question
+			FROM courses c
+			INNER JOIN course_questions cq ON c.id = cq.id_course
+			INNER JOIN questions q ON cq.id_course = q.id
+			INNER JOIN questions_type_radio qtr ON q.id = qtr.global_id
+			INNER JOIN school_levels sl ON qtr.id_school_level = sl.id
+			INNER JOIN disciplines d ON qtr.id_discipline = d.id
+			WHERE c.id=?";
+
+	$pdoStatement = $pdo->prepare($sql);
+
+	$pdoStatement->bindParam(1, $id, PDO::PARAM_INT);
+	$pdoStatement->execute();
+
+	return $pdoStatement->fetchAll();		
+
+}	
 
 }
 

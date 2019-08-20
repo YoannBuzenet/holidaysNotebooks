@@ -25,7 +25,22 @@ if(userManager::checkIfAdmin($_SESSION['user'])){
 			$success = courseManager::registerCourse($bdd, $_POST, $_FILES["course-picture"]);
 
 			$listCourses = courseManager::getAllCourses($bdd);
+			$message = "Le parcours a bien été créé.";
 			include('view/back/course/all_courses.php');
+		break;
+
+		case "3":
+			//Updating a course 
+			$current_course = courseManager::findCourseById($bdd, $id);
+
+			$listDisciplines = questionManager::getAllDisciplines($bdd);
+			$listeSchoolLevel = questionManager::getAllSchoolLevel($bdd);
+			include('view/back/course/update.php');
+		break;
+
+
+		case "3V":
+
 		break;
 
 	}

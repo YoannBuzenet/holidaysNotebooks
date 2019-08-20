@@ -5,7 +5,8 @@ class Course{
 	private $id;
 	private $name;
 	private $number_of_questions;
-	private $level;
+	private $id_school_level;
+	private $url_picture;
 
 	public function getId(){
 		return $this->id;
@@ -32,11 +33,19 @@ class Course{
 	}
 
 	public function getLevel(){
-		return $this->level;
+		return $this->id_school_level;
 	}
 
-	public function setLevel(string $level){
-		$this->level = $level;
+	public function setLevel(string $id_school_level){
+		$this->id_school_level = $id_school_level;
+	}
+
+	public function getUrlPicture(){
+		return $this->url_picture;
+	}
+
+	public function setUrlPicture(string $url_picture){
+		$this->url_picture = $url_picture;
 	}
 
 }

@@ -90,4 +90,14 @@
 	cursor: pointer; /* "hand" cursor */
 }
 
+.add-picture {
+	margin-top:1em;
+}
 
+/***********************************
+*************COURSES TABLE**********
+***********************************/
+
+table.course-table tbody tr td:nth-of-type(3), table.course-table tbody tr td:nth-of-type(5){
+	text-align: center;
+}
