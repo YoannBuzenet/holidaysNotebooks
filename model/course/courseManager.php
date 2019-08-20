@@ -17,7 +17,7 @@ public static function getAllCourses($pdo){
 
 public static function registerCourse(PDO $pdo, $post, $file){
 
-	var_dump($post);
+	//var_dump($post);
 
 
 	//Saving the picture
@@ -51,23 +51,26 @@ public static function registerCourse(PDO $pdo, $post, $file){
 
 
 	//us the id to save the intermediary table
-
+	// We browse the $_POST to extract the key/value of question ID.
 	$questions_orders = array();
-	$id_question = null;
-	$order_question = null;
 	
 	foreach ($post as $key => $value) {
-		//var_dump($post);
 		if(preg_match('#^order#', $key)){
 			$order_question = intval($value);
+			$order_found = true;
 		}
 
 		if(preg_match('#^question#', $key)){
 			$id_question = intval($value);
+			$question_found = true;
 		}
-		$questions_orders[$order_question] = $id_question;
+		if(isset($order_found) && $order_found && isset($question_found) && $question_found){
+			$questions_orders[$order_question] = $id_question;
+			$order_found = false;
+			$question_found = false;
+		}
 	}
-	//var_dump($questions_orders);
+
 
 	foreach ($questions_orders as $order => $question) {
 		$sql = "INSERT INTO course_questions(order_question, id_question, id_course) VALUES (?,?,?)";
@@ -78,6 +81,8 @@ public static function registerCourse(PDO $pdo, $post, $file){
 		$pdoStatement->bindParam(2, $question, PDO::PARAM_INT);
 		$pdoStatement->bindParam(3, $id, PDO::PARAM_INT);
 		$pdoStatement->execute();
+
+		return $pdoStatement->rowCount();
 	}
 
 }

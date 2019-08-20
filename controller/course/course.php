@@ -21,9 +21,11 @@ if(userManager::checkIfAdmin($_SESSION['user'])){
 		break;
 
 		case "2V":
-			//var_dump($_POST);
 			//Course validation after creation
-			courseManager::registerCourse($bdd, $_POST, $_FILES["course-picture"]);
+			$success = courseManager::registerCourse($bdd, $_POST, $_FILES["course-picture"]);
+
+			$listCourses = courseManager::getAllCourses($bdd);
+			include('view/back/course/all_courses.php');
 		break;
 
 	}
