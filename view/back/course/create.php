@@ -7,9 +7,9 @@ ob_start();
 		<form action="index.php" method="POST" class="create-form" id="course-form" enctype="multipart/form-data">
 
 			<label for="course-name">Nom du parcours</label>
-			<input type="text" id="course-name">
+			<input type="text" id="course-name" required>
 
-			<input type="file" id="course-picture" name="course-picture" class="inputfile" accept="image/png, image/jpeg">
+			<input type="file" id="course-picture" name="course-picture" class="inputfile" accept="image/png, image/jpeg" required>
 			<label for="course-picture"><i class="fas fa-plus-circle"></i> Ajouter une image</label>
 			
 			<div class="course-question-add" id="course-question-add">

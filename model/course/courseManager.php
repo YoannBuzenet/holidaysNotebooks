@@ -15,23 +15,8 @@ public static function getAllCourses($pdo){
 	return $pdoStatement->fetchAll(PDO::FETCH_CLASS, "Course");
 }
 
-public static function registerCourseWithJSON(PDO $pdo, string $json){
-
-			$json = json_decode($json);
-
-			$course_name = $json[0];
-			echo $json[0];
-
-			//CREER LE PARCOURS EN BASE
-
-			foreach ($json[1] as $question) {
-				echo $question->order;
-				echo $question->globalId;
-			}
-
-			//ENREGISTRER TOUTES LES ASSOCIATIONS DANS LA TABLE INTERMEDIAIRE AVEC L ID
-
-			echo'bien reçu';
+public static function registerCourse(PDO $pdo, $post, $picture){
+	
 }
 
 

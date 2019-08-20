@@ -1,3 +1,10 @@
+// WARNING
+// SCRIPT CODED IN PROCEDURAL
+// LOT OF SCOPE PROBLEMS
+// Creates div dynamically and sets them ID to follow them in $_POST
+// The form sends Id Questions + Id Order of question in the course + Course Picture + Course name
+
+
 onload=init;
 
 var number_of_questions = 0;
@@ -24,10 +31,13 @@ function init(){
 		checkBeforeSubmit(e, submitButton);
 		});
 
-	//Questions creation follow-up
 	
 }
 
+/*
+Create a div, add it two fields : discipline and school level.
+Each one has an addEventListener that triggers a request on the server.
+*/
 function createQuestion(divToAppendNewQuestions){
 		var questionDiv = document.createElement('div');
 		questionDiv.classList.add('question-div');
@@ -51,7 +61,7 @@ function createQuestion(divToAppendNewQuestions){
 				allQuestionsCreated[i].setAttribute('data-number', i);
 				//updating the "name" of questions id AND order to get the final POST differenciated
 				let selectQuestion = allQuestionsCreated[i].querySelector('#select-question');
-				console.log(selectQuestion);
+
 				if(selectQuestion == null){
 
 				}
@@ -277,8 +287,18 @@ function checkBeforeSubmit(e, submitButton){
 			}
 			else{
 				submit = false;
+				var problem_paragraph = true;
 			}
 		}
+
+		//Checking if a file has been uploaded (we have to it in JS because the original input file has been hidden for CSS reasons)
+		var inputFile = document.getElementById('course-picture').value;
+		if(inputFile == ""){
+			submit = false;
+			var problem_picture = true;
+		}
+
+
 		//end of the check
 
 		// //getting all the questions created to put them into array to prepare ajax sending
@@ -300,22 +320,45 @@ function checkBeforeSubmit(e, submitButton){
 
 		if(!submit){
 			e.preventDefault();
-			paragraphCheck = document.getElementById('problem-paragraph');
-			if(paragraphCheck == null){
-				var problemParagraph = document.createElement('p');
-				problemParagraph.setAttribute('id','problem-paragraph');
-			}	
-			else{
-				problemParagraph = document.getElementById('problem-paragraph');
-			}	
 
-			problemParagraph.innerHTML = "L'ordre des questions ne semble pas complet. Pouvez-vous revérifier ?";
-			problemParagraph.classList.add('alert');
-			problemParagraph.classList.add('problem');
+			if(problem_paragraph == true){
+				var paragraphCheck = document.getElementById('problem-paragraph');
+				if(paragraphCheck == null){
+					var problemParagraph = document.createElement('p');
+					problemParagraph.setAttribute('id','problem-paragraph');
+				}	
+				else{
+					problemParagraph = document.getElementById('problem-paragraph');
+				}	
 
-			formParent = document.getElementById('course-form');
+				problemParagraph.innerHTML = "L'ordre des questions ne semble pas complet. Pouvez-vous revérifier ?";
+				problemParagraph.classList.add('alert');
+				problemParagraph.classList.add('problem');
 
-			formParent.insertBefore(problemParagraph, submitButton);
+				formParent = document.getElementById('course-form');
+
+				formParent.insertBefore(problemParagraph, submitButton);
+			}
+
+			if(problem_picture == true){
+				var problemParagraphPicture = document.getElementById('problem-paragraph-picture');
+				if(problemParagraphPicture == null){
+					problemParagraphPicture = document.createElement('p');
+					problemParagraphPicture.setAttribute('id','problem-paragraph-picture');
+				}	
+				else{
+					problemParagraphPicture = document.getElementById('problem-paragraph');
+				}	
+
+				problemParagraphPicture.innerHTML = "L'upload d'image est obligatoire. Pouvez-vous revérifier ?";
+				problemParagraphPicture.classList.add('alert');
+				problemParagraphPicture.classList.add('problem');
+
+				formParent = document.getElementById('course-form');
+
+				formParent.insertBefore(problemParagraphPicture, submitButton);
+			}
+
 		}
 
 }
