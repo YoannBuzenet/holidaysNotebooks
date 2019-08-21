@@ -232,15 +232,16 @@ function getSchoolLevels(questionDiv){
 	  	xhttp2.send();
 }
 
-function checkDisciplineANDSchoolLevel(questionDiv, currentDataNumber, selectedSchoolLevel){
-	if(selectedSchoolLevel != 0 && selectedDiscipline != 0){
+function checkDisciplineANDSchoolLevel(questionDiv, currentDataNumber, selectedSchoolLevel, selectedDiscipline, preselectedQuestion){
 
+	if(selectedSchoolLevel != 0 && selectedDiscipline != 0){
 	xhr = new XMLHttpRequest();
 	xhr.open('POST', 'index.php?section=ajax&page=ask');
 	xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 	xhr.onload = function() {
 	    if (this.readyState == 4 && this.status == 200) {
-	        relevantQuestions = JSON.parse(xhr.responseText);
+	        		relevantQuestions = JSON.parse(xhr.responseText);
+	        		console.log(xhr.responseText);
 
 	        		//checking if the result already exist, to just modify it instead of creating severals
 	        		currentSelectQuestion = questionDiv.querySelector('#select-question');
@@ -261,6 +262,11 @@ function checkDisciplineANDSchoolLevel(questionDiv, currentDataNumber, selectedS
 			        	questionOption.value = relevantQuestions[i]['id'];
 			        	questionOption.text = relevantQuestions[i]['name'];
 			        	selectQuestion.appendChild(questionOption);
+			        	if(preselectedQuestion){
+			        		if(questionOption.text == preselectedQuestion){
+			        			questionOption.setAttribute('selected', true);
+			        		}
+			        	}
 	        		}
 	        		questionDiv.appendChild(selectQuestion);
 	        		currentDataNumber = selectQuestion.parentNode.getAttribute('data-number');

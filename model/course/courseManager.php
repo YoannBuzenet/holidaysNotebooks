@@ -20,9 +20,6 @@ public static function getAllCourses($pdo){
 
 public static function registerCourse(PDO $pdo, $post, $file){
 
-	//var_dump($post);
-
-
 	//Saving the picture
 	$target_dir = "public/pictures/courses/";
 	$target_file = $target_dir . basename($file["name"]);

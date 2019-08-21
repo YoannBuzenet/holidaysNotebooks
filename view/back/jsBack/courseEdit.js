@@ -28,8 +28,8 @@ function reCreateCourseForm(json){
 
 	var divToAppendNewQuestions = document.getElementById('course-question-add');
 	var questionDiv;
+
 	for(let i = 0; i<json.length;i++){
-		console.log(json[i]);
 		questionDiv = createQuestion(divToAppendNewQuestions);
 		number_of_questions += 1;
 	}
@@ -42,10 +42,26 @@ function reCreateCourseForm(json){
 
 	}, 200)
 
-	setTimeout(function(){
 
-		completeQuestion(questionDiv);
 
+	setTimeout(async function(){
+
+		allQuestionsCreated = document.getElementsByClassName('question-div');
+
+		for(let i=0;i<allQuestionsCreated.length; i++){
+			currentDataNumber = allQuestionsCreated[i].getAttribute('data-number');
+			questionDiv = allQuestionsCreated[i];
+
+			let selectedDiscipline = json[i][2];
+			let selectedSchoolLevel = json[i][4];
+			let preselectedQuestion = json[i][1];
+
+			await sleep(300);
+			checkDisciplineANDSchoolLevel(questionDiv, currentDataNumber, selectedSchoolLevel, selectedDiscipline, preselectedQuestion);
+
+
+
+		}
 	}, 300)
 	
 }
@@ -69,8 +85,6 @@ function hydrateChildren(div, json, i){
 	}
 }
 
-function completeQuestion(div){
-
-	
-	
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
