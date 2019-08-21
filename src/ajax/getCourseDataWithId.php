@@ -9,6 +9,8 @@ include('model/course/courseManager.php');
 
 $result = courseManager::getCourseQuestionsData($bdd, $_GET['id']);
 
-var_dump($result);
+$result = json_encode($result);
+
+echo($result);
 
 ?>

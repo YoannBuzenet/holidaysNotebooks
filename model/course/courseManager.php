@@ -86,8 +86,6 @@ public static function registerCourse(PDO $pdo, $post, $file){
 		$pdoStatement->bindParam(2, $question, PDO::PARAM_INT);
 		$pdoStatement->bindParam(3, $id, PDO::PARAM_INT);
 		$pdoStatement->execute();
-
-		return $pdoStatement->rowCount();
 	}
 
 }

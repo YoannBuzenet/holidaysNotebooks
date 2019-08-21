@@ -13,6 +13,7 @@ var selectedSchoolLevel;
 var selectedDiscipline;
 
 
+
 function init(){
 
 	// Allowing Question creation
@@ -113,6 +114,8 @@ function createQuestion(divToAppendNewQuestions){
 		setTimeout(function(){
 			getSchoolLevels(questionDiv)}
 			,10);
+
+		return questionDiv;
 	  	  	
 }
 
