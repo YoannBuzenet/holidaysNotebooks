@@ -33,19 +33,44 @@ function reCreateCourseForm(json){
 		questionDiv = createQuestion(divToAppendNewQuestions);
 		number_of_questions += 1;
 	}
+	setTimeout(function(){
+		allQuestionsCreated = document.getElementsByClassName('question-div');
 
-	allQuestionsCreated = document.getElementsByClassName('question-div');
-	for(let i=0;i<allQuestionsCreated.length; i++){
-		hydrateChildren(allQuestionsCreated[i], json, i)
-	}
+		for(let i=0;i<allQuestionsCreated.length; i++){
+			hydrateChildren(allQuestionsCreated[i], json, i)
+		}
 
+	}, 200)
+
+	setTimeout(function(){
+
+		completeQuestion(questionDiv);
+
+	}, 300)
 	
-
 }
 
 function hydrateChildren(div, json, i){
 
+	//console.log(div.childNodes);
+
+	//setting order question
 	div.childNodes[1].selectedIndex = json[i].order_question;
-	console.log(div.childNodes[1].childNodes);
-	console.log(json[i].order_question);
+	//setting id school level
+	div.childNodes[5].selectedIndex = json[i][4];
+	
+
+	//setting id discipline (we browse each option so that we can keep the alphabetical order)
+	allOptionsAvailable = div.childNodes[3].childNodes;
+	for(let n=0; n<allOptionsAvailable.length;n++){
+		if(allOptionsAvailable[n].value == json[i][2]){
+			allOptionsAvailable[n].setAttribute('selected', true);
+		}
+	}
+}
+
+function completeQuestion(div){
+
+	
+	
 }
