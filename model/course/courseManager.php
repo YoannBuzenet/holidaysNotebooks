@@ -7,10 +7,10 @@ class CourseManager{
 
 public static function getAllCourses($pdo){
 
-	$sql = "SELECT (SELECT COUNT(id_question) FROM course_questions WHERE id_course=c.id) as total_questions, c.id, c.name, c.id_school_level, sl.school_level as slname 
+	$sql = "SELECT (SELECT COUNT(id_question) FROM course_questions WHERE id_course=c.id) as total_questions, c.id, c.name, c.id_school_level, sl.school_level as slname, sl.general_level, c.url_picture
 			FROM courses c
 			INNER JOIN school_levels sl ON c.id_school_level = sl.id
-			ORDER BY c.id";
+			ORDER BY sl.general_level";
 
 	$pdoStatement = $pdo->prepare($sql);
 	$pdoStatement->execute();
@@ -18,7 +18,7 @@ public static function getAllCourses($pdo){
 	return $pdoStatement->fetchAll();
 }
 
-public static function registerCourse(PDO $pdo, $post, $file){
+public static function registerCourse(PDO $pdo, array $post, $file){
 
 	//Here we :
 	// 1 - Save the picture on server
@@ -116,8 +116,9 @@ public static function findCourseById(PDO $pdo, int $id){
 
 	$pdoStatement->bindParam(1, $id, PDO::PARAM_INT);
 	$pdoStatement->execute();
+	$pdoStatement->setFetchMode(PDO::FETCH_CLASS, "Course");
 
-	return $pdoStatement->fetchAll(PDO::FETCH_CLASS, "Course");
+	return $pdoStatement->fetch();
 
 
 }
@@ -143,7 +144,114 @@ public static function getCourseQuestionsData(PDO $pdo, int $course_id){
 
 }	
 
+public static function deleteCourseQuestions(PDO $pdo, int $id_course){
+
+	$sql= "DELETE FROM course_questions WHERE id_course = ?";
+
+	$pdoStatement = $pdo->prepare($sql);
+
+	$pdoStatement->bindParam(1, $id_course, PDO::PARAM_INT);
+	$pdoStatement->execute();
+
+	return $pdoStatement->rowCount();
+
+}
+
+public static function updateCourse(PDO $pdo, array $post_datas){
+	//This function updates global course table and delete old question-course records, then insert new ones
+	// 1 - Updating main course table
+	// 2 - Deleting all courses-question for this course
+	// 3 - Inserting the new ones for this course
+
+	//////////////////////////////////
+	// 1 - Updating main course table
+	//////////////////////////////////
+
+	$name_course = $post_datas['course-name'];
+	$id_school_level = $post_datas['course-level'];
+	$id_course = $post_datas['id'];
+
+	$sql = "UPDATE courses SET name = ?, id_school_level = ? WHERE id=?";
+
+	$pdoStatement = $pdo->prepare($sql);
+
+	$pdoStatement->bindParam(1, $name_course, PDO::PARAM_INT);
+	$pdoStatement->bindParam(2, $id_school_level, PDO::PARAM_INT);
+	$pdoStatement->bindParam(3, $id_course, PDO::PARAM_INT);
+	$pdoStatement->execute();
+
+	//would be good to check here if it succeeded (rowCount() ), if not throw an error
+
+	//////////////////////////////////
+	// 2 - Deleting all courses-question for this course
+	//////////////////////////////////
+
+	courseManager::deleteCourseQuestions($pdo, $id_course);
+
+	//would be good to check here if it succeeded (rowCount() ), if not throw an error
+
+	//////////////////////////////////
+	// 3 - Inserting the new ones for this course
+	//////////////////////////////////
+
+	foreach ($post_datas as $key => $value) {
+		if(preg_match('#^order#', $key)){
+			$order_question = intval($value);
+			$order_found = true;
+		}
+
+		if(preg_match('#^question#', $key)){
+			$id_question = intval($value);
+			$question_found = true;
+		}
+		if(isset($order_found) && $order_found && isset($question_found) && $question_found){
+			$questions_orders[$order_question] = $id_question;
+			$order_found = false;
+			$question_found = false;
+		}
+	}
+
+	foreach ($questions_orders as $order => $question) {
+		$sql = "INSERT INTO course_questions(order_question, id_question, id_course) VALUES (?,?,?)";
+
+		$pdoStatement = $pdo->prepare($sql);
+
+		$pdoStatement->bindParam(1, $order, PDO::PARAM_INT);
+		$pdoStatement->bindParam(2, $question, PDO::PARAM_INT);
+		$pdoStatement->bindParam(3, $id_course, PDO::PARAM_INT);
+		$pdoStatement->execute();
+	}
+
+}
+
+public static function updatePictureCourse(PDO $pdo, int $course_id, array $file){
+
+	//////////////////////////////////
+	// 1 - Saving the picture
+	//////////////////////////////////
+
+	$target_dir = "public/pictures/courses/";
+	$target_file = $target_dir . basename($file["name"]);
+	$uploadOk = 1;
+	$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+	// if everything is ok, try to upload file
+	move_uploaded_file($_FILES["course-picture"]["tmp_name"], $target_file); 
+
+	//////////////////////////////////
+	// 2 - Updating the link in DB
+	//////////////////////////////////
+
+	$sql = "UPDATE courses SET url_picture = ? WHERE id=?";
+
+	$pdoStatement = $pdo->prepare($sql);
+
+	$pdoStatement->bindParam(1, $target_file, PDO::PARAM_STR);
+	$pdoStatement->bindParam(2, $course_id, PDO::PARAM_INT);
+	$pdoStatement->execute();
+
+
 }
 
 
+}
 ?>

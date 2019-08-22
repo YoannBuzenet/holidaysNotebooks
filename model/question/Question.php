@@ -18,6 +18,8 @@ class Question {
 	private $solution;
 	private $solution_number;
 	private $global_id;
+	private $order_number;
+	private $total_questions;
 	
 
 	public function getId(){
@@ -154,6 +156,22 @@ class Question {
 
 	public function getGlobalId(){
 		return $this->global_id;
+	}
+
+	public function setOrderNumber(int $order_number){
+		$this->order_number = $order_number;
+	}
+
+	public function getOrderNumber(){
+		return $this->order_number;
+	}
+
+	public function setTotalQuestions(int $total_questions){
+		$this->total_questions = $total_questions;
+	}
+
+	public function getTotalQuestions(){
+		return $this->total_questions;
 	}
 
 }

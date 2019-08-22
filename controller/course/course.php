@@ -1,7 +1,7 @@
 <?php 
 
-include('model/course/courseManager.php');
-include('model/question/questionManager.php');
+include_once('model/course/courseManager.php');
+include_once('model/question/questionManager.php');
 
 if(userManager::checkIfAdmin($_SESSION['user'])){
 
@@ -40,13 +40,58 @@ if(userManager::checkIfAdmin($_SESSION['user'])){
 
 
 		case "3V":
+			//Saving the modified course
+			courseManager::updateCourse($bdd, $_POST);
+
+			//If there's a new file, we register it AND update its link on DB
+			if(isset($_FILES["course-picture"])){
+				courseManager::updatePictureCourse($bdd, $_POST['id'], $_FILES["course-picture"]);
+			}
+
+			$listCourses = courseManager::getAllCourses($bdd);
+			$message = "Le parcours a bien été modifié.";
+			include('view/back/course/all_courses.php');
 
 		break;
 
 	}
 }
 else{
-	include('view/front/course/course.php');
+	switch($action){
+
+		case "1":
+		//display all courses
+
+		$listCourses = courseManager::getAllCourses($bdd);
+		include('view/front/home.php');
+		break;
+
+		case "2":
+		//display all courses with particular school level OR discipline
+
+		include('view/front/course/course.php');
+		break;
+
+		case "3":
+		//Begin the course !
+		$course_id = $_GET['id'];
+
+		if(isset($_POST['current_question'])){
+			$next_question_id = $_POST['current_question'];
+		}
+		else {
+			$next_question_id = 0;
+		}
+
+		//get the following question
+		$next_question = questionManager::getNextQuestion($bdd, $course_id, $next_question_id);
+
+		//Do a particular course
+		//load a particular question
+
+		include('view/front/course/course.php');
+		break;
+	}
 }
 
 ?>

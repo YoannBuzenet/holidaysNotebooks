@@ -7,10 +7,16 @@
 
 onload=init;
 
+// global indicator
 var number_of_questions = 0;
+//Memory of the order selected for each questions
 var orderFollowUp = [];
+//global variable to know which school level is selected
 var selectedSchoolLevel;
+//global variable to know which discipline is selected
 var selectedDiscipline;
+// This variable allows the scirpt to know if it's in edit mode. In courseEdit.js, it is set to true.
+var editmode;
 
 
 
@@ -29,7 +35,7 @@ function init(){
 	//Checking form validation
 	var submitButton = document.getElementById('create-course-button');
 	submitButton.addEventListener('click', function(e){
-		checkBeforeSubmit(e, submitButton);
+		checkBeforeSubmit(e, submitButton, editmode);
 		});
 
 	
@@ -241,7 +247,6 @@ function checkDisciplineANDSchoolLevel(questionDiv, currentDataNumber, selectedS
 	xhr.onload = function() {
 	    if (this.readyState == 4 && this.status == 200) {
 	        		relevantQuestions = JSON.parse(xhr.responseText);
-	        		console.log(xhr.responseText);
 
 	        		//checking if the result already exist, to just modify it instead of creating severals
 	        		currentSelectQuestion = questionDiv.querySelector('#select-question');
@@ -278,7 +283,7 @@ function checkDisciplineANDSchoolLevel(questionDiv, currentDataNumber, selectedS
 	}
 }
 
-function checkBeforeSubmit(e, submitButton){
+function checkBeforeSubmit(e, submitButton, editmode){
 
 		var submit = true;
 		
@@ -301,10 +306,13 @@ function checkBeforeSubmit(e, submitButton){
 		}
 
 		//Checking if a file has been uploaded (we have to it in JS because the original input file has been hidden for CSS reasons)
-		var inputFile = document.getElementById('course-picture').value;
-		if(inputFile == ""){
-			submit = false;
-			var problem_picture = true;
+		// In edit mode, the picture is optional. Thus we remove the presence check.
+		if(editmode != true){
+			var inputFile = document.getElementById('course-picture').value;
+			if(inputFile == ""){
+				submit = false;
+				var problem_picture = true;
+			}
 		}
 
 

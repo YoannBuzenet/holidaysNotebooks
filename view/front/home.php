@@ -1,63 +1,24 @@
-<?php ob_start() ?>
+<?php ob_start(); 
+
+//var_dump($listCourses);
+?>
 
 <div class="cards-container">
-	<a href="index.php?section=courses&class=3eme" class="card-link">
+
+<?php 
+foreach($listCourses as $course){ ?>
+
+	<a href="index.php?section=courses&action=3&id=<?= $course['id'] ?>" class="card-link">
 		<article class="card">
-			<h1>3ème - College</h1>
+			<img src="<?= $course['url_picture'] ?>" class="card-img">
+			<h1><?= $course['slname'] ?> - <?= $course['general_level'] ?> </h1>
 			<p class="discover">Découvrez</p>
 		</article>
 	</a>
-	<a href="#" class="card-link">
-		<article class="card">
-			<h1>4ème - College</h1>
-			<p class="discover">Découvrez</p>
-		</article>
-	</a>
-	<a href="#" class="card-link">
-		<article class="card">
-			<h1>5ème - College</h1>
-			<p class="discover">Découvrez</p>
-		</article>
-	</a>
-	<a href="#" class="card-link">
-		<article class="card">
-			<h1>6ème - College</h1>
-			<p class="discover">Découvrez</p>
-		</article>
-	</a>
-	<a href="#" class="card-link">
-		<article class="card">
-			<h1>CM2 - Primaire</h1>
-			<p class="discover">Découvrez</p>
-		</article>
-	</a>
-	<a href="#" class="card-link">
-		<article class="card">
-			<h1>CM1 - Primaire</h1>
-			<p class="discover">Découvrez</p>
-		</article>
-	</a>
-	<a href="#" class="card-link">
-		<article class="card">
-			<h1>CE2 - Primaire</h1>
-			<p class="discover">Découvrez</p>
-		</article>
-	</a>
-	<a href="#" class="card-link">
-		<article class="card">
-			<h1>CE1 - Primaire</h1>
-			<p class="discover">Découvrez</p>
-		</article>
-	</a>
-	<a href="#" class="card-link">
-		<article class="card">
-			<h1>CP - Primaire</h1>
-			<p class="discover">Découvrez</p>
-		</article>
-	</a>
-</div>	
+	
+<?php } ?>
 
 <?php 
 $view = ob_get_clean();
 include('view/front/templateFront.php');
- ?>
+?>

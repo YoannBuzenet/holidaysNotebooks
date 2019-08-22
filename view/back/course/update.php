@@ -7,13 +7,19 @@ ob_start();
 		<form action="index.php" method="POST" class="create-form" id="course-form" enctype="multipart/form-data">
 
 			<label for="course-name">Nom du parcours</label>
-			<input type="text" id="course-name" name="course-name" required>
+			<input type="text" id="course-name" name="course-name" value ="<?= $current_course->getName() ?>"required>
 
 			<label for="course-level">Niveau du parcours</label>
 			<select name="course-level" id="course-level">
 				<option value="default" disabled checked>Niveau scolaire</option>
 			<?php foreach($listeSchoolLevel as $school_level){?>
-				<option value="<?= $school_level['id'] ?>"><?= $school_level['school_level'] ?></option>
+				
+				<option value="<?= $school_level['id'] ?>" 
+					<?=  ($school_level['id'] == $current_course->getLevel()) ? 'selected' : null ?>
+				>
+					<?= $school_level['school_level'] ?>
+				</option>
+
 			<?php } ?>
 			</select>
 			
@@ -26,6 +32,7 @@ ob_start();
 
 			<input type="hidden" name="action" value="3V">
 			<input type="hidden" name="section" value="courses">
+			<input type="hidden" name="id" value="<?= $_GET['id'] ?>">
 			<input type="submit" id="create-course-button" value ="Modifier le parcours">
 		</form>
 	</div>	

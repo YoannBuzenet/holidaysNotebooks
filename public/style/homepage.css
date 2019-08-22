@@ -13,8 +13,8 @@ article.card{
 	width: 22em;
 	border-radius: .5em;
 	margin: 1em;
-	background-image: url('../../public/pictures/student-walking.jpg');
-	background-size: cover;
+	position: relative;
+	border: 1px black solid;
 }
 
 article.card p.discover {
@@ -22,8 +22,6 @@ article.card p.discover {
 }
 
 article.card:hover{
-	background-image: url("../../public/pictures/student-walking.jpg"), linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5));
-    background-blend-mode: overlay;
     color: white;
 }
 
@@ -40,5 +38,16 @@ article.card h1{
 	padding-bottom: 1em;
 }
 
+article img.card-img {
+	position: absolute;
+	z-index: -1;
+	top: 0%;
+	height: 100%;
+	object-fit: cover;
+}
+
+article.card:hover {
+	background-color: #00000080;
+}
 
 

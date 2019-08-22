@@ -305,6 +305,31 @@ class questionManager {
 
 	}
 
+	public static function getNextQuestion(PDO $pdo, int $course_id, int $next_question){
+
+	//Get the next question of a course + the total number of question in the current course
+
+	$sql = "SELECT (SELECT COUNT(id_question) FROM course_questions WHERE id_course=?) as total_questions, cq.id_course, cq.order_question as order_number, qtr.enonce, qtr.answer1, qtr.answer2, qtr.answer3, qtr.answer4, qtr.solution, qtr.solution_number, qtr.id_discipline, qtr.id_school_level, qtr.name as name, qtr.id_type , d.discipline
+			FROM course_questions cq
+			INNER JOIN questions_type_radio qtr ON cq.id_question = qtr.global_id
+			INNER JOIN school_levels sl ON qtr.id_school_level = sl.id
+			INNER JOIN disciplines d ON qtr.id_discipline = d.id
+			WHERE cq.id_course = ?
+			AND cq.order_question = ?
+			";
+
+	$pdoStatement = $pdo->prepare($sql);
+
+	$pdoStatement->bindParam(1, $course_id, PDO::PARAM_INT);
+	$pdoStatement->bindParam(2, $course_id, PDO::PARAM_INT);
+	$pdoStatement->bindParam(3, $next_question, PDO::PARAM_INT);
+	$pdoStatement->execute();
+	$pdoStatement->setFetchMode(PDO::FETCH_CLASS, "Question");
+
+	return $pdoStatement->fetch();
+
+}
+
 
 }
 

@@ -2,41 +2,45 @@
 
 ob_start();
 
+//var_dump($next_question);
+
 ?>
 
 <article class="question">
 	<div class="progress-wrapper">
-		<progress value="20" max="100">20</progress>
+		<progress value="<?= $next_question->getOrderNumber()+1 ?>" max="<?= $next_question->getTotalQuestions() ?>"><?= $next_question->getOrderNumber()+1 ?></progress>
 	</div>
-	<h1>PARTIE : MATHEMATIQUES</h1>
-	<small>Question 2</small>
+	<h1>PARTIE : <?= strtoupper($next_question->getDiscipline()) ?></h1>
+	<small>Question <?= $next_question->getOrderNumber() + 1?></small>
 
-	<p>Enoncé</p>
+	<p><?= $next_question->getEnonce() ?></p>
 
 	<form action="#" method="POST" id="" class="question-form">
 		<div class="form-container">
 			<div class="answer">
-			  <input type="radio" id="huey" name="question" value="huey">
-			  <label for="huey">Blip</label>
+			  <input type="radio" id="answer1" name="question" value="answer1">
+			  <label for="answer1"><?= $next_question->getAnswer1()  ?></label>
 			</div>
 
 			<div class="answer">
-			  <input type="radio" id="dewey" name="question" value="dewey">
-			  <label for="dewey">Bloup</label>
+			  <input type="radio" id="answer2" name="question" value="answer2">
+			  <label for="answer2"><?= $next_question->getAnswer2()  ?></label>
 			</div>
 
 			<div class="answer">
-			  <input type="radio" id="louie" name="question" value="louie">
-			  <label for="louie">Blap</label>
+			  <input type="radio" id="answer3" name="question" value="answer3">
+			  <label for="answer3"><?= $next_question->getAnswer3()  ?></label>
 			</div>
 
 			<div class="answer">
-			  <input type="radio" id="louie2" name="question" value="louie">
-			  <label for="louie2">Blouh</label>
+			  <input type="radio" id="answer4" name="question" value="answer4">
+			  <label for="answer4"><?= $next_question->getAnswer4()  ?></label>
 			</div>
 		</div>	
 		
 		<input type="button" id="form-validate" value="Suivant">
+		<input type="hidden" name="current_question" value="<?= $next_question->getOrderNumber() ?>">
+
 	</form>
 	
 </article>

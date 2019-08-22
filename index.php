@@ -1,8 +1,12 @@
 <?php 
 
+//sécurité
+//Boucler sur chaque valeur de POST pour la HTMLspecialChars;
+
 include_once('tools/db_connect.php');
 include_once('model/user/User.php');
 include_once('model/user/userManager.php');
+include_once('model/course/courseManager.php');
 
 session_start();
 
@@ -64,6 +68,7 @@ else if($section == "ajax"){
 }
 else if($section == 'logout'){
 	session_destroy();
+	$listCourses = courseManager::getAllCourses($bdd);
 	include('view/front/home.php');
 }
 else{
@@ -71,6 +76,7 @@ else{
 		include('controller/user/user_admin.php');
 	}
 	else{
+		$listCourses = courseManager::getAllCourses($bdd);
 		include('view/front/home.php');
 	}
 }

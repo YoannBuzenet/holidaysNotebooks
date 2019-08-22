@@ -1,4 +1,7 @@
 
+//We're telling the script we're in edit mode. It will allow few behaviour modification, like removing the check on the picture when posting.
+editmode = true;
+
 //getting the ID from GET parameters
 var queryDict = {};
 location.search.substr(1).split("&").forEach(function(item) {queryDict[item.split("=")[0]] = item.split("=")[1]});
@@ -29,10 +32,16 @@ function reCreateCourseForm(json){
 	var divToAppendNewQuestions = document.getElementById('course-question-add');
 	var questionDiv;
 
+	//Creating the question div
 	for(let i = 0; i<json.length;i++){
 		questionDiv = createQuestion(divToAppendNewQuestions);
 		number_of_questions += 1;
+
+		//Saving the order question in the saving array orderFollowUp
+		let currentQuestionOrder = questionDiv.getAttribute('data-number');
+		orderFollowUp[currentQuestionOrder]=json[i].order_question;
 	}
+	//Giving it id_discipline and id_school_level. We wait in setTimeout because there's an AJAX call on them.
 	setTimeout(function(){
 		allQuestionsCreated = document.getElementsByClassName('question-div');
 
@@ -42,8 +51,7 @@ function reCreateCourseForm(json){
 
 	}, 200)
 
-
-
+	// Giving it the selected question. We wait in setTimeout AND sleep because there's also an AJAX call.
 	setTimeout(async function(){
 
 		allQuestionsCreated = document.getElementsByClassName('question-div');
@@ -58,7 +66,6 @@ function reCreateCourseForm(json){
 
 			await sleep(300);
 			checkDisciplineANDSchoolLevel(questionDiv, currentDataNumber, selectedSchoolLevel, selectedDiscipline, preselectedQuestion);
-
 
 
 		}
