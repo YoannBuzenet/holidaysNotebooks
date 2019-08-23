@@ -10,6 +10,11 @@ function init(){
 		})
 	}
 
+	var articleWithIdQuestion = document.getElementById('main-article');
+	var currentQuestionId = articleWithIdQuestion.getAttribute('data-idquestion');
+
+	gets(currentQuestionId);
+
 }
 
 function tickRadiosBox(divParent){
@@ -27,4 +32,15 @@ function tickRadiosBox(divParent){
 	let currentInput = divParent.getElementsByTagName('input');
 	currentInput[0].checked=true;
 
+}
+
+function gets(currentQuestionId){
+	var xhr = new XMLHttpRequest();
+ 	xhr.onreadystatechange = function() {
+    	if (xhr.readyState == 4 && xhr.status == 200) {
+	    	console.log(xhr.responseText);
+	    }
+ 	};
+  	xhr.open("GET", "index.php?section=ajax&page=gets&idq="+currentQuestionId, true);
+  	xhr.send();
 }

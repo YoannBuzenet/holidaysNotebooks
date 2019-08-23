@@ -6,7 +6,7 @@ ob_start();
 
 ?>
 
-<article class="question">
+<article class="question" id="main-article" data-idquestion="<?= $next_question->id_question ?>" >
 	<div class="progress-wrapper">
 		<progress value="<?= $next_question->getOrderNumber()+1 ?>" max="<?= $next_question->getTotalQuestions() ?>"><?= $next_question->getOrderNumber()+1 ?></progress>
 	</div>

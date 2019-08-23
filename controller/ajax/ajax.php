@@ -33,6 +33,11 @@ switch($page){
 	include('src/ajax/getCourseDataWithId.php');
 	break;
 
+	case"gets":
+
+	include('src/ajax/getSolution.php');
+	break;
+
 }
 
 

@@ -309,7 +309,7 @@ class questionManager {
 
 	//Get the next question of a course + the total number of question in the current course
 
-	$sql = "SELECT (SELECT COUNT(id_question) FROM course_questions WHERE id_course=?) as total_questions, cq.id_course, cq.order_question as order_number, qtr.enonce, qtr.answer1, qtr.answer2, qtr.answer3, qtr.answer4, qtr.solution, qtr.solution_number, qtr.id_discipline, qtr.id_school_level, qtr.name as name, qtr.id_type , d.discipline
+	$sql = "SELECT (SELECT COUNT(id_question) FROM course_questions WHERE id_course=?) as total_questions, cq.id_course, cq.order_question as order_number, qtr.enonce, qtr.answer1, qtr.answer2, qtr.answer3, qtr.answer4, qtr.solution, qtr.solution_number, qtr.id_discipline, qtr.id_school_level, qtr.name as name, qtr.id_type , d.discipline, cq.id_question
 			FROM course_questions cq
 			INNER JOIN questions_type_radio qtr ON cq.id_question = qtr.global_id
 			INNER JOIN school_levels sl ON qtr.id_school_level = sl.id
@@ -328,6 +328,16 @@ class questionManager {
 
 	return $pdoStatement->fetch();
 
+}
+
+public static function getSolution(PDO $pdo, int $id_question){
+
+	$sql = "SELECT solution, solution_number FROM questions_type_radio WHERE global_id = ?";
+
+	$pdoStatement = $pdo->prepare($sql);
+	$pdoStatement->bindParam(1, $id_question, PDO::PARAM_INT);
+	$pdoStatement->execute();
+	return $pdoStatement->fetch();
 }
 
 
