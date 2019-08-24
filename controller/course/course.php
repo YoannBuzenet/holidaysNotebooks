@@ -80,6 +80,7 @@ else{
 		if(isset($_POST['next_question'])){
 
 			if($_POST['next_question'] == 'endcourse'){
+				$course = courseManager::findCourseById($bdd, $course_id);
 				//End of course : result page
 				include('view/front/course/endcourse.php');
 				exit;
@@ -98,8 +99,9 @@ else{
 		//get the following question
 		$next_question = questionManager::getNextQuestion($bdd, $course_id, $next_question_id);
 
-		//Do a particular course
-		//load a particular question
+
+		//get the course info
+		$course = courseManager::findCourseById($bdd, $course_id);
 
 		include('view/front/course/course.php');
 		break;
