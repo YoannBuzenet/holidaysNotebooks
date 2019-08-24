@@ -72,14 +72,26 @@ else{
 		include('view/front/course/course.php');
 		break;
 
-		case "3":
+		case "3": 
 		//Begin the course !
 		$course_id = $_GET['id'];
 
-		if(isset($_POST['current_question'])){
-			$next_question_id = $_POST['current_question'];
+		//If we received a POST, that means the course has begun. We look for the next page, or the end of the course.
+		if(isset($_POST['next_question'])){
+
+			if($_POST['next_question'] == 'endcourse'){
+				//End of course : result page
+				include('view/front/course/endcourse.php');
+				exit;
+			}
+			else{
+				//Setting the next question number
+				$next_question_id = $_POST['next_question'];
+			}
+			
 		}
 		else {
+		//If we have no info, we take the first question in the course (the number 0)
 			$next_question_id = 0;
 		}
 

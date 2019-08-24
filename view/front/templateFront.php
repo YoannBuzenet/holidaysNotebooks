@@ -29,7 +29,7 @@
 					</ul>
 				</div>	
 			</header>
-			<div class="container">
+			<div class="container" id="main-container">
 				<main>
  
 					<?php echo $view; ?>

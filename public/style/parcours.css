@@ -66,4 +66,39 @@ progress {
 	background-color: #3B87FB80;
 }
 
+/***********************************
+****************MODAL************
+***********************************/
+
+.modal {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	padding: 2em;
+	background-color: #3B87FB;
+	border-radius : .5em;
+}
+
+.modal-paragraph {
+	padding : 0;
+}
+
+.background-modal {
+	background-color: #00000020;
+	position: fixed;
+	width:100vw;
+	height: 100vh;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+.next-button {
+	margin: 0;
+	text-align: right;
+}
+
+
 
