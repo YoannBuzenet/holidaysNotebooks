@@ -61,11 +61,8 @@ class UserManager {
 		$sql = "SELECT course_id, last_question_number FROM users_courses WHERE user_id = ?";
 
 		$pdoStatement = $pdo->prepare($sql);
-
 		$pdoStatement->bindParam(1, $user_id, PDO::PARAM_STR);
-
 		$pdoStatement->execute();
-
 		$results = $pdoStatement->fetchAll();	
 
 		//We are sorting the result in an associative array : key is id_course, value is last_number_question.
@@ -84,10 +81,66 @@ class UserManager {
 
 	}
 
-	public static function updateUserProgress(PDO $pdo, User $user, int $newQuestionOrder){
+	public static function updateUserProgress(PDO $pdo, User $user, int $newQuestionOrder, int $id_course){
 
-		//update
+		//1. We check if any record already exist.
+		//2. If no, we insert that new data.
+		//3. If yes, we just update the data.
 
+		//////////////////////////////////
+		// 1 - Checking if data already exists.
+		//////////////////////////////////
+
+		$sql = "SELECT course_id, last_question_number FROM users_courses WHERE user_id = ? AND course_id = ?";
+
+		$user_id = $user->getId();
+
+		$pdoStatement = $pdo->prepare($sql);
+		$pdoStatement->bindParam(1, $user_id, PDO::PARAM_INT);
+		$pdoStatement->bindParam(2, $id_course, PDO::PARAM_INT);
+		$pdoStatement->execute();
+		$results = $pdoStatement->fetch();	
+
+		//////////////////////////////////
+		// 2 - If data doesn't exist, we insert it into DB.
+		//////////////////////////////////
+
+		if(!$results){
+			var_dump($results);
+			$sql = "INSERT INTO users_courses(user_id,course_id, last_question_number) VALUES(?,?,?)";
+
+			$user_id = $user->getId();
+
+			$pdoStatement = $pdo->prepare($sql);
+			$pdoStatement->bindParam(1, $user_id, PDO::PARAM_INT);
+			$pdoStatement->bindParam(2, $id_course, PDO::PARAM_INT);
+			$pdoStatement->bindParam(3, $newQuestionOrder, PDO::PARAM_INT);
+			$pdoStatement->execute();
+
+		}
+		//////////////////////////////////
+		// 3 - If data already exists, we update it on DB.
+		//////////////////////////////////
+
+		else {
+			$sql = "UPDATE users_courses SET last_question_number = ? WHERE user_id=? AND course_id = ? ";
+
+			$user_id = $user->getId();
+
+			$pdoStatement = $pdo->prepare($sql);
+			$pdoStatement->bindParam(1, $newQuestionOrder, PDO::PARAM_INT);
+			$pdoStatement->bindParam(2, $user_id, PDO::PARAM_INT);
+			$pdoStatement->bindParam(3, $id_course, PDO::PARAM_INT);
+			$pdoStatement->execute();
+
+
+		}
+
+		//At the end of the function, inserting and updating data in RAM
+		$user_progress = $_SESSION['user']->getUserProgress();
+		$user_progress[$id_course] = $newQuestionOrder;
+		$_SESSION['user']->setUserProgress($user_progress);
+		
 	}
 	
 	

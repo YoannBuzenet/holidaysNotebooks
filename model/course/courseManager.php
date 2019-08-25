@@ -110,7 +110,7 @@ public static function registerCourse(PDO $pdo, array $post, $file){
 //Get the basic information about a course (id, name, url picture, school level)
 public static function findCourseById(PDO $pdo, int $id){
 
-	$sql = "SELECT * 
+	$sql = "SELECT (SELECT COUNT(id_question) FROM course_questions WHERE id_course=c.id) as total_questions, c.id, c.name, c.id_school_level, c.url_picture, sl.school_level, sl.general_level 
 			FROM courses c
 			INNER JOIN school_levels sl ON c.id_school_level = sl.id
 			WHERE c.id=?";
