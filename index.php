@@ -1,7 +1,7 @@
 <?php 
 
 //sécurité
-//Boucler sur chaque valeur de POST pour la HTMLspecialChars;
+//Boucler sur chaque valeur de POST/sortie depuis db pour la HTMLspecialChars;
 
 include_once('tools/db_connect.php');
 include_once('model/user/User.php');
@@ -10,16 +10,10 @@ include_once('model/course/courseManager.php');
 
 session_start();
 
-//Builing User to browse the app
-if(!isset($_SESSION['user'])){
+//User check
+include('controller/user/user.php');
 
-	$user = New User;
-	$user->setLogged(false);
-	$_SESSION['user'] = $user;
-}
-
-
-// Catching parameters
+//Catching parameters for browsing the app
 //Defining what the user is doing with parameters of by default
 if(isset($_GET['section'])){
 	$section = $_GET['section'];

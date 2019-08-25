@@ -19,7 +19,8 @@ function callCourseData(id){
 	var xhttp = new XMLHttpRequest();
  	xhttp.onreadystatechange = function() {
     	if (xhttp.readyState == 4 && xhttp.status == 200) {
-	    	var courseData = JSON.parse(xhttp.responseText);	    	
+    		//console.log(xhttp.responseText); 
+	    	var courseData = JSON.parse(xhttp.responseText);	
 	    	reCreateCourseForm(courseData);
 	    }
  	};

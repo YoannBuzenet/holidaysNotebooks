@@ -1,6 +1,6 @@
 <?php 
 
-include('model/course/courseManager.php');
+include_once('model/course/courseManager.php');
 //We have to produce a JSON with :
 	//- all questions from the course
 	//- all SL and Disc from each question
