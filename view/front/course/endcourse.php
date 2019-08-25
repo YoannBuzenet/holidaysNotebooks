@@ -18,7 +18,7 @@ ob_start();
 	<p>Voici le rappel des questions où tu t'es trompé·e :</p>
 
 	<p>N'hésite pas à reprendre le cahier quand tu veux !</p>
-	<p>Recommencer le cahier</p>
+	<p class="restart-button"><button><a href="index.php?section=courses&action=4&id=<?= $_GET['id'] ?>">Recommencer le cahier</a></button></p>
 </article>
 				
 

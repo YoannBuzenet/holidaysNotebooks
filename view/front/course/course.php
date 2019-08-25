@@ -39,7 +39,7 @@ ob_start();
 		</div>	
 		
 		<input type="button" id="form-validate" value="Suivant">
-		<input type="hidden" name="next_question" value="<?= (($next_question->getOrderNumber() + 1)/$next_question->getTotalQuestions() == 1) ? "endcourse" : $next_question->getOrderNumber() + 1 ?>">
+		<input type="hidden" name="next_question" value="<?= $next_question->getOrderNumber()+1 ?>">
 
 	</form>
 	

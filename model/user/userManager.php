@@ -142,6 +142,60 @@ class UserManager {
 		$_SESSION['user']->setUserProgress($user_progress);
 		
 	}
+
+	public function trackResult(PDO $pdo, User $user, bool $result, int $course_id, int $question_id){
+
+		if($result){
+			$result = 1;
+		}
+		else{
+			$result = 0;
+		}
+
+		//check si ça existe deja
+		$sql = "SELECT id, id_course, id_question, id_user, result FROM result_per_question_per_user WHERE id_user = ? AND id_course = ? AND id_question = ?";
+
+		$user_id = $user->getId();
+
+		$pdoStatement = $pdo->prepare($sql);
+		$pdoStatement->bindParam(1, $user_id, PDO::PARAM_INT);
+		$pdoStatement->bindParam(2, $course_id, PDO::PARAM_INT);
+		$pdoStatement->bindParam(3, $question_id, PDO::PARAM_INT);
+		$pdoStatement->execute();
+
+		$results = $pdoStatement->fetch();	
+
+		if(!$results){
+			var_dump($results);
+			$sql = "INSERT INTO result_per_question_per_user(id_user,id_course, id_question, result) VALUES(?,?,?,?)";
+
+			$user_id = $user->getId();
+
+			$pdoStatement = $pdo->prepare($sql);
+			$pdoStatement->bindParam(1, $user_id, PDO::PARAM_INT);
+			$pdoStatement->bindParam(2, $course_id, PDO::PARAM_INT);
+			$pdoStatement->bindParam(3, $question_id, PDO::PARAM_INT);
+			$pdoStatement->bindParam(4, $result, PDO::PARAM_INT);
+			$pdoStatement->execute();
+
+		}
+
+		else {
+			$sql = "UPDATE result_per_question_per_user SET result = ? WHERE id_user=? AND id_course = ? AND id_question = ?";
+
+			$user_id = $user->getId();
+
+			$pdoStatement = $pdo->prepare($sql);
+			$pdoStatement->bindParam(1, $result, PDO::PARAM_INT);
+			$pdoStatement->bindParam(2, $user_id, PDO::PARAM_INT);
+			$pdoStatement->bindParam(3, $id_course, PDO::PARAM_INT);
+			$pdoStatement->bindParam(4, $question_id, PDO::PARAM_INT);
+			$pdoStatement->execute();
+
+
+		}
+
+	}
 	
 	
 }

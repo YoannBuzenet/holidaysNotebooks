@@ -80,7 +80,6 @@ else{
 			//If we received a POST, that means the course has begun. We look for the next page, or the end of the course.
 			// Each time, we check what's in the user memory about the course, to be sure he continues where he stopped before.
 			if(isset($_POST['next_question'])){
-				echo "1";
 				//Checking if the course is over
 				if(intval($_POST['next_question']+1) == $current_course->total_questions){
 					userManager::updateUserProgress($bdd, $_SESSION['user'], $current_course->total_questions, $course_id);
@@ -94,15 +93,16 @@ else{
 					if(!empty($_SESSION['user']->getUserProgress())){
 						$user_progress = $_SESSION['user']->getUserProgress();
 						if(array_key_exists($course_id, $user_progress)){
-							//If the input tries to go backward ot forward in the course, we stick it to the regular path.
+							//If the input tries to go backward or forward in the course, we stick it to the regular path.
 							if(intval($_POST['next_question']) <= intval($user_progress[$course_id]) || intval($_POST['next_question']) > intval($user_progress[$course_id])+1){
-								$next_question_id = $user_progress[$course_id];
+								$next_question_id = $user_progress[$course_id]+1;
 							}
 							//If it's the normal number going, we follow it
 							else{
 								$next_question_id = $_POST['next_question'];
 								//update user progress HERE
 								userManager::updateUserProgress($bdd, $_SESSION['user'], $next_question_id, $course_id);
+								//userManager::trackResult($bdd, $_SESSION['user'], $_POST['result'], $course_id, )
 							}
 						}
 						else{
@@ -142,9 +142,7 @@ else{
 					else{
 						//If we have no info, we take the first question in the course (the number 0)
 						$next_question_id = 0;
-						echo "4";
 					}
-					echo "2";
 				}
 				else{
 						//If we have no info, we take the first question in the course (the number 0)
@@ -162,6 +160,16 @@ else{
 			$course = courseManager::findCourseById($bdd, $course_id);
 			include('view/front/course/course.php');
 		break;
+
+		case "4":
+
+		$course_id = $_GET['id'];
+
+		//Restart user course
+		userManager::updateUserProgress($bdd, $_SESSION['user'], '0', $course_id);
+
+		header('location:index.php?section=courses&action=3&id='.$course_id);
+
 	}
 }
 

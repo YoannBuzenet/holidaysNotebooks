@@ -60,6 +60,12 @@ function process(json){
 	//console.log(data);
 	let pageForm = document.getElementById('question-form');
 
+	$result = document.createElement('input');
+	$result.setAttribute('type','hidden');
+	$result.setAttribute('name','result');
+	$result.setAttribute('value',selectedAnswer == json.solution_number);
+	pageForm.appendChild($result);
+
 	//Black background
 	var greyBackgroundDiv = document.createElement('div');
 	greyBackgroundDiv.className=('background-modal')
