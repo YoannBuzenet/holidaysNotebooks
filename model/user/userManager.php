@@ -106,7 +106,7 @@ class UserManager {
 		//////////////////////////////////
 
 		if(!$results){
-			var_dump($results);
+			//var_dump($results);
 			$sql = "INSERT INTO users_courses(user_id,course_id, last_question_number) VALUES(?,?,?)";
 
 			$user_id = $user->getId();
@@ -143,9 +143,8 @@ class UserManager {
 		
 	}
 
-	public function trackResult(PDO $pdo, User $user, bool $result, int $course_id, int $question_id){
-
-		if($result){
+	public static function trackResult(PDO $pdo, User $user, string $result, int $course_id, int $question_id){
+		if($result == 'true'){
 			$result = 1;
 		}
 		else{
@@ -165,8 +164,10 @@ class UserManager {
 
 		$results = $pdoStatement->fetch();	
 
+		//var_dump($results);
+
 		if(!$results){
-			var_dump($results);
+			//var_dump($results);
 			$sql = "INSERT INTO result_per_question_per_user(id_user,id_course, id_question, result) VALUES(?,?,?,?)";
 
 			$user_id = $user->getId();
@@ -184,13 +185,15 @@ class UserManager {
 			$sql = "UPDATE result_per_question_per_user SET result = ? WHERE id_user=? AND id_course = ? AND id_question = ?";
 
 			$user_id = $user->getId();
-
+			
 			$pdoStatement = $pdo->prepare($sql);
 			$pdoStatement->bindParam(1, $result, PDO::PARAM_INT);
 			$pdoStatement->bindParam(2, $user_id, PDO::PARAM_INT);
-			$pdoStatement->bindParam(3, $id_course, PDO::PARAM_INT);
+			$pdoStatement->bindParam(3, $course_id, PDO::PARAM_INT);
 			$pdoStatement->bindParam(4, $question_id, PDO::PARAM_INT);
 			$pdoStatement->execute();
+
+			//var_dump($pdoStatement->rowCount());
 
 
 		}

@@ -60,11 +60,21 @@ function process(json){
 	//console.log(data);
 	let pageForm = document.getElementById('question-form');
 
-	$result = document.createElement('input');
-	$result.setAttribute('type','hidden');
-	$result.setAttribute('name','result');
-	$result.setAttribute('value',selectedAnswer == json.solution_number);
-	pageForm.appendChild($result);
+	//tracking
+	result = document.createElement('input');
+	result.setAttribute('type','hidden');
+	result.setAttribute('name','result');
+	result.setAttribute('value',selectedAnswer == json.solution_number);
+	pageForm.appendChild(result);
+
+	//tracking
+	questionId = document.createElement('input');
+	questionId.setAttribute('type','hidden');
+	questionId.setAttribute('name','question-id');
+	questionIdvalue = document.getElementById('main-article').getAttribute('data-idquestion')
+	questionId.setAttribute('value',questionIdvalue);
+	pageForm.appendChild(questionId);
+
 
 	//Black background
 	var greyBackgroundDiv = document.createElement('div');

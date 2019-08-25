@@ -83,6 +83,7 @@ else{
 				//Checking if the course is over
 				if(intval($_POST['next_question']+1) == $current_course->total_questions){
 					userManager::updateUserProgress($bdd, $_SESSION['user'], $current_course->total_questions, $course_id);
+					userManager::trackResult($bdd, $_SESSION['user'], $_POST['result'], $course_id, $_POST['question-id']);
 					$course = courseManager::findCourseById($bdd, $course_id);
 					//End of course : result page
 					include('view/front/course/endcourse.php');
@@ -102,13 +103,14 @@ else{
 								$next_question_id = $_POST['next_question'];
 								//update user progress HERE
 								userManager::updateUserProgress($bdd, $_SESSION['user'], $next_question_id, $course_id);
-								//userManager::trackResult($bdd, $_SESSION['user'], $_POST['result'], $course_id, )
+								userManager::trackResult($bdd, $_SESSION['user'], $_POST['result'], $course_id, $_POST['question-id']);
 							}
 						}
 						else{
 								$next_question_id = $_POST['next_question'];
 								//update user progress HERE
 								userManager::updateUserProgress($bdd, $_SESSION['user'], $next_question_id, $course_id);
+								userManager::trackResult($bdd, $_SESSION['user'], $_POST['result'], $course_id, $_POST['question-id']);
 							}
 
 					}
@@ -119,6 +121,7 @@ else{
 
 						//update user progress HERE
 						userManager::updateUserProgress($bdd, $_SESSION['user'], $next_question_id, $course_id);
+						userManager::trackResult($bdd, $_SESSION['user'], $_POST['result'], $course_id, $_POST['question-id']);
 					}
 					
 				}
