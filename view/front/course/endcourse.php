@@ -14,7 +14,7 @@ ob_start();
 	<p class="checked">CAHIER TERMINÉ &#10004;</p>
 
 	<h2>Félicitations ! Tu as terminé ce cahier de vacances !</h2>
-	<p>Ton score total est de 72%.</p>
+	<p>Ton score total est de <?= $final_score ?>%.</p>
 	<p>Voici le rappel des questions où tu t'es trompé·e :</p>
 
 	<p>N'hésite pas à reprendre le cahier quand tu veux !</p>

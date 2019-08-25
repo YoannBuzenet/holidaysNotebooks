@@ -82,9 +82,13 @@ else{
 			if(isset($_POST['next_question'])){
 				//Checking if the course is over
 				if(intval($_POST['next_question']+1) == $current_course->total_questions){
+
 					userManager::updateUserProgress($bdd, $_SESSION['user'], $current_course->total_questions, $course_id);
 					userManager::trackResult($bdd, $_SESSION['user'], $_POST['result'], $course_id, $_POST['question-id']);
+					//calculer résultat de bonne rep ici
 					$course = courseManager::findCourseById($bdd, $course_id);
+					$final_score = courseManager::calculateSuccessRateOnCourse($bdd, $_SESSION['user'], $course_id);
+
 					//End of course : result page
 					include('view/front/course/endcourse.php');
 					exit;
@@ -138,6 +142,7 @@ else{
 
 						if($user_progress[$course_id] == $current_course->total_questions){
 							$course = courseManager::findCourseById($bdd, $course_id);
+							$final_score = courseManager::calculateSuccessRateOnCourse($bdd, $_SESSION['user'], $course_id);
 							include('view/front/course/endcourse.php');
 							exit;
 						}

@@ -247,10 +247,29 @@ public static function updatePictureCourse(PDO $pdo, int $course_id, array $file
 	$sql = "UPDATE courses SET url_picture = ? WHERE id=?";
 
 	$pdoStatement = $pdo->prepare($sql);
-
 	$pdoStatement->bindParam(1, $target_file, PDO::PARAM_STR);
 	$pdoStatement->bindParam(2, $course_id, PDO::PARAM_INT);
 	$pdoStatement->execute();
+
+
+}
+
+public static function calculateSuccessRateOnCourse(PDO $pdo, User $user, int $id_course){
+
+		$course = courseManager::findCourseById($pdo, $id_course);
+		$total_questions = $course->total_questions;
+
+		$user_id = $user->getId();
+
+		$sql = "SELECT SUM(result) as total_score FROM result_per_question_per_user WHERE id_user = ? AND id_course = ?";
+		$pdoStatement = $pdo->prepare($sql);
+		$pdoStatement->bindParam(1, $user_id, PDO::PARAM_INT);
+		$pdoStatement->bindParam(2, $id_course, PDO::PARAM_INT);
+		$pdoStatement->execute();
+
+		$result = $pdoStatement->fetch();
+
+		return $result['total_score']/$total_questions*100;
 
 
 }
