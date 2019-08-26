@@ -178,7 +178,7 @@ public static function updateCourse(PDO $pdo, array $post_datas){
 
 	$pdoStatement = $pdo->prepare($sql);
 
-	$pdoStatement->bindParam(1, $name_course, PDO::PARAM_INT);
+	$pdoStatement->bindParam(1, $name_course, PDO::PARAM_STR);
 	$pdoStatement->bindParam(2, $id_school_level, PDO::PARAM_INT);
 	$pdoStatement->bindParam(3, $id_course, PDO::PARAM_INT);
 	$pdoStatement->execute();
@@ -269,7 +269,7 @@ public static function calculateSuccessRateOnCourse(PDO $pdo, User $user, int $i
 
 		$result = $pdoStatement->fetch();
 
-		return $result['total_score']/$total_questions*100;
+		return round($result['total_score']/$total_questions*100);
 
 
 }

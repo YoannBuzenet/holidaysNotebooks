@@ -31,7 +31,7 @@ ob_start();
 					<?php }  ?>
 				</select>
 			</div>
-			<textarea name="enonce" id="enonce" cols="60" rows="10" required><?= $question_to_edit->getEnonce() ?></textarea>
+			<textarea name="enonce" id="enonce-editor" cols="60" rows="10" required><?= $question_to_edit->getEnonce() ?></textarea>
 			<textarea name="answer1" id="answer1" cols="60" rows="10" placeholder="Réponse 1" required><?= $question_to_edit->getAnswer1() ?></textarea>
 			<textarea name="answer2" id="answer2" cols="60" rows="10" placeholder="Réponse 2" required><?= $question_to_edit->getAnswer2() ?></textarea>
 			<textarea name="answer3" id="answer3" cols="60" rows="10" placeholder="Réponse 3" required><?= $question_to_edit->getAnswer3() ?></textarea>
@@ -43,7 +43,7 @@ ob_start();
 					<option value="3" <?= ($question_to_edit->getSolutionNumber() == 3) ? 'selected': null ?>>3</option>
 					<option value="4" <?= ($question_to_edit->getSolutionNumber() == 4) ? 'selected': null ?>>4</option>
 			</select>
-			<textarea name="soluce" id="soluce" cols="60" rows="10" placeholder="Solution" required><?= $question_to_edit->getSoluce() ?></textarea>
+			<textarea name="soluce" id="soluce-editor" cols="60" rows="10" placeholder="Solution" required><?= $question_to_edit->getSoluce() ?></textarea>
 			<input type="hidden" name="id" value="<?= $question_to_edit->getGlobalId(); ?>">
 			<input type="hidden" name="action" value="3V">
 			<input type="hidden" name="section" value="questions">
@@ -52,6 +52,29 @@ ob_start();
 	</div>	
 
 </div>
+<!-- CKeditor script -->
+<script src="https://cdn.ckeditor.com/ckeditor5/12.3.1/classic/ckeditor.js"></script>
+<script>
+    ClassicEditor
+        .create( document.querySelector( '#enonce-editor' ), {
+        toolbar: [ 'heading','bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote' ]
+    })
+        .catch( error => {
+            console.error( error );
+        } )
+        /*.then( editor => {
+        console.log( Array.from( editor.ui.componentFactory.names() ) );
+    } )*/;
+    ClassicEditor
+        .create( document.querySelector( '#soluce-editor' ), {
+        removePlugins: [ 'Link' ],
+        toolbar: [ 'heading','bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote' ]
+    } )
+        .catch( error => {
+            console.error( error );
+        } );    
+</script>
+<!-- CKeditor script -->
 <?php 
 
 $view= ob_get_clean();

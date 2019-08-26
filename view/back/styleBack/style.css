@@ -132,7 +132,7 @@ table tbody tr td i:hover {
 }
 
 .create-form textarea{
-	margin-top: 1em;
+	margin: 1em auto;
 }
 
 .create-form input[type='submit']{
