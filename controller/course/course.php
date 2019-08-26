@@ -81,7 +81,7 @@ else{
 			// Each time, we check what's in the user memory about the course, to be sure he continues where he stopped before.
 			if(isset($_POST['next_question'])){
 				//Checking if the course is over
-				if(intval($_POST['next_question']+1) == $current_course->total_questions){
+				if(intval($_POST['next_question']) == $current_course->total_questions){
 
 					userManager::updateUserProgress($bdd, $_SESSION['user'], $current_course->total_questions, $course_id);
 					userManager::trackResult($bdd, $_SESSION['user'], $_POST['result'], $course_id, $_POST['question-id']);
