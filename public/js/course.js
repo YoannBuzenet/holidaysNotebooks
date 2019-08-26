@@ -115,11 +115,9 @@ function process(json){
 	messageParagraph.className=('modal-paragraph');
 
 	//Solution
-	var solutionParagraph = document.createElement('p');
+	var solutionParagraph = document.createElement('div');
 	globalDiv.appendChild(solutionParagraph);
-	var solutionContent = document.createTextNode(json.solution);
-	solutionParagraph.appendChild(solutionContent);
-	globalDiv.appendChild(solutionParagraph);
+	solutionParagraph.innerHTML = json.solution;
 	solutionParagraph.className=('modal-paragraph');
 
 	//Paragraph containing final button
