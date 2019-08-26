@@ -44,7 +44,7 @@ if(userManager::checkIfAdmin($_SESSION['user'])){
 			courseManager::updateCourse($bdd, $_POST);
 
 			//If there's a new file, we register it AND update its link on DB
-			if(isset($_FILES["course-picture"])){
+			if(isset($_FILES["course-picture"]) && !empty($_FILES['course-picture']['name'][0])){
 				courseManager::updatePictureCourse($bdd, $_POST['id'], $_FILES["course-picture"]);
 			}
 
