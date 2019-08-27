@@ -2,6 +2,7 @@
 
 include_once('model/course/courseManager.php');
 include_once('model/question/questionManager.php');
+include_once('model/appStatistics/appStatistics.php');
 
 if(userManager::checkIfAdmin($_SESSION['user'])){
 
@@ -85,11 +86,11 @@ else{
 
 					userManager::updateUserProgress($bdd, $_SESSION['user'], $current_course->total_questions, $course_id);
 					userManager::trackResult($bdd, $_SESSION['user'], $_POST['result'], $course_id, $_POST['question-id']);
-					courseManager::statsTrackResultsQuestion($bdd, $_SESSION['user'], $_POST['question-id'], $course_id, $_POST['result']);
+					Appstatistics::statsTrackResultsQuestion($bdd, $_SESSION['user'], $_POST['question-id'], $course_id, $_POST['result']);
 
 					$course = courseManager::findCourseById($bdd, $course_id);
 					$final_score = courseManager::calculateSuccessRateOnCourse($bdd, $_SESSION['user'], $course_id);
-					courseManager::statsTrackCourseEnding($bdd, $_SESSION['user'], $course_id, $final_score);
+					Appstatistics::statsTrackCourseEnding($bdd, $_SESSION['user'], $course_id, $final_score);
 
 					//End of course : result page
 					include('view/front/course/endcourse.php');
@@ -110,7 +111,7 @@ else{
 								//update user progress & making stats HERE
 								userManager::updateUserProgress($bdd, $_SESSION['user'], $next_question_id, $course_id);
 								userManager::trackResult($bdd, $_SESSION['user'], $_POST['result'], $course_id, $_POST['question-id']);
-								courseManager::statsTrackResultsQuestion($bdd, $_SESSION['user'], $_POST['question-id'], $course_id, $_POST['result']);
+								Appstatistics::statsTrackResultsQuestion($bdd, $_SESSION['user'], $_POST['question-id'], $course_id, $_POST['result']);
 							}
 						}
 						else{
@@ -118,7 +119,7 @@ else{
 								//update user progress & making stats HERE
 								userManager::updateUserProgress($bdd, $_SESSION['user'], $next_question_id, $course_id);
 								userManager::trackResult($bdd, $_SESSION['user'], $_POST['result'], $course_id, $_POST['question-id']);
-								courseManager::statsTrackResultsQuestion($bdd, $_SESSION['user'], $_POST['question-id'], $course_id, $_POST['result']);
+								Appstatistics::statsTrackResultsQuestion($bdd, $_SESSION['user'], $_POST['question-id'], $course_id, $_POST['result']);
 							}
 
 					}
@@ -130,7 +131,7 @@ else{
 						//update user progress & making stats HERE
 						userManager::updateUserProgress($bdd, $_SESSION['user'], $next_question_id, $course_id);
 						userManager::trackResult($bdd, $_SESSION['user'], $_POST['result'], $course_id, $_POST['question-id']);
-						courseManager::statsTrackResultsQuestion($bdd, $_SESSION['user'], $_POST['question-id'], $course_id, $_POST['result']);
+						Appstatistics::statsTrackResultsQuestion($bdd, $_SESSION['user'], $_POST['question-id'], $course_id, $_POST['result']);
 					}
 					
 				}
@@ -150,7 +151,7 @@ else{
 						if($user_progress[$course_id] == $current_course->total_questions){
 							$course = courseManager::findCourseById($bdd, $course_id);
 							$final_score = courseManager::calculateSuccessRateOnCourse($bdd, $_SESSION['user'], $course_id);
-							courseManager::statsTrackCourseEnding($bdd, $_SESSION['user'], $course_id, $final_score);
+							Appstatistics::statsTrackCourseEnding($bdd, $_SESSION['user'], $course_id, $final_score);
 							include('view/front/course/endcourse.php');
 							exit;
 						}
@@ -158,13 +159,13 @@ else{
 					else{
 						//If we have no info, we take the first question in the course (the number 0)
 						$next_question_id = 0;
-						courseManager::statsTrackCourseBeginning($bdd, $_SESSION['user'], $_GET['id']);
+						Appstatistics::statsTrackCourseBeginning($bdd, $_SESSION['user'], $_GET['id']);
 					}
 				}
 				else{
 						//If we have no info, we take the first question in the course (the number 0)
 						$next_question_id = 0;
-						courseManager::statsTrackCourseBeginning($bdd, $_SESSION['user'], $_GET['id']);
+						Appstatistics::statsTrackCourseBeginning($bdd, $_SESSION['user'], $_GET['id']);
 					}
 				
 			}	
@@ -183,6 +184,7 @@ else{
 		$course_id = $_GET['id'];
 		//Restart user course
 		userManager::updateUserProgress($bdd, $_SESSION['user'], '0', $course_id);
+		Appstatistics::statsTrackCourseBeginning($bdd, $_SESSION['user'], $_GET['id']);
 		header('location:index.php?section=courses&action=3&id='.$course_id);
 
 	}
