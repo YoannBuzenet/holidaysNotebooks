@@ -149,7 +149,7 @@ progress {
 }
 
 .restart-button button {
-	padding : 1em;
+	padding : 3em;
 	background-color: #3B87FB;
 	border-radius: .5em;
 	font-weight: bold;
@@ -162,4 +162,5 @@ progress {
 .restart-button button a {
 	color: black;
 	text-decoration: none;
+	font-size:2rem;
 }

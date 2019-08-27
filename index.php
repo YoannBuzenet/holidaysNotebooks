@@ -60,6 +60,15 @@ else if($section == "questions"){
 else if($section == "ajax"){
 	include('controller/ajax/ajax.php');
 }
+else if($section == "cookie_policy"){
+	include('view/front/fixed_pages/cookie_policy.php');
+}
+else if($section == "privacy_policy"){
+	include('view/front/fixed_pages/privacy_policy.php');
+}
+else if($section == "contact-us"){
+	include('view/front/fixed_pages/contact-form.php');
+}
 else if($section == 'logout'){
 	session_destroy();
 	$listCourses = courseManager::getAllCourses($bdd);

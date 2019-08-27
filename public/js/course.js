@@ -24,7 +24,8 @@ function init(){
 		}
 		else{
 			let message = "Merci de cocher au moins une réponse."
-			createModal(message);
+			let validationText = "OK";
+			createModal(message, validationText);
 		}
 		
 	})
@@ -156,7 +157,7 @@ function process(json){
 
 }
 
-function createModal(message){
+function createModal(message, validationText){
 
 	//Black background
 	var greyBackgroundDiv = document.createElement('div');
@@ -186,7 +187,7 @@ function createModal(message){
 
 	var cancelButton = document.createElement('input');
 	cancelButton.type = 'button';
-	cancelButton.value = "OK";
+	cancelButton.value = validationText;
 	cancelButton.onclick = function (){
 		greyBackgroundDiv.parentNode.removeChild(greyBackgroundDiv);
 	}

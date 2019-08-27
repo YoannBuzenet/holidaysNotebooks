@@ -85,9 +85,11 @@ else{
 
 					userManager::updateUserProgress($bdd, $_SESSION['user'], $current_course->total_questions, $course_id);
 					userManager::trackResult($bdd, $_SESSION['user'], $_POST['result'], $course_id, $_POST['question-id']);
-					//calculer résultat de bonne rep ici
+					courseManager::statsTrackResultsQuestion($bdd, $_SESSION['user'], $_POST['question-id'], $course_id, $_POST['result']);
+
 					$course = courseManager::findCourseById($bdd, $course_id);
 					$final_score = courseManager::calculateSuccessRateOnCourse($bdd, $_SESSION['user'], $course_id);
+					courseManager::statsTrackCourseEnding($bdd, $_SESSION['user'], $course_id, $final_score);
 
 					//End of course : result page
 					include('view/front/course/endcourse.php');
@@ -105,16 +107,18 @@ else{
 							//If it's the normal number going, we follow it
 							else{
 								$next_question_id = $_POST['next_question'];
-								//update user progress HERE
+								//update user progress & making stats HERE
 								userManager::updateUserProgress($bdd, $_SESSION['user'], $next_question_id, $course_id);
 								userManager::trackResult($bdd, $_SESSION['user'], $_POST['result'], $course_id, $_POST['question-id']);
+								courseManager::statsTrackResultsQuestion($bdd, $_SESSION['user'], $_POST['question-id'], $course_id, $_POST['result']);
 							}
 						}
 						else{
 								$next_question_id = $_POST['next_question'];
-								//update user progress HERE
+								//update user progress & making stats HERE
 								userManager::updateUserProgress($bdd, $_SESSION['user'], $next_question_id, $course_id);
 								userManager::trackResult($bdd, $_SESSION['user'], $_POST['result'], $course_id, $_POST['question-id']);
+								courseManager::statsTrackResultsQuestion($bdd, $_SESSION['user'], $_POST['question-id'], $course_id, $_POST['result']);
 							}
 
 					}
@@ -123,9 +127,10 @@ else{
 						//This path is possible if user has memory but not for the current course
 						$next_question_id = $_POST['next_question'];
 
-						//update user progress HERE
+						//update user progress & making stats HERE
 						userManager::updateUserProgress($bdd, $_SESSION['user'], $next_question_id, $course_id);
 						userManager::trackResult($bdd, $_SESSION['user'], $_POST['result'], $course_id, $_POST['question-id']);
+						courseManager::statsTrackResultsQuestion($bdd, $_SESSION['user'], $_POST['question-id'], $course_id, $_POST['result']);
 					}
 					
 				}
@@ -133,16 +138,19 @@ else{
 			}
 			//If there are no POST datas
 			else {
-			//Here we check the cookie if relevant data concerning this course are there
+			//Here we check the session (hydrated via cookie) to see if relevant data concerning this course are there
 				if(!empty($_SESSION['user']->getUserProgress())){
 					$user_progress = $_SESSION['user']->getUserProgress();
 
+					//if there are relevant data we go to the good question
 					if(array_key_exists($course_id, $user_progress)){
 						$next_question_id = $user_progress[$course_id];
 
+						//if the course was done, we reload the datas and go to the final page : endcourse.
 						if($user_progress[$course_id] == $current_course->total_questions){
 							$course = courseManager::findCourseById($bdd, $course_id);
 							$final_score = courseManager::calculateSuccessRateOnCourse($bdd, $_SESSION['user'], $course_id);
+							courseManager::statsTrackCourseEnding($bdd, $_SESSION['user'], $course_id, $final_score);
 							include('view/front/course/endcourse.php');
 							exit;
 						}
@@ -150,12 +158,13 @@ else{
 					else{
 						//If we have no info, we take the first question in the course (the number 0)
 						$next_question_id = 0;
+						courseManager::statsTrackCourseBeginning($bdd, $_SESSION['user'], $_GET['id']);
 					}
 				}
 				else{
 						//If we have no info, we take the first question in the course (the number 0)
 						$next_question_id = 0;
-
+						courseManager::statsTrackCourseBeginning($bdd, $_SESSION['user'], $_GET['id']);
 					}
 				
 			}	

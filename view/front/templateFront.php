@@ -43,10 +43,10 @@
 	</div>
 	<footer>
 		<ul>
-			<li><a href="#">A propos</a></li>
-			<li><a href="#">Contactez-nous</a></li>
-			<li><a href="#">Politique de confidentialité</a></li>
+			<li><a href="index.php?section=privacy_policy">Protection de la vie privée</a></li>
+			<li><a href="index.php?section=cookie_policy">Cookies</a></li>
 			<li><a href="#">Mentions légales</a></li>
+			<li><a href="#">Contactez-nous</a></li>
 		</ul>
 	</footer>
 </body>
