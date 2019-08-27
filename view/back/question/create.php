@@ -31,7 +31,7 @@ ob_start();
 				</select>
 			</div>
 
-			<input type="file" id="question-picture" name="question-picture" class="inputfile" accept="image/png, image/jpeg">
+			<input type="file" id="question-picture" name="question-picture" class="inputfile" accept="image/png, image/jpeg, image/gif">
 			<label for="question-picture" class="add-picture"><i class="fas fa-plus-circle"></i> Facultatif : Ajouter une image</label>
 
 			<p>Enoncé</p>
@@ -48,7 +48,7 @@ ob_start();
 					<option value="4">4</option>
 			</select>
 
-			<input type="file" id="solution-picture" name="solution-picture" class="inputfile" accept="image/png, image/jpeg">
+			<input type="file" id="solution-picture" name="solution-picture" class="inputfile" accept="image/png, image/jpeg, image/gif">
 			<label for="solution-picture" class="add-picture"><i class="fas fa-plus-circle"></i> Facultatif : Ajouter une image pour la solution</label>
 
 			<textarea name="soluce" id="soluce-editor" cols="60" rows="10" placeholder="Solution"></textarea>

@@ -13,6 +13,7 @@ ob_start();
 	<h1>PARTIE : <?= strtoupper($next_question->getDiscipline()) ?></h1>
 	<small>Question <?= $next_question->getOrderNumber() + 1 ?></small>
 
+	<!-- Implementing the picture if there's one -->
 	<?php if(!empty($next_question->getURLPictureMain())){ ?>
 		<div class="img-statement">
 			<img src="<?= $next_question->getURLPictureMain() ?>" alt="question-picture">

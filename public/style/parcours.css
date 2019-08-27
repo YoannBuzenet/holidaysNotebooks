@@ -73,6 +73,10 @@ progress {
 	margin: 2em;
 }
 
+.img-statement img{
+	max-width: 100%;
+}
+
 /***********************************
 ****************MODAL************
 ***********************************/
@@ -106,6 +110,24 @@ progress {
 	margin: 0;
 	text-align: right;
 }
+
+.confirm-button{
+	text-align: center;
+	margin-top: 2em;
+}
+
+.confirm-button input {
+	padding: 2em 3em;	
+	border-radius: .5em;
+	background-color: #ffe2ff50;
+}
+
+.confirm-button:hover input {
+	background-color: #FFFFFF80;
+	color:white;
+}
+
+
 
 /***********************************
 *************ENDCOURSE**************

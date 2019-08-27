@@ -19,7 +19,14 @@ function init(){
 	//CHECK IF NO QUESTION HAVE BEEN SELECTED HERE 
 	var formButton = document.getElementById('form-validate');
 	formButton.addEventListener('click', function(){
-		gets(currentQuestionId);
+		if(typeof selectedAnswer!=='undefined'){
+			gets(currentQuestionId);
+		}
+		else{
+			let message = "Merci de cocher au moins une réponse."
+			createModal(message);
+		}
+		
 	})
 
 }
@@ -146,5 +153,48 @@ function process(json){
 	//Appending the whole to the DOM
 	var currentDiv = document.getElementById('main-article');
 	currentDiv.parentNode.insertBefore(greyBackgroundDiv, currentDiv);
+
+}
+
+function createModal(message){
+
+	//Black background
+	var greyBackgroundDiv = document.createElement('div');
+	greyBackgroundDiv.className=('background-modal')
+
+	//Main Div
+	var globalModalDiv = document.createElement('div');
+	greyBackgroundDiv.appendChild(globalModalDiv);
+	globalModalDiv.className=('modal');
+
+	//title
+	var resultTitle = document.createElement('h1');
+	resultTitle.innerHTML = "Il faut cocher !";
+	globalModalDiv.appendChild(resultTitle);
+
+	//message
+	var messageParagraph = document.createElement('p');
+	globalModalDiv.appendChild(messageParagraph);
+	var newContent = document.createTextNode(message);
+	messageParagraph.appendChild(newContent);
+	messageParagraph.className=('modal-paragraph');
+
+	//closure button
+	var alertModalButton = document.createElement('p');
+	globalModalDiv.appendChild(alertModalButton);
+	alertModalButton.className=('confirm-button');
+
+	var cancelButton = document.createElement('input');
+	cancelButton.type = 'button';
+	cancelButton.value = "OK";
+	cancelButton.onclick = function (){
+		greyBackgroundDiv.parentNode.removeChild(greyBackgroundDiv);
+	}
+	alertModalButton.appendChild(cancelButton);
+
+	var currentDiv = document.getElementById('first-container');
+	document.body.insertBefore(greyBackgroundDiv, currentDiv);
+
+
 
 }

@@ -23,7 +23,7 @@
 				<li><a href="index.php">Dashboard</a></li>
 				<li><a href="index.php?section=questions&action=1">Questions</a></li>
 				<li><a href="index.php?section=courses&action=1">Parcours</a></li>
-				<li><a href="index.php?section=users&action=1">Utilisateurs</a></li>
+				<!-- <li><a href="index.php?section=users&action=1">Utilisateurs</a></li> -->
 			</ul>
 		</div>
 	</header>
