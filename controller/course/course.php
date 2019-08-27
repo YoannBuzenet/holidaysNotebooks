@@ -172,10 +172,8 @@ else{
 		case "4":
 
 		$course_id = $_GET['id'];
-
 		//Restart user course
 		userManager::updateUserProgress($bdd, $_SESSION['user'], '0', $course_id);
-
 		header('location:index.php?section=courses&action=3&id='.$course_id);
 
 	}

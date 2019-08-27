@@ -22,6 +22,7 @@ class Question {
 	private $total_questions;
 	private $questionPicture;
 	private $questionSolutionPicture;
+	private $url_picture_main;
 	
 
 	public function getId(){
@@ -190,6 +191,14 @@ class Question {
 
 	public function getQuestionSolutionPicture(){
 		return $this->questionSolutionPicture;
+	}
+
+	public function setURLPictureMain($url_picture_main){
+		$this->url_picture_main = $url_picture_main;
+	}
+
+	public function getURLPictureMain(){
+		return $this->url_picture_main;
 	}
 
 }

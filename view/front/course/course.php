@@ -13,6 +13,12 @@ ob_start();
 	<h1>PARTIE : <?= strtoupper($next_question->getDiscipline()) ?></h1>
 	<small>Question <?= $next_question->getOrderNumber() + 1 ?></small>
 
+	<?php if(!empty($next_question->getURLPictureMain())){ ?>
+		<div class="img-statement">
+			<img src="<?= $next_question->getURLPictureMain() ?>" alt="question-picture">
+		</div>
+	<?php } ?>
+
 	<p><?= $next_question->getEnonce() ?></p>
 
 	<form action="index.php?section=courses&action=3&id=<?= $next_question->id_course ?>" method="POST" id="question-form" class="question-form">

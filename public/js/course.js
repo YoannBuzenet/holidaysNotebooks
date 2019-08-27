@@ -114,6 +114,15 @@ function process(json){
 	messageParagraph.appendChild(newContent);
 	messageParagraph.className=('modal-paragraph');
 
+	//implementing the picture if there's one
+	if(json.url_picture_solution.length>0){
+		var pictureContainer = document.createElement('div');
+		globalDiv.appendChild(pictureContainer);
+		var picture = document.createElement('img');
+		picture.src=json.url_picture_solution;
+		pictureContainer.appendChild(picture);
+	}
+
 	//Solution
 	var solutionParagraph = document.createElement('div');
 	globalDiv.appendChild(solutionParagraph);
