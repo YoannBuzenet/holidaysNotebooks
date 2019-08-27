@@ -5,7 +5,7 @@ ob_start();
 	<h2>Modifier une question</h2>
 
 	<div class="form-container">
-		<form action="index.php" method="POST" class="create-form">
+		<form action="index.php" method="POST" class="create-form" enctype="multipart/form-data">
 
 			
 			<label for="name">Nom de la question</label><input type="text" id="name" name="name" value="<?= $question_to_edit->getName() ?>"required>
@@ -31,6 +31,11 @@ ob_start();
 					<?php }  ?>
 				</select>
 			</div>
+
+			<input type="file" id="question-picture" name="question-picture" class="inputfile" accept="image/png, image/jpeg">
+			<label for="question-picture" class="add-picture"><i class="fas fa-plus-circle"></i> Facultatif : Modifier l'image</label>
+
+			<p>Enoncé</p>
 			<textarea name="enonce" id="enonce-editor" cols="60" rows="10" required><?= $question_to_edit->getEnonce() ?></textarea>
 			<textarea name="answer1" id="answer1" cols="60" rows="10" placeholder="Réponse 1" required><?= $question_to_edit->getAnswer1() ?></textarea>
 			<textarea name="answer2" id="answer2" cols="60" rows="10" placeholder="Réponse 2" required><?= $question_to_edit->getAnswer2() ?></textarea>
@@ -43,6 +48,10 @@ ob_start();
 					<option value="3" <?= ($question_to_edit->getSolutionNumber() == 3) ? 'selected': null ?>>3</option>
 					<option value="4" <?= ($question_to_edit->getSolutionNumber() == 4) ? 'selected': null ?>>4</option>
 			</select>
+
+			<input type="file" id="solution-picture" name="solution-picture" class="inputfile" accept="image/png, image/jpeg">
+			<label for="solution-picture" class="add-picture"><i class="fas fa-plus-circle"></i> Facultatif : Modifier l'image</label>
+
 			<textarea name="soluce" id="soluce-editor" cols="60" rows="10" placeholder="Solution" required><?= $question_to_edit->getSoluce() ?></textarea>
 			<input type="hidden" name="id" value="<?= $question_to_edit->getGlobalId(); ?>">
 			<input type="hidden" name="action" value="3V">

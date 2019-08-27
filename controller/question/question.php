@@ -32,8 +32,18 @@ if(userManager::checkIfAdmin($_SESSION['user'])){
 			$question_to_register->setSoluce($_POST['soluce']);
 			$question_to_register->setSolutionNumber($_POST['solution_number']);
 
-
 			$success = questionManager::insertQuestion($bdd, $question_to_register);
+
+			
+			//If there's a picture, we upload it and associate it in DB after the questiob creation
+			if(isset($_FILES["question-picture"]) && !empty($_FILES['question-picture']['name'][0])){
+				//First, find the question newly created to get its global id
+				$question = questionManager::findQuestionWithNameAndIdType($bdd, $question_to_register);
+				//Thanks to its global id, we update its url_picture.
+				$success = questionManager::updatePictureQuestion($bdd, $question, $_FILES["question-picture"]);
+			}
+
+			
 			$message = "La question a bien été ajoutée en base de données.";
 			$listQuestions = questionManager::getAllQuestions($bdd);
 		include('view/back/question/all_questions.php');
@@ -63,6 +73,17 @@ if(userManager::checkIfAdmin($_SESSION['user'])){
 			$question_to_edit->setGlobalId($id);
 
 			$success = questionManager::updateQuestion($bdd, $question_to_edit);
+
+			//If there's a picture, we upload it and associate it in DB after the questiob creation
+			if(isset($_FILES["question-picture"]) && !empty($_FILES['question-picture']['name'][0])){
+				$success = questionManager::updatePictureStatementQuestion($bdd, $question_to_edit, $_FILES["question-picture"]);
+			}
+
+			if(isset($_FILES["solution-picture"]) && !empty($_FILES['solution-picture']['name'][0])){
+				$success = questionManager::updatePictureSolutionQuestion($bdd, $question_to_edit, $_FILES["solution-picture"]);
+			}
+
+
 			$message = "La question a bien été modifiée.";
 
 			$listQuestions = questionManager::getAllQuestions($bdd);

@@ -148,11 +148,13 @@ class questionManager {
 			$type_name = questionManager::getTypeNameByIdType($pdo, $id_type);
 			$table_to_register = 'questions_type_'.$type_name;
 
-			$sql = "INSERT INTO ".$table_to_register."(enonce, answer1, answer2, answer3, answer4, solution, solution_number, id_type, id_discipline, id_school_level, name, success_rate, global_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			$sql = "INSERT INTO ".$table_to_register."(url_picture_main, enonce, answer1, answer2, answer3, answer4, solution, solution_number, url_picture_solution, id_type, id_discipline, id_school_level, name, success_rate, global_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 			$pdoStatement = $pdo->prepare($sql);
 			
 			//Desassembling for BindParam
+			//url_picture is set to nul by default, we update it after in the creation
+			$url_picture_main = null;
 			$enonce = $question->getEnonce();
 			$answ1 = $question->getAnswer1();
 			$answ2 = $question->getAnswer2();
@@ -160,25 +162,28 @@ class questionManager {
 			$answ4 = $question->getAnswer4();
 			$solution = $question->getSoluce();
 			$solution_number = $question->getSolutionNumber();
+			$url_picture_solution = null;
 			$id_type = $question->getIdType();
 			$id_discipline = $question->getIdDiscipline();
 			$id_school_level =$question->getIdSchoolLevel();
 			$name =$question->getName();
 			$success_rate = 0;
 
-			$pdoStatement->bindParam(1, $enonce, PDO::PARAM_STR);
-			$pdoStatement->bindParam(2, $answ1, PDO::PARAM_STR);
-			$pdoStatement->bindParam(3, $answ2, PDO::PARAM_STR);
-			$pdoStatement->bindParam(4, $answ3, PDO::PARAM_STR);
-			$pdoStatement->bindParam(5, $answ4, PDO::PARAM_STR);
-			$pdoStatement->bindParam(6, $solution, PDO::PARAM_STR);
-			$pdoStatement->bindParam(7, $solution_number, PDO::PARAM_INT);
-			$pdoStatement->bindParam(8, $id_type, PDO::PARAM_INT);
-			$pdoStatement->bindParam(9, $id_discipline, PDO::PARAM_INT);
-			$pdoStatement->bindParam(10, $id_school_level, PDO::PARAM_INT);
-			$pdoStatement->bindParam(11, $name, PDO::PARAM_STR);
-			$pdoStatement->bindParam(12, $success_rate, PDO::PARAM_INT);
-			$pdoStatement->bindParam(13, $global_id_question, PDO::PARAM_INT);
+			$pdoStatement->bindParam(1, $url_picture_main, PDO::PARAM_STR);
+			$pdoStatement->bindParam(2, $enonce, PDO::PARAM_STR);
+			$pdoStatement->bindParam(3, $answ1, PDO::PARAM_STR);
+			$pdoStatement->bindParam(4, $answ2, PDO::PARAM_STR);
+			$pdoStatement->bindParam(5, $answ3, PDO::PARAM_STR);
+			$pdoStatement->bindParam(6, $answ4, PDO::PARAM_STR);
+			$pdoStatement->bindParam(7, $solution, PDO::PARAM_STR);
+			$pdoStatement->bindParam(8, $solution_number, PDO::PARAM_INT);
+			$pdoStatement->bindParam(9, $url_picture_solution, PDO::PARAM_INT);
+			$pdoStatement->bindParam(10, $id_type, PDO::PARAM_INT);
+			$pdoStatement->bindParam(11, $id_discipline, PDO::PARAM_INT);
+			$pdoStatement->bindParam(12, $id_school_level, PDO::PARAM_INT);
+			$pdoStatement->bindParam(13, $name, PDO::PARAM_STR);
+			$pdoStatement->bindParam(14, $success_rate, PDO::PARAM_INT);
+			$pdoStatement->bindParam(15, $global_id_question, PDO::PARAM_INT);
 
 			$pdoStatement->execute();
 
@@ -229,6 +234,27 @@ class questionManager {
 		$result= $pdoStatement->fetchAll(PDO::FETCH_CLASS, "Question");
 
 		return $result[0];
+	}
+
+	public static function findQuestionWithNameAndIdType(PDO $pdo, Question $question){
+
+		$type_question_name = questionManager::getTypeNameByIdType($pdo, $question->getIdType());
+
+		$table_name = "questions_type_".strtolower($type_question_name);
+
+		
+		$sql = "SELECT * FROM ". $table_name ." WHERE name=?";
+
+		$question_name = $question->getName();
+
+		$pdoStatement = $pdo->prepare($sql);
+		$pdoStatement->bindParam(1, $question_name, PDO::PARAM_STR);
+		$pdoStatement->execute();
+
+		$result= $pdoStatement->fetchAll(PDO::FETCH_CLASS, "Question");
+
+		return $result[0];
+
 	}
 
 	public static function updateQuestion(PDO $pdo, Question $question){
@@ -340,6 +366,77 @@ public static function getSolution(PDO $pdo, int $id_question){
 	return $pdoStatement->fetch();
 }
 
+public static function updatePictureStatementQuestion(PDO $pdo, Question $question, $file){
+
+	//////////////////////////////////
+	// 1 - Saving the picture
+	//////////////////////////////////
+
+	$target_dir = "public/pictures/questions/";
+	$target_file = $target_dir . basename($file["name"]);
+	$uploadOk = 1;
+	$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+	// if everything is ok, try to upload file
+	move_uploaded_file($_FILES["question-picture"]["tmp_name"], $target_file); 
+
+	//////////////////////////////////
+	// 2 - Updating the link in DB
+	//////////////////////////////////
+
+
+	//getting the right table name for question
+	$type_question_name = questionManager::getTypeNameByIdType($pdo, $question->getIdType());
+
+	$table_name = "questions_type_".strtolower($type_question_name);
+
+	//updating the URL path of the question picture once we know the good table
+	$sql = "UPDATE ". $table_name ." SET url_picture_main = ? WHERE global_id=?";
+
+	$global_id = $question->getGlobalId();
+
+	$pdoStatement = $pdo->prepare($sql);
+	$pdoStatement->bindParam(1, $target_file, PDO::PARAM_STR);
+	$pdoStatement->bindParam(2, $global_id, PDO::PARAM_INT);
+	$pdoStatement->execute();
+
+	return $pdoStatement->rowCount();
+}
+
+public static function updatePictureSolutionQuestion(PDO $pdo, Question $question, $file){
+
+	//////////////////////////////////
+	// 1 - Saving the picture
+	//////////////////////////////////
+
+	$target_dir = "public/pictures/questions/";
+	$target_file = $target_dir . basename($file["name"]);
+	$uploadOk = 1;
+	$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+	// if everything is ok, try to upload file
+	move_uploaded_file($_FILES["solution-picture"]["tmp_name"], $target_file); 
+
+	//////////////////////////////////
+	// 2 - Updating the link in DB
+	//////////////////////////////////
+
+
+	//getting the right table name for question
+	$type_question_name = questionManager::getTypeNameByIdType($pdo, $question->getIdType());
+
+	$table_name = "questions_type_".strtolower($type_question_name);
+
+	//updating the URL path of the question picture once we know the good table
+	$sql = "UPDATE ". $table_name ." SET url_picture_solution = ? WHERE global_id=?";
+
+	$global_id = $question->getGlobalId();
+
+	$pdoStatement = $pdo->prepare($sql);
+	$pdoStatement->bindParam(1, $target_file, PDO::PARAM_STR);
+	$pdoStatement->bindParam(2, $global_id, PDO::PARAM_INT);
+	$pdoStatement->execute();
+
+	return $pdoStatement->rowCount();
+}
 
 }
 

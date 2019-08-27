@@ -20,6 +20,8 @@ class Question {
 	private $global_id;
 	private $order_number;
 	private $total_questions;
+	private $questionPicture;
+	private $questionSolutionPicture;
 	
 
 	public function getId(){
@@ -172,6 +174,22 @@ class Question {
 
 	public function getTotalQuestions(){
 		return $this->total_questions;
+	}
+
+	public function setQuestionPicture($file){
+		$this->questionPicture = $file;
+	}
+
+	public function getQuestionPicture(){
+		return $this->questionPicture;
+	}
+
+	public function setQuestionSolutionPicture($file){
+		$this->questionSolutionPicture = $file;
+	}
+
+	public function getQuestionSolutionPicture(){
+		return $this->questionSolutionPicture;
 	}
 
 }
