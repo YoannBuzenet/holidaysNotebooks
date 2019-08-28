@@ -13,7 +13,7 @@ Le nom de ce cookie est "cookie_id". Il est supprimé automatiquement au bout de
 
 <p>C'est le seul cookie utilisé sur le site.</p>
 
-<p>Pour supprimer vos cookies, vous pouvez accéder aux paramètres de votre navigateur web et supprimer l'historique. Sachez toutefois que vous pouvez perdre certaines informations sauvegardées, telles que des préférences ou des authentifications.</p>
+<p>Pour supprimer vos cookies, vous pouvez accéder aux paramètres de votre navigateur web et supprimer l'historique. Sachez toutefois que vous pouvez perdre certaines informations sauvegardées, telles que votre progrès sur le site, des préférences ou des authentifications.</p>
 
 <?php 
 

@@ -6,7 +6,7 @@ ob_start();
 ?>
 <h1>Politique de vie privée</h1>
 
-<p>Liste des données conservées par le www.cahier-de-vacances, dit le site :</p>
+<p>Liste des données conservées par le site web www.cahier-de-vacances.fr :</p>
 
 <ul>
 	<li>Taux de succès par question</li>
@@ -14,7 +14,7 @@ ob_start();
 	<li>Les dates auxquelles les questions et les cahiers ont été passés.</li>
 </ul>
 
-<p>Ces données sont <strong>complètement anonymisées</strong> et nous servent à améliorer la pertinence des cahiers proposés : </p>
+<p>Ces données sont <strong>complètement anonymisées</strong> et nous servent à améliorer la pertinence des cahiers proposés. </p>
 <ul>
 	<li>Voir si des questions sont plus difficiles que d'autres</li>
 	<li>Voir si les utilisateurs bloquent tous à la même question</li>

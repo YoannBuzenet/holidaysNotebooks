@@ -15,7 +15,7 @@ ob_start();
 
 	<h2>Félicitations ! Tu as terminé ce cahier de vacances !</h2>
 	<p>Ton score total est de <?= $final_score ?>%.</p>
-	<p>Voici le rappel des questions où tu t'es trompé·e :</p>
+
 
 	<p>N'hésite pas à reprendre le cahier quand tu veux !</p>
 	<p class="restart-button"><button><a href="index.php?section=courses&action=4&id=<?= $_GET['id'] ?>">Recommencer le cahier</a></button></p>
