@@ -36,7 +36,7 @@ ob_start();
 	<table>
 		<thead>
 			<tr>
-				<th>ID</th><th>Name</th><th>Discipline</th><th>Success Rate</th><th>Type</th><th>Level</th><th>Edit</th><th>Delete</th>
+				<th>ID</th><th>Name</th><th>Discipline</th><th>Type</th><th>Level</th><th>Edit</th><th>Delete</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -45,7 +45,6 @@ ob_start();
 					<td><?= $question->getId() ?></td>
 					<td><?= $question->getName() ?></td>
 					<td><?= $question->getDiscipline() ?></td>
-					<td><?= $question->getSuccessRate() ?>%</td>
 					<td><?= $question->getType() ?></td>
 					<td><?= $question->getSchoolLevel() ?></td>
 					<td><a href="index.php?section=questions&action=3&id=<?= $question->getId(); ?>"><i class="fas fa-edit"></a></i></td>

@@ -69,7 +69,7 @@ else{
 
 		case "2":
 			//display all courses with particular school level OR discipline
-
+			//Has it been done ? TODO
 			include('view/front/course/course.php');
 		break;
 

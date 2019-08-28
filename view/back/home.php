@@ -20,6 +20,26 @@ ob_start();
 
 			</section>
 
+			<section>
+				<table class="stats-table">
+					<thead><th>Users</th><th>Questions done</th><th>Courses done</th><th>Date</th></thead>
+					<tbody>
+				<?php 
+
+				foreach ($list_of_stats as $daily_stat) { ?>
+					<tr>
+					<td><?= $daily_stat['today_number_of_users'] ?></td>
+					<td><?= $daily_stat['today_quantities_questions'] ?></td>
+					<td><?= $daily_stat['today_quantities_courses'] ?></td>
+					<td><?= $daily_stat['simplified_date'] ?></td>
+					</tr>
+				<?php
+			}
+				?>
+				</tbody>
+				</table>
+			</section>
+
 	</main>
 </div>
 <?php 

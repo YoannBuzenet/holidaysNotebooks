@@ -6,7 +6,7 @@ class questionManager {
 
 	public static function getAllQuestions(PDO $pdo){
 
-		$sql = "SELECT q.id, qtr.name, qtr.success_rate, d.discipline, atoq.type, sl.school_level 
+		$sql = "SELECT q.id, qtr.name, d.discipline, atoq.type, sl.school_level 
 				FROM questions q 
 				INNER JOIN questions_type_radio qtr ON q.id = qtr.global_id 
 				INNER JOIN disciplines d ON d.id = qtr.id_discipline 
@@ -148,7 +148,7 @@ class questionManager {
 			$type_name = questionManager::getTypeNameByIdType($pdo, $id_type);
 			$table_to_register = 'questions_type_'.$type_name;
 
-			$sql = "INSERT INTO ".$table_to_register."(url_picture_main, enonce, answer1, answer2, answer3, answer4, solution, solution_number, url_picture_solution, id_type, id_discipline, id_school_level, name, success_rate, global_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			$sql = "INSERT INTO ".$table_to_register."(url_picture_main, enonce, answer1, answer2, answer3, answer4, solution, solution_number, url_picture_solution, id_type, id_discipline, id_school_level, name, global_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 			$pdoStatement = $pdo->prepare($sql);
 			
@@ -167,7 +167,6 @@ class questionManager {
 			$id_discipline = $question->getIdDiscipline();
 			$id_school_level =$question->getIdSchoolLevel();
 			$name =$question->getName();
-			$success_rate = 0;
 
 			$pdoStatement->bindParam(1, $url_picture_main, PDO::PARAM_STR);
 			$pdoStatement->bindParam(2, $enonce, PDO::PARAM_STR);
@@ -182,7 +181,6 @@ class questionManager {
 			$pdoStatement->bindParam(11, $id_discipline, PDO::PARAM_INT);
 			$pdoStatement->bindParam(12, $id_school_level, PDO::PARAM_INT);
 			$pdoStatement->bindParam(13, $name, PDO::PARAM_STR);
-			$pdoStatement->bindParam(14, $success_rate, PDO::PARAM_INT);
 			$pdoStatement->bindParam(15, $global_id_question, PDO::PARAM_INT);
 
 			$pdoStatement->execute();
