@@ -10,7 +10,7 @@ ob_start();
 	<div class="progress-wrapper">
 		<progress value="<?= $next_question->getOrderNumber()+1 ?>" max="<?= $next_question->getTotalQuestions() ?>"><?= $next_question->getOrderNumber()+1 ?></progress>
 	</div>
-	<h1>PARTIE : <?= strtoupper($next_question->getDiscipline()) ?></h1>
+	<h1>PARTIE : <?= ucfirst($next_question->getDiscipline()) ?></h1>
 	<small>Question <?= $next_question->getOrderNumber() + 1 ?></small>
 
 	<!-- Implementing the picture if there's one -->

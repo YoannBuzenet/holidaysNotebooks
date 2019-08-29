@@ -123,7 +123,7 @@ function process(json){
 	messageParagraph.className=('modal-paragraph');
 
 	//implementing the picture if there's one
-	if(json.url_picture_solution.length>0){
+	if(json.url_picture_solution != null){
 		var pictureContainer = document.createElement('div');
 		globalDiv.appendChild(pictureContainer);
 		var picture = document.createElement('img');

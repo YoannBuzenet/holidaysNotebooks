@@ -23,7 +23,7 @@ class questionManager {
 
 	public static function getQuestionsWithIdDisciplineAndIdSchoolLevel(PDO $pdo, int $id_discipline, int $id_school_level){
 
-		$sql = "SELECT q.id, qtr.name, qtr.success_rate, d.discipline, atoq.type, sl.school_level 
+		$sql = "SELECT q.id, qtr.name, d.discipline, atoq.type, sl.school_level 
 				FROM questions q 
 				INNER JOIN questions_type_radio qtr ON q.id = qtr.global_id 
 				INNER JOIN disciplines d ON d.id = qtr.id_discipline 
@@ -181,7 +181,7 @@ class questionManager {
 			$pdoStatement->bindParam(11, $id_discipline, PDO::PARAM_INT);
 			$pdoStatement->bindParam(12, $id_school_level, PDO::PARAM_INT);
 			$pdoStatement->bindParam(13, $name, PDO::PARAM_STR);
-			$pdoStatement->bindParam(15, $global_id_question, PDO::PARAM_INT);
+			$pdoStatement->bindParam(14, $global_id_question, PDO::PARAM_INT);
 
 			$pdoStatement->execute();
 

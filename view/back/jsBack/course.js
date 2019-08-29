@@ -246,6 +246,7 @@ function checkDisciplineANDSchoolLevel(questionDiv, currentDataNumber, selectedS
 	xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 	xhr.onload = function() {
 	    if (this.readyState == 4 && this.status == 200) {
+	    	//console.log(xhr.responseText);
 	        		relevantQuestions = JSON.parse(xhr.responseText);
 
 	        		//checking if the result already exist, to just modify it instead of creating severals
