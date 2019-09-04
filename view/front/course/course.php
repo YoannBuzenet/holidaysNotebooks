@@ -20,7 +20,9 @@ ob_start();
 		</div>
 	<?php } ?>
 
-	<p><?= $next_question->getEnonce() ?></p>
+	<p class="lesson"><?= $next_question->getEnonce() ?></p>
+
+	<p class="exercice"> <?= $next_question->getExercice() ?></p>
 
 	<form action="index.php?section=courses&action=3&id=<?= $next_question->id_course ?>" method="POST" id="question-form" class="question-form">
 		<div class="form-container">

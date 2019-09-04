@@ -50,7 +50,7 @@ function reCreateCourseForm(json){
 			hydrateChildren(allQuestionsCreated[i], json, i)
 		}
 
-	}, 200)
+	}, 600)
 
 	// Giving it the selected question. We wait in setTimeout AND sleep because there's also an AJAX call.
 	setTimeout(async function(){
@@ -70,7 +70,7 @@ function reCreateCourseForm(json){
 
 
 		}
-	}, 300)
+	}, 50)
 	
 }
 

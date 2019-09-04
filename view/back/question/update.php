@@ -32,11 +32,12 @@ ob_start();
 				</select>
 			</div>
 
-			<input type="file" id="question-picture" name="question-picture" class="inputfile" accept="image/png, image/jpeg, image/gif">
+			<input type="file" id="question-picture" name="question-picture" class="inputfile" accept="image/png, image/jpeg, image/jpg, image/gif">
 			<label for="question-picture" class="add-picture"><i class="fas fa-plus-circle"></i> Facultatif : Modifier l'image</label>
 
 			<p>Enoncé</p>
-			<textarea name="enonce" id="enonce-editor" cols="60" rows="10" required><?= $question_to_edit->getEnonce() ?></textarea>
+			<textarea name="enonce" id="enonce-editor" cols="60" rows="10" required><?= $question_to_edit->getEnonce() ?></textarea> <br/>
+			<textarea name="exercice" id="exercice-editor" cols="60" rows="10" placeholder="Exercice"><?= $question_to_edit->getExercice() ?></textarea>
 			<textarea name="answer1" id="answer1" cols="60" rows="10" placeholder="Réponse 1" required><?= $question_to_edit->getAnswer1() ?></textarea>
 			<textarea name="answer2" id="answer2" cols="60" rows="10" placeholder="Réponse 2" required><?= $question_to_edit->getAnswer2() ?></textarea>
 			<textarea name="answer3" id="answer3" cols="60" rows="10" placeholder="Réponse 3" required><?= $question_to_edit->getAnswer3() ?></textarea>
@@ -49,7 +50,7 @@ ob_start();
 					<option value="4" <?= ($question_to_edit->getSolutionNumber() == 4) ? 'selected': null ?>>4</option>
 			</select>
 
-			<input type="file" id="solution-picture" name="solution-picture" class="inputfile" accept="image/png, image/jpeg, image/gif">
+			<input type="file" id="solution-picture" name="solution-picture" class="inputfile" accept="image/png, image/jpeg, image/jpg, image/gif">
 			<label for="solution-picture" class="add-picture"><i class="fas fa-plus-circle"></i> Facultatif : Modifier l'image</label>
 
 			<textarea name="soluce" id="soluce-editor" cols="60" rows="10" placeholder="Solution" required><?= $question_to_edit->getSoluce() ?></textarea>
@@ -81,7 +82,15 @@ ob_start();
     } )
         .catch( error => {
             console.error( error );
-        } );    
+        } );
+    ClassicEditor
+        .create( document.querySelector( '#exercice-editor' ), {
+        removePlugins: [ 'Link' ],
+        toolbar: [ 'heading','bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote' ]
+    } )
+        .catch( error => {
+            console.error( error );  
+        } );          
 </script>
 <!-- CKeditor script -->
 <?php 

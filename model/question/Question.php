@@ -11,6 +11,7 @@ class Question {
 	private $id_school_level;
 	private $success_rate;
 	private $enonce;
+	private $exercice;
 	private $answer1;
 	private $answer2;
 	private $answer3;
@@ -103,6 +104,14 @@ class Question {
 
 	public function getEnonce(){
 		return $this->enonce;
+	}
+
+	public function setExercice(string $exercice){
+		$this->exercice = $exercice;
+	}
+
+	public function getExercice(){
+		return $this->exercice;
 	}
 
 	public function setAnswer1(string $answer1){

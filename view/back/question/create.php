@@ -31,11 +31,12 @@ ob_start();
 				</select>
 			</div>
 
-			<input type="file" id="question-picture" name="question-picture" class="inputfile" accept="image/png, image/jpeg, image/gif">
+			<input type="file" id="question-picture" name="question-picture" class="inputfile" accept="image/png, image/jpeg, image/jpg, image/gif">
 			<label for="question-picture" class="add-picture"><i class="fas fa-plus-circle"></i> Facultatif : Ajouter une image</label>
 
 			<p>Enoncé</p>
 			<textarea name="enonce" id="enonce-editor" cols="60" rows="10" placeholder="Enonce"></textarea>
+			<textarea name="exercice" id="exercice-editor" cols="60" rows="10" placeholder="Exercice"></textarea>
 			<textarea name="answer1" id="answer1" cols="60" rows="10" placeholder="Réponse 1" required></textarea>
 			<textarea name="answer2" id="answer2" cols="60" rows="10" placeholder="Réponse 2" required></textarea>
 			<textarea name="answer3" id="answer3" cols="60" rows="10" placeholder="Réponse 3" required></textarea>
@@ -48,7 +49,7 @@ ob_start();
 					<option value="4">4</option>
 			</select>
 
-			<input type="file" id="solution-picture" name="solution-picture" class="inputfile" accept="image/png, image/jpeg, image/gif">
+			<input type="file" id="solution-picture" name="solution-picture" class="inputfile" accept="image/png, image/jpeg, image/jpg, image/gif">
 			<label for="solution-picture" class="add-picture"><i class="fas fa-plus-circle"></i> Facultatif : Ajouter une image pour la solution</label>
 
 			<textarea name="soluce" id="soluce-editor" cols="60" rows="10" placeholder="Solution"></textarea>
@@ -80,6 +81,14 @@ ob_start();
         .catch( error => {
             console.error( error );
         } );    
+    ClassicEditor
+        .create( document.querySelector( '#exercice-editor' ), {
+        removePlugins: [ 'Link' ],
+        toolbar: [ 'heading','bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote' ]
+    } )
+        .catch( error => {
+            console.error( error );
+        } );      
 </script>
 <!-- CKeditor script -->
 <?php 

@@ -148,7 +148,7 @@ class questionManager {
 			$type_name = questionManager::getTypeNameByIdType($pdo, $id_type);
 			$table_to_register = 'questions_type_'.$type_name;
 
-			$sql = "INSERT INTO ".$table_to_register."(url_picture_main, enonce, answer1, answer2, answer3, answer4, solution, solution_number, url_picture_solution, id_type, id_discipline, id_school_level, name, global_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			$sql = "INSERT INTO ".$table_to_register."(url_picture_main, enonce, exercice, answer1, answer2, answer3, answer4, solution, solution_number, url_picture_solution, id_type, id_discipline, id_school_level, name, global_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 			$pdoStatement = $pdo->prepare($sql);
 			
@@ -156,6 +156,7 @@ class questionManager {
 			//url_picture is set to nul by default, we update it after in the creation
 			$url_picture_main = null;
 			$enonce = $question->getEnonce();
+			$exercice = $question->getExercice();
 			$answ1 = $question->getAnswer1();
 			$answ2 = $question->getAnswer2();
 			$answ3 = $question->getAnswer3();
@@ -170,18 +171,19 @@ class questionManager {
 
 			$pdoStatement->bindParam(1, $url_picture_main, PDO::PARAM_STR);
 			$pdoStatement->bindParam(2, $enonce, PDO::PARAM_STR);
-			$pdoStatement->bindParam(3, $answ1, PDO::PARAM_STR);
-			$pdoStatement->bindParam(4, $answ2, PDO::PARAM_STR);
-			$pdoStatement->bindParam(5, $answ3, PDO::PARAM_STR);
-			$pdoStatement->bindParam(6, $answ4, PDO::PARAM_STR);
-			$pdoStatement->bindParam(7, $solution, PDO::PARAM_STR);
-			$pdoStatement->bindParam(8, $solution_number, PDO::PARAM_INT);
-			$pdoStatement->bindParam(9, $url_picture_solution, PDO::PARAM_INT);
-			$pdoStatement->bindParam(10, $id_type, PDO::PARAM_INT);
-			$pdoStatement->bindParam(11, $id_discipline, PDO::PARAM_INT);
-			$pdoStatement->bindParam(12, $id_school_level, PDO::PARAM_INT);
-			$pdoStatement->bindParam(13, $name, PDO::PARAM_STR);
-			$pdoStatement->bindParam(14, $global_id_question, PDO::PARAM_INT);
+			$pdoStatement->bindParam(3, $exercice, PDO::PARAM_STR);
+			$pdoStatement->bindParam(4, $answ1, PDO::PARAM_STR);
+			$pdoStatement->bindParam(5, $answ2, PDO::PARAM_STR);
+			$pdoStatement->bindParam(6, $answ3, PDO::PARAM_STR);
+			$pdoStatement->bindParam(7, $answ4, PDO::PARAM_STR);
+			$pdoStatement->bindParam(8, $solution, PDO::PARAM_STR);
+			$pdoStatement->bindParam(9, $solution_number, PDO::PARAM_INT);
+			$pdoStatement->bindParam(10, $url_picture_solution, PDO::PARAM_INT);
+			$pdoStatement->bindParam(11, $id_type, PDO::PARAM_INT);
+			$pdoStatement->bindParam(12, $id_discipline, PDO::PARAM_INT);
+			$pdoStatement->bindParam(13, $id_school_level, PDO::PARAM_INT);
+			$pdoStatement->bindParam(14, $name, PDO::PARAM_STR);
+			$pdoStatement->bindParam(15, $global_id_question, PDO::PARAM_INT);
 
 			$pdoStatement->execute();
 
@@ -275,11 +277,12 @@ class questionManager {
 
 
 		//Once the first table was updated successfully, we update the second, the more detailed one
-			$sql = "UPDATE questions_type_radio SET enonce = ?, answer1 = ?, answer2 = ?, answer3 = ?, answer4 = ?, solution = ?, solution_number = ?, id_discipline = ?, id_school_level = ?, name = ?, id_type = ? WHERE global_id=?";
+			$sql = "UPDATE questions_type_radio SET enonce = ?, exercice = ?, answer1 = ?, answer2 = ?, answer3 = ?, answer4 = ?, solution = ?, solution_number = ?, id_discipline = ?, id_school_level = ?, name = ?, id_type = ? WHERE global_id=?";
 
 			$pdoStatement = $pdo->prepare($sql);
 
-			$enonce = $question->getEnonce();			
+			$enonce = $question->getEnonce();	
+			$exercice = $question->getExercice();
 			$Answer1 = $question->getAnswer1();		
 			$Answer2 = $question->getAnswer2();		
 			$Answer3 = $question->getAnswer3();		
@@ -293,17 +296,18 @@ class questionManager {
 			$id = $question->getGlobalId();
 
 			$pdoStatement->bindParam(1, $enonce, PDO::PARAM_STR);
-			$pdoStatement->bindParam(2, $Answer1, PDO::PARAM_STR);
-			$pdoStatement->bindParam(3, $Answer2, PDO::PARAM_STR);
-			$pdoStatement->bindParam(4, $Answer3, PDO::PARAM_STR);
-			$pdoStatement->bindParam(5, $Answer4, PDO::PARAM_STR);
-			$pdoStatement->bindParam(6, $solution, PDO::PARAM_STR);
-			$pdoStatement->bindParam(7, $solution_number, PDO::PARAM_INT);
-			$pdoStatement->bindParam(8, $id_discipline, PDO::PARAM_INT);
-			$pdoStatement->bindParam(9, $id_school_level, PDO::PARAM_INT);
-			$pdoStatement->bindParam(10, $name, PDO::PARAM_STR);
-			$pdoStatement->bindParam(11, $id_type, PDO::PARAM_INT);
-			$pdoStatement->bindParam(12, $id, PDO::PARAM_INT);
+			$pdoStatement->bindParam(2, $exercice, PDO::PARAM_STR);
+			$pdoStatement->bindParam(3, $Answer1, PDO::PARAM_STR);
+			$pdoStatement->bindParam(4, $Answer2, PDO::PARAM_STR);
+			$pdoStatement->bindParam(5, $Answer3, PDO::PARAM_STR);
+			$pdoStatement->bindParam(6, $Answer4, PDO::PARAM_STR);
+			$pdoStatement->bindParam(7, $solution, PDO::PARAM_STR);
+			$pdoStatement->bindParam(8, $solution_number, PDO::PARAM_INT);
+			$pdoStatement->bindParam(9, $id_discipline, PDO::PARAM_INT);
+			$pdoStatement->bindParam(10, $id_school_level, PDO::PARAM_INT);
+			$pdoStatement->bindParam(11, $name, PDO::PARAM_STR);
+			$pdoStatement->bindParam(12, $id_type, PDO::PARAM_INT);
+			$pdoStatement->bindParam(13, $id, PDO::PARAM_INT);
 			$pdoStatement->execute();
 
 			if($pdoStatement->rowCount()>0){
@@ -333,7 +337,7 @@ class questionManager {
 
 	//Get the next question of a course + the total number of question in the current course
 
-	$sql = "SELECT (SELECT COUNT(id_question) FROM course_questions WHERE id_course=?) as total_questions, cq.id_course, cq.order_question as order_number, qtr.enonce, qtr.answer1, qtr.answer2, qtr.answer3, qtr.answer4, qtr.solution, qtr.solution_number, qtr.id_discipline, qtr.id_school_level, qtr.name as name, qtr.id_type , d.discipline, cq.id_question, qtr.url_picture_main, qtr.url_picture_solution
+	$sql = "SELECT (SELECT COUNT(id_question) FROM course_questions WHERE id_course=?) as total_questions, cq.id_course, cq.order_question as order_number, qtr.enonce, qtr.answer1, qtr.answer2, qtr.answer3, qtr.answer4, qtr.solution, qtr.solution_number, qtr.id_discipline, qtr.id_school_level, qtr.name as name, qtr.id_type , d.discipline, cq.id_question, qtr.url_picture_main, qtr.url_picture_solution, qtr.exercice
 			FROM course_questions cq
 			INNER JOIN questions_type_radio qtr ON cq.id_question = qtr.global_id
 			INNER JOIN school_levels sl ON qtr.id_school_level = sl.id

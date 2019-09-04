@@ -25,6 +25,7 @@ if(userManager::checkIfAdmin($_SESSION['user'])){
 			$question_to_register->setIdDiscipline($_POST['question-discipline']);
 			$question_to_register->setIdSchoolLevel($_POST['question-school_level']);
 			$question_to_register->setEnonce($_POST['enonce']);
+			$question_to_register->setExercice($_POST['exercice']);
 			$question_to_register->setAnswer1($_POST['answer1']);
 			$question_to_register->setAnswer2($_POST['answer2']);
 			$question_to_register->setAnswer3($_POST['answer3']);
@@ -40,7 +41,7 @@ if(userManager::checkIfAdmin($_SESSION['user'])){
 				//First, find the question newly created to get its global id
 				$question = questionManager::findQuestionWithNameAndIdType($bdd, $question_to_register);
 				//Thanks to its global id, we update its url_picture.
-				$success = questionManager::updatePictureQuestion($bdd, $question, $_FILES["question-picture"]);
+				$success = questionManager::updatePictureStatementQuestion($bdd, $question, $_FILES["question-picture"]);
 			}
 
 			
@@ -64,6 +65,7 @@ if(userManager::checkIfAdmin($_SESSION['user'])){
 			$question_to_edit->setIdDiscipline($_POST['question-discipline']);
 			$question_to_edit->setIdSchoolLevel($_POST['question-school_level']);
 			$question_to_edit->setEnonce($_POST['enonce']);
+			$question_to_edit->setExercice($_POST['exercice']);
 			$question_to_edit->setAnswer1($_POST['answer1']);
 			$question_to_edit->setAnswer2($_POST['answer2']);
 			$question_to_edit->setAnswer3($_POST['answer3']);
