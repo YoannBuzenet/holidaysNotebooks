@@ -19,10 +19,21 @@ ob_start();
 			<img src="<?= $next_question->getURLPictureMain() ?>" alt="question-picture">
 		</div>
 	<?php } ?>
+		<?php if(!empty($next_question->getEnonce())){?>
+		<div class="lesson">
+			<h2>A RETENIR</h2>
+			<div class="context-color">
+			<?= $next_question->getEnonce() ?>
+			</div>
+		</div>
+		<?php } ?>
 
-	<p class="lesson"><?= $next_question->getEnonce() ?></p>
-
-	<p class="exercice"> <?= $next_question->getExercice() ?></p>
+	<div class="exercice"> 
+		<h2>EXERCICE</h2>
+		<div class="context-color">
+		<?= $next_question->getExercice() ?>
+		</div>
+	</div>
 
 	<form action="index.php?section=courses&action=3&id=<?= $next_question->id_course ?>" method="POST" id="question-form" class="question-form">
 		<div class="form-container">

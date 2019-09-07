@@ -25,6 +25,29 @@ progress {
 }
 
 /***********************************
+****************LAYOUT***************
+***********************************/
+
+.lesson h2, .exercice h2 {
+	font-family: 'Chilanka', cursive;
+}
+
+.lesson h2 {
+	margin-bottom : -.25em;
+}
+
+.lesson .context-color{
+	padding: 1em;
+	margin-bottom: 1em;
+	background-color: white;
+	border-radius: .5em;
+}
+
+.lesson .context-color h2{
+	margin-top : 0;
+}
+
+/***********************************
 ****************FORM***************
 ***********************************/
 .question h1 {

@@ -6,6 +6,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="https://fonts.googleapis.com/css?family=Chilanka&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="public/style/general.css">
 	<link rel="stylesheet" href="public/style/homepage.css">
 	<link rel="stylesheet" href="public/style/parcours.css">
