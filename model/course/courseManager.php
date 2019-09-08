@@ -18,6 +18,7 @@ public static function getAllCourses($pdo){
 	return $pdoStatement->fetchAll();
 }
 
+
 public static function registerCourse(PDO $pdo, array $post, $file){
 
 	//Here we :

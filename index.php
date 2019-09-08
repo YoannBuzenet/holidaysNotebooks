@@ -67,7 +67,20 @@ else if($section == "privacy_policy"){
 	include('view/front/fixed_pages/privacy_policy.php');
 }
 else if($section == "contact-us"){
+	//Here we check if the user is sending a message, or if he just did it.
+	if(isset($_POST['message'])){
+		//mail the message
+		mail( 'ybuzenet@gmail.com', $_POST['message-title'], $_POST['message']);
+
+		//display confirmation to user
+		$success = true;
+		$message = 'Votre message a bien été envoyé.';
+	}
+
 	include('view/front/fixed_pages/contact-form.php');
+}
+else if($section == "legal-mentions"){
+	include('view/front/fixed_pages/legal-mentions.php');
 }
 else if($section == 'logout'){
 	session_destroy();

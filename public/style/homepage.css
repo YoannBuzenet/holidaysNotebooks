@@ -1,7 +1,9 @@
 /***********************************
 ****************CARDS***************
 ***********************************/
-
+.main-section {
+	width: 100%;
+}
 .cards-container {
 	display: flex;
 	justify-content: center;
@@ -16,6 +18,7 @@ article.card{
 	position: relative;
 	border: 1px black solid;
 	overflow: hidden;
+
 }
 
 article.card p.discover {
@@ -33,10 +36,20 @@ article.card:hover .discover{
 	font-size: 3rem;
 }
 
+article.card .course-infos {
+	background-color :#3B87FB90;
+}
+
 article.card h1{
 	padding-top: 1em;
 	padding-left: 1em;
-	padding-bottom: 1em;
+	margin-bottom: 0.5rem; 
+}
+
+article.card h2{
+	padding-top:0;
+	padding-left: 1em;
+	margin: 0;
 }
 
 article img.card-img {
@@ -54,3 +67,26 @@ article.card:hover {
 }
 
 
+/***********************************
+****************ALERTS************
+***********************************/
+
+.alert-wrapper {
+	display: flex;
+	justify-content: center;
+}
+
+.alert {
+	padding: 1em;
+	margin: 0;
+	margin-bottom: 1em;
+	border-radius: 1em;
+}
+
+.alert.success{
+	background-color: lightgreen;
+}
+
+.alert.problem{
+	background-color: #FB735690;
+}

@@ -96,13 +96,26 @@ body {
 }
 
 .main-header .menu ul li a:hover{
-	background-color: #3B87FB;
+	background-color: #3B87FB; /*  light blue */
 	color : white;
 }
 
 main .card-link {
 	text-decoration: none;
 	color: black;
+}
+
+/***********************************
+****************FORM***************
+***********************************/
+
+label {
+	display: block;
+	text-align: center;
+}
+input, textarea {
+	display: block;
+	margin : 0.25em auto 1em;
 }
 
 
@@ -127,6 +140,10 @@ footer>ul>li>a{
 	color: black;
 }
 
+footer ul li a:hover{
+	background-color: #3B87FB; /*  light blue */
+	color : white;
+
 @media only screen and (max-width: 500px) {
 
 	footer>ul {
@@ -138,4 +155,3 @@ footer>ul>li>a{
 }
 
 }
-
