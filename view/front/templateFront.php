@@ -22,7 +22,7 @@
 		<div class="main-content">
 			<header class="main-header">
 				<div class="container">
-					<h1><a href="/holidaysNotebooks">Cahiers de vacances gratuits</a></h1>
+					<h1><a href="/index.php">Cahiers de vacances gratuits</a></h1>
 				</div>
 				<div class="menu">
 					<ul>
