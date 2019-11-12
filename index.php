@@ -66,6 +66,11 @@ else if($section == "cookie_policy"){
 else if($section == "privacy_policy"){
 	include('view/front/fixed_pages/privacy_policy.php');
 }
+//landing pages
+else if($section == "nos-cahiers-de-vacances-gratuits-pour-les-cm2"){
+	$listCourses = courseManager::getAllCourses($bdd);
+	include('view/front/fixed_pages/landing_pages/nos-cahiers-de-vacances-gratuits-pour-les-cm2.php');
+}
 else if($section == "contact-us"){
 	//Here we check if the user is sending a message, or if he just did it.
 	if(isset($_POST['message'])){

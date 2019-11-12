@@ -136,6 +136,20 @@ input, textarea {
 	margin : 0.25em auto 1em;
 }
 
+/***********************************
+****************LANDING**************
+***********************************/
+article.card.center-card {
+	margin: 1em auto 2em auto;
+}
+
+.margin-bottom-paragraph {
+	margin-bottom : 1em;
+}
+
+.margin-bottom-paragraph a {
+	color : black;
+}
 
 /***********************************
 ****************FOOTER**************
