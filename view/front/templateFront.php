@@ -15,12 +15,7 @@
 </head>
 
 <body>
-	<div class="main-container">
-		<div class="left-content">
-
-		</div>	
-		<div class="main-content">
-			<header class="main-header">
+				<header class="main-header">
 				<div class="container">
 					<h1><a href="/index.php">Cahiers de vacances gratuits</a></h1>
 				</div>
@@ -31,6 +26,12 @@
 					</ul>
 				</div>	
 			</header>
+	<div class="main-container">
+		<div class="left-content">
+
+		</div>	
+		<div class="main-content">
+
 			<div class="container" id="main-container">
 				<main>
 					<?php echo $view; ?>

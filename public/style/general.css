@@ -66,8 +66,17 @@ body {
 ****************HEADER***************
 ***********************************/
 
+.main-header {
+	padding-top: 2em;
+	background-image: url('../../public/pictures/kids_studying.jpg');
+	background-size: cover;
+	background-position : 40% 50%;
+}
+
 .main-header h1 {
 	text-align :center;
+	margin-top: 0;
+	font-family: 'Chilanka', cursive;
 }
 
 .main-header h1 a{
@@ -86,6 +95,7 @@ body {
 	list-style: none;
 	margin-top: 1em;
 	margin-bottom: 1em;
+	font-family: 'Chilanka', cursive;
 }
 
 .main-header .menu ul li a{
@@ -106,6 +116,14 @@ main .card-link {
 }
 
 /***********************************
+****************HOME***************
+***********************************/
+
+.cards-container h1.discover{
+	font-family: 'Chilanka', cursive;
+}
+
+/***********************************
 ****************FORM***************
 ***********************************/
 
@@ -122,7 +140,6 @@ input, textarea {
 /***********************************
 ****************FOOTER**************
 ***********************************/
-
 footer>ul {
 	display: flex;
 	justify-content: center;

@@ -7,7 +7,7 @@
 	<p>Bienvenue sur les cahiers de vacances ! Sur le site vous trouverez des cahiers de vacances en ligne gratuits à destination des enfants. Leur progression est sauvegardée automatiquement, vous pouvez quitter le site, revenir et continuer votre cahier. </p> <p>Idéal pour les révisions. Notre conseil : 5 questions par jour !</p>
 
 
-	<h1>Découvrez nos cahiers de vacances en ligne</h1>
+	<h1 class="discover">Découvrez nos cahiers de vacances en ligne</h1>
 <?php 
 foreach($listCourses as $course){ ?>
 
