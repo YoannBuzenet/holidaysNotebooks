@@ -69,6 +69,11 @@ progress {
 	width: 20em;
 }
 
+#question-form div div label ul li {
+	list-style-type: none;
+	text-align: left;
+}
+
 .question-form input[type="button"]{
 	margin-top: 2em;
 	padding: 1em;
